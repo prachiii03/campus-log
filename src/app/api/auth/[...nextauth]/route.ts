@@ -20,15 +20,15 @@ const handler = NextAuth({
                 try {
                     const user = await prisma.student.findFirst({
                         where: {
-                            prn: credentials?.prn,
+                            student_id: credentials?.prn,
                         },
                     });
 
 
                     if (user) {
                         return {
-                            id: user.prn,
-                            name: user.name,
+                            id: user.student_id,
+                            name: user.first_name,
                         };
                     }
 
