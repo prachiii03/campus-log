@@ -8,7 +8,8 @@ datasource db {
 }
 
 model Student {
-  rollNo String @id @default(uuid())
-  name   String
-  prn    Int
+  rollNo   String @id @default(uuid())
+  name     String
+  prn      String
+  password String
 }
