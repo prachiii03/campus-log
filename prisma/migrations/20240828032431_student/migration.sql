@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Student" ALTER COLUMN "prn" SET DATA TYPE TEXT;
