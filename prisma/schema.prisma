@@ -26,7 +26,7 @@ model College {
 }
 
 model Department {
-  department_id      String             @id @default(uuid())
+  department_id      Int                @id @default(autoincrement())
   department_name    String
   hod                Faculty            @relation("DepartmentToFaculty", fields: [hodId], references: [faculty_id])
   hodId              String             @unique
@@ -114,7 +114,7 @@ model Student {
   address          String
   username         String       @unique
   department       Department   @relation(fields: [department_id], references: [department_id])
-  department_id    String
+  department_id    Int
   current_year     String
   current_semester String
   results          Result[]
@@ -150,5 +150,5 @@ model NonTeachingStaff {
   contact       String
   username      String      @unique
   department    Department? @relation("DepartmentNonTeachingStaff", fields: [department_id], references: [department_id])
-  department_id String?
+  department_id Int
 }
