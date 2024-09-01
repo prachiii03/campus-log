@@ -1,154 +1,228 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("POSTGRES_URL")
+  provider  = "postgresql"
+  url       = env("POSTGRES_URL")
+  directUrl = env("DIRECT_URL")
+  schemas   = ["college", "faculties", "master_table", "students", "study_material"]
 }
 
-model prn_table {
-  prn          String  @id
-  email        String  @unique
-  is_registerd Boolean
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model college_governece_body {
+  governance_body_id  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at          DateTime @default(now()) @db.Timestamptz(6)
+  name                String
+  position            String
+  email               String   @unique
+  contact_number      String?
+  address             String?
+  date_of_appointment DateTime @db.Date
+  term_duration       Int?
+  department_id       String?  @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  biography           String
+  photo_url           String
+  status              Boolean
+
+  @@schema("college")
 }
 
-model College {
-  college_id               String       @id @default(uuid())
-  college_name             String
-  address                  String
-  principal                String
-  vice_principal           String
-  chair_person             Json
-  departments              Department[] @relation("CollegeDepartments")
-  teaching_staff_count     Int
-  non_teaching_staff_count Int
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model college_info {
+  id                   String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at           DateTime     @default(now()) @db.Timestamptz(6)
+  college_name         String
+  college_address      String
+  teaching_staff_count Int?
+  non_teaching_staff   Int?
+  department           department[]
+
+  @@schema("college")
 }
 
-model Department {
-  department_id      Int                @id @default(autoincrement())
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model department {
+  department_id      String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   department_name    String
-  hod                Faculty            @relation("DepartmentToFaculty", fields: [hodId], references: [faculty_id])
-  hodId              String             @unique
-  teaching_staff     Faculty[]          @relation("DepartmentTeachingStaff")
-  non_teaching_staff NonTeachingStaff[] @relation("DepartmentNonTeachingStaff")
-  students           Student[]          @relation("DepartmentStudents")
-  student_count      Int
-  girls              Int
-  boys               Int
-  alumnis            Student[]          @relation("DepartmentAlumni")
+  hod_id             String               @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  teaching_staff     String               @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  non_teaching_staff String               @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student_count      BigInt
+  girls_count        BigInt
+  boys_count         BigInt
+  alumnies           String               @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  college_id         String               @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  college_info       college_info         @relation(fields: [college_id], references: [id], onDelete: Cascade)
+  teaching_faculties teaching_faculties[]
+  student_details    student_details[]
 
-  College   College? @relation("CollegeDepartments", fields: [collegeId], references: [college_id])
-  collegeId String?
-
-  Student Student[]
+  @@schema("college")
 }
 
-model Faculty {
-  faculty_id        String       @id @default(uuid())
-  first_name        String
-  middle_name       String
-  last_name         String
-  highest_education String
-  address           String
-  email             String
-  contact_no        String
-  username          String       @unique
-  department        Department?  @relation("DepartmentToFaculty") // Made optional
-  department_id     String?
-  subjects          Subject[]    @relation("FacultySubjects")
-  syllabus          Syllabus[]
-  attendance        Attendance[]
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model non_teaching_faculty {
+  id          String  @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  first_name  String
+  middle_name String?
+  last_name   String
+  address     String
+  email       String
+  contact_no  String?
+  position    String
 
-  Department Department[] @relation("DepartmentTeachingStaff")
+  @@schema("faculties")
 }
 
-model Subject {
-  subject_id     String         @id @unique @default(uuid())
-  subject_name   String
-  required_hours String
-  have_practical Boolean
-  syllabus       Syllabus?
-  studyMaterial  StudyMaterial?
-  faculty        Faculty[]      @relation("FacultySubjects")
-  attendance     Attendance[]
-  results        Result[]
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model teaching_faculties {
+  faculty_id         String               @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  first_name         String
+  middle_name        String?
+  last_name          String
+  gender             String
+  highest_education  String
+  address            String
+  email              String
+  contact_no         String?
+  username           String
+  department_id      String               @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  subjects           String[]
+  department         department           @relation(fields: [department_id], references: [department_id], onDelete: SetNull)
+  student_attendence student_attendence[]
+  study_material     study_material[]
+  subject            subject[]
+  syllabus           syllabus[]
+
+  @@schema("faculties")
 }
 
-model Syllabus {
-  subject_id     String  @id
-  reference_link Json
-  practicals     Json
-  faculty        Faculty @relation(fields: [faculty_id], references: [faculty_id])
-  faculty_id     String
-  subject        Subject @relation(fields: [subject_id], references: [subject_id])
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model prn_list {
+  prn             BigInt            @id @unique
+  email           String
+  is_registerd    Boolean?
+  student_details student_details[]
+
+  @@schema("master_table")
 }
 
-model StudyMaterial {
-  subject_id String   @id
-  notes      String[]
-  exams      Json
-  subject    Subject  @relation(fields: [subject_id], references: [subject_id])
+/// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
+// model attendance {
+// @@schema("students")
+// }
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model student_attendence {
+  id                 BigInt             @id @default(autoincrement())
+  created_at         DateTime           @default(now()) @db.Timestamptz(6)
+  student_id         String             @db.Uuid
+  faculty_id         String             @db.Uuid
+  subject_id         String?            @db.Uuid
+  date               DateTime?          @db.Date
+  lecture_start_time DateTime           @db.Time(6)
+  lecture_end_time   DateTime           @db.Time(6)
+  status             Boolean
+  teaching_faculties teaching_faculties @relation(fields: [faculty_id], references: [faculty_id], onDelete: NoAction, onUpdate: NoAction)
+  student_details    student_details    @relation(fields: [student_id], references: [student_id], onDelete: NoAction, onUpdate: NoAction)
+  subject            subject?           @relation(fields: [subject_id], references: [subject_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("students")
 }
 
-model Result {
-  student_id      String
-  subject_id      String
-  gained_marks    Int
-  total_marks     Int
-  status          Boolean
-  semester_number Int
-  academic_year   String
-  student         Student @relation(fields: [student_id], references: [student_id])
-  subject         Subject @relation(fields: [subject_id], references: [subject_id])
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model student_details {
+  student_id               String               @id(map: "studen_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  first_name               String
+  middle_name              String?
+  last_name                String
+  prn_no                   BigInt?
+  email                    String
+  address                  Json
+  username                 String
+  department_id            String               @db.Uuid
+  current_studing_year     String
+  current_studing_semester String
+  guardian_name            String
+  category                 String?
+  cast                     String?
+  blood_group              String?
+  adhar_card_no            BigInt
+  material_status          Boolean
+  guardian_contact_no      Int
+  student_attendence       student_attendence[]
+  department               department           @relation(fields: [department_id], references: [department_id], onDelete: NoAction, onUpdate: NoAction, map: "studen_department_id_fkey")
+  prn_list                 prn_list?            @relation(fields: [prn_no], references: [prn], onDelete: NoAction, onUpdate: NoAction, map: "studen_prn_no_fkey")
+  student_performance      student_performance?
+  student_result           student_result[]
 
-  @@id([student_id, subject_id])
+  @@schema("students")
 }
 
-model Student {
-  student_id       String       @id
-  first_name       String
-  middle_name      String
-  last_name        String
-  email            String
-  address          String
-  username         String       @unique
-  department       Department   @relation(fields: [department_id], references: [department_id])
-  department_id    Int
-  current_year     String
-  current_semester String
-  results          Result[]
-  attendance       Attendance[]
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model student_performance {
+  student_id      String          @id @db.Uuid
+  marks           Json
+  attendence      Json
+  student_details student_details @relation(fields: [student_id], references: [student_id], onDelete: NoAction, onUpdate: NoAction)
 
-  departmentStudents Department[] @relation("DepartmentStudents")
-  departmentAlumni   Department[] @relation("DepartmentAlumni")
+  @@schema("students")
 }
 
-model Attendance {
-  id            String   @id @default(uuid())
-  student       Student  @relation(fields: [student_id], references: [student_id])
-  student_id    String
-  subject       Subject  @relation(fields: [subject_id], references: [subject_id])
-  subject_id    String
-  teacher       Faculty  @relation(fields: [teacher_id], references: [faculty_id])
-  teacher_id    String
-  date          DateTime
-  time          DateTime
-  duration      Int
-  status        Boolean
-  academic_year String
-  semester      Int
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model student_result {
+  id              BigInt          @id @default(autoincrement())
+  student_id      String          @db.Uuid
+  subject_id      String          @db.Uuid
+  total_marks     Float
+  gained_marks    Float
+  semester        String
+  status          Boolean?
+  student_details student_details @relation(fields: [student_id], references: [student_id], onDelete: NoAction, onUpdate: NoAction)
+  subject         subject         @relation(fields: [subject_id], references: [subject_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("students")
 }
 
-model NonTeachingStaff {
-  id            String      @id @default(uuid())
-  first_name    String
-  middle_name   String
-  last_name     String
-  address       String
-  position      String
-  contact       String
-  username      String      @unique
-  department    Department? @relation("DepartmentNonTeachingStaff", fields: [department_id], references: [department_id])
-  department_id Int
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model study_material {
+  id                 BigInt             @id @default(autoincrement())
+  subject_id         String             @db.Uuid
+  faculty_id         String             @db.Uuid
+  notes              Json?
+  exams              Json?
+  teaching_faculties teaching_faculties @relation(fields: [faculty_id], references: [faculty_id], onDelete: NoAction, onUpdate: NoAction)
+  subject            subject            @relation(fields: [subject_id], references: [subject_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("study_material")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model subject {
+  subject_id         String               @id(map: "syllabus_pkey") @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  subject_name       String
+  required_hours     Int
+  habe_practicals    Boolean
+  faculty_id         String               @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  student_attendence student_attendence[]
+  student_result     student_result[]
+  study_material     study_material[]
+  teaching_faculties teaching_faculties   @relation(fields: [faculty_id], references: [faculty_id], onDelete: NoAction, onUpdate: NoAction, map: "syllabus_faculty_id_fkey")
+  syllabus           syllabus[]
+
+  @@schema("study_material")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model syllabus {
+  subject_id          String?            @db.Uuid
+  id                  BigInt             @id(map: "syllabus_pkey1")
+  faculty_id          String             @db.Uuid
+  reference_book_link Json
+  practical_link      Json
+  teaching_faculties  teaching_faculties @relation(fields: [faculty_id], references: [faculty_id], onDelete: NoAction, onUpdate: NoAction, map: "syllabus_faculty_id_fkey1")
+  subject             subject?           @relation(fields: [subject_id], references: [subject_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("study_material")
 }
