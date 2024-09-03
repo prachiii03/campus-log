@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/lib/db";
+import bcrypt from 'bcryptjs';
 
 const handler = NextAuth({
     session: {
@@ -16,25 +17,30 @@ const handler = NextAuth({
                 prn: { label: "PRN", type: "text" },
                 password: { label: "Password", type: "password" },
             },
-            async authorize(credentials, req) {
+            async authorize(credentials) {
                 try {
-                    const user = await prisma.student.findFirst({
+                    const user = await prisma.student_details.findFirst({
                         where: {
-                            student_id: credentials?.prn,
+                            prn_no: credentials?.prn ? parseInt(credentials.prn) : 0,
                         },
                     });
 
-
-                    if (user) {
-                        return {
-                            id: user.student_id,
-                            name: user.first_name,
-                        };
+                    if (user && credentials) {
+                        const match = await bcrypt.compare(credentials.password, user.password);
+                        if (match) {
+                            // Return only the fields needed
+                            return {
+                                id: user.student_id.toString(),
+                                name: user.username,
+                                email: user.email,
+                                department: user.department_id,
+                                prn: user.prn_no ? user.prn_no.toString() : null,
+                            };
+                        }
                     }
-
-                    return null;
+                    return null; // If no match, return null
                 } catch (error) {
-                    console.log("Error: " + error);
+                    console.error("Authorization Error:", error);
                     return null;
                 }
             },
@@ -42,20 +48,29 @@ const handler = NextAuth({
     ],
     callbacks: {
         async jwt({ token, user }) {
-            console.log("JWT Callback:", { token, user });
             if (user) {
+                // Add user information to the token
                 token.id = user.id;
+                token.prn = user.prn;
+                token.department = user.department;
+                token.username = user.name;
+                token.email = user.email;
             }
+            console.log("JWT : " + { token })
             return token;
         },
         async session({ session, token }) {
-            console.log("Session Callback:", { session, token });
-            if (token) {
-                session.id = token.id;
-            }
+            // Add token information to the session
+
+            session.user.id = token.id as string;
+            session.user.prn = token.prn as string;
+            session.user.department = token.department as string;
+            session.user.username = token.username as string;
+            console.log("Session : " + { session })
             return session;
         },
     },
 });
 
 export { handler as GET, handler as POST };
+

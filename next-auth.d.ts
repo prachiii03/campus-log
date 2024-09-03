@@ -1,18 +1,31 @@
-// next-auth.d.ts
 import NextAuth from "next-auth";
 
 declare module "next-auth" {
     interface Session {
-        id: string;  // Add custom id field
+        user: {
+            id: string;
+            prn: string | null;
+            department: string;
+            username: string;
+            email: string;
+        };
     }
 
     interface User {
-        id: string;  // Add custom id field for user
+        id: string;
+        prn: string | null;
+        name: string;
+        department: string;
+        email: string;
     }
 }
 
 declare module "next-auth/jwt" {
     interface JWT {
-        id: string;  // Add custom id field for JWT token
+        id: string;
+        prn: string | null;
+        department: string;
+        username: string;
+        email: string;
     }
 }
