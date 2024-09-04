@@ -2,6 +2,8 @@ import { getServerSession } from "next-auth";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import AuthProvider from "@/context/AuthProvider";
+import { authOptions } from "./api/auth/[...nextauth]/options";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,26 +17,28 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession();
-  console.log({ session }); // Check if session contains the expected fields
+  const session = await getServerSession(authOptions); // Make sure to pass authOptions
+  console.log({ session }); // This should log the session with all the necessary fields
 
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <nav>
-          {session?.user ? (
-            <>
-              <span>Username: {session.user.username}</span>
-              <span>Department: {session.user.department}</span>
-              <span>PRN: {session.user.prn}</span>
-              <span>Logout</span>
-            </>
-          ) : (
-            <span>Login</span>
-          )}
-        </nav>
-        {children}
-      </body>
+      <AuthProvider>
+        <body className={inter.className}>
+          <nav>
+            {session?.user ? (
+              <>
+                <span>Username: {session.user.username}</span>
+                <span>Department: {session.user.department}</span>
+                <span>Email: {session.user.email}</span>
+                <span>Logout</span>
+              </>
+            ) : (
+              <span>Login</span>
+            )}
+          </nav>
+          {children}
+        </body>
+      </AuthProvider>
     </html>
   );
 }
