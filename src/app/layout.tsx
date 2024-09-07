@@ -32,7 +32,8 @@
 
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { SidebarDemo } from "./Frontend/Sidebar/Sidebar";
+import Navbar from "./Navbar/Navbar";
+import { SidebarDemo } from "./Sidebar/Sidebar";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -50,9 +51,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} >
+        <Navbar/>
         <SidebarDemo/>
         {children}</body>
     </html>
   );
-} 
-
+}
