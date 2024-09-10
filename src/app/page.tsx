@@ -1,9 +1,10 @@
-import Image from "next/image";
+import Herosection from "@/components/Landingpage";
 
 export default function Home() {
   return (
-   <div>
-      <strong>our code goes here from m prachi from temp 2 </strong>
-   </div>
+    <>
+    {/* <div className="min-h-screen w-full bg-gray-100"> </div> */}
+      <Herosection />
+    </>
   );
 }

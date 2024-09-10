@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Global CSS */
+body.dark {
+    background-color: #121212;
+    color: #e0e0e0;
+  }
+  
+  .dark .bg-white {
+    background-color: #1e1e1e;
+  }
+  
+  .dark .text-black {
+    color: #e0e0e0;
+  }
+  
+  /* Add this in your global CSS file or style section */
+@keyframes movingBorder {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+.moving-border {
+  background: linear-gradient(90deg, #ff0080, #ff8c00, #40e0d0, #00bfff);
+  background-size: 300% 300%;
+  border-radius: 1rem;
+  padding: 2px;
+  animation: movingBorder 3s ease-in-out infinite;
+}
