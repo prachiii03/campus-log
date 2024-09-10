@@ -10,7 +10,6 @@ datasource db {
   schemas   = ["college", "faculties", "master_table", "students", "study_material"]
 }
 
-<<<<<<< HEAD
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model college_governece_body {
   governance_body_id  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
@@ -188,12 +187,6 @@ model subject {
   syllabus           syllabus[]
 
   @@schema("study_material")
-=======
-model Student {
-  rollNo String @id @default(uuid())
-  name   String
-  prn    Int
->>>>>>> develop
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
