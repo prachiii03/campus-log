@@ -1,13 +1,30 @@
 'use client';
 
-import { FormEvent } from "react";
+import { FormEvent, useEffect, useState } from "react";
 enum professionType{
     "student",
     "faculty",
     "nonTeachingStaff"
 }
 export default function Form() {
+    const [departments, setDepartments] = useState([]);
+    useEffect(() => {
+      getAllDepartments();
+     
+    }, [])
 
+    const getAllDepartments = async () => {
+        console.log('in get all departmets')
+        try {
+          const response = await fetch("/api/services/departmentService/get-all-departments");
+          const data = await response.json();
+          setDepartments(data);
+          console.log({ universities: data });
+        } catch (error) {
+          console.error("Error fetching departments:", error);
+        }
+      };
+    
     const handleSubmit = async(e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
@@ -32,6 +49,7 @@ export default function Form() {
         } catch (error) {
             console.log({error})
         }
+       
     }
     return(
         <form onSubmit={handleSubmit}>

@@ -25,7 +25,6 @@ export async function registerStudent(data: any) {
         const hashedPassword = await bcrypt.hash(data.password, 10);
         const newStudent = await prisma.student_details.create({
             data: {
-                student_id: data.studentId,
                 first_name: data.firstName,
                 middle_name: data.middleName,
                 last_name: data.lastName,
