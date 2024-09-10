@@ -11,14 +11,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.18.0",
-<<<<<<< HEAD
     "bcryptjs": "^2.4.3",
-=======
-    "@tabler/icons-react": "^3.14.0",
-    "chart.js": "^4.4.4",
-    "clsx": "^2.1.1",
-    "framer-motion": "^11.3.31",
->>>>>>> develop
     "next": "14.2.6",
     "next-auth": "^4.24.7",
     "react": "^18",
