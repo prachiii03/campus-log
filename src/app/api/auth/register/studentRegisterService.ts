@@ -39,7 +39,7 @@ export async function registerStudent(data: any) {
                 category: data.category,
                 cast: data.cast,
                 blood_group: data.bloodGroup,
-                adhar_card_no: parseInt(data.adharCardNo),
+                adhar_card_no: data.adharCardNo,
                 material_status: data.materialStatus,
                 guardian_contact_no: data.guardianContactNo,
                 password: hashedPassword

@@ -10,12 +10,10 @@ export default function StudentAttendencePage() {
     return (
         <div className='bg-pink-300'>
             <div className="flex justify-between">
-                {/* StudentInfo with 5px left margin */}
                 <div className="ml-[5px]">
                     <StudentInfo />
                 </div>
                 
-                {/* AttendenceHistory placed next to StudentInfo */}
                 <div className="ml-4">
                     <AttendenceHistory />
                 </div>
