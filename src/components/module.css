@@ -1,0 +1,13 @@
+@media (max-width: 900px) {
+    .navbar {
+      padding: 2px 10px; 
+    }
+    .navbar .nav-item {
+      margin-right: 8px; 
+      font-size: 14px; 
+    .navbar button {
+      padding: 5px 10px; 
+      font-size: 14px; 
+    }
+  }
+  }
