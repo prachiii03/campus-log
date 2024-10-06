@@ -5,7 +5,8 @@ const Footer: React.FC = () => {
   return (
     <>
       {/* Footer Main Section */}
-      <div className="bg-gray-50 w-full flex flex-row justify-around items-center p-4 md:p-6 text-xs md:text-base">
+      <div className="bg-gray-50 w-full flex flex-row justify-around items-center p-6 md:p-8 text-xs md:text-base min-h-[250px]"> 
+        {/* Increased height using `min-h-[200px]` */}
         {/* Brand and Social Icons */}
         <div className="flex flex-col items-center md:items-start w-1/4">
           <ul>
@@ -86,7 +87,8 @@ const Footer: React.FC = () => {
       </div>
 
       {/* Footer Copyright Section */}
-      <div className="flex justify-center items-center text-center p-2 bg-gray-50">
+      <div className="flex justify-center items-center text-center p-4 bg-gray-50">
+        {/* Increased padding */}
         <h1 className="text-gray-800 font-semibold text-[10px] md:text-sm">
           © 2024-2025 All rights reserved | Built with ❤ by{" "}
           <span className="hover:text-blue-600 font-semibold cursor-pointer">
