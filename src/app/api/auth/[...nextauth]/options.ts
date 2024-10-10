@@ -17,8 +17,16 @@ export const authOptions: NextAuthOptions = {
                     const user = await prisma.student_details.findFirst({
                         where: {
                             prn_no: credentials.prn
+                        },
+                        include: {
+                            department: {
+                                select: {
+                                    department_name: true // Select department_name instead of just the id
+                                }
+                            }
                         }
                     });
+                    console.log(user)
 
                     if (!user) {
                         throw new Error("No user found with provided PRN number");
@@ -30,17 +38,19 @@ export const authOptions: NextAuthOptions = {
                         throw new Error("Password does not match");
                     }
 
-                    // Return the user object with only the fields you need in the session
+                    // Return the user object with the department name
                     return {
                         id: user.student_id,
                         prn: user.prn_no.toString(),
                         name: user.first_name,
                         username: `${user.first_name} ${user.last_name}`,
                         email: user.email,
-                        department: user.department_id
+                        department: user.department.department_name, // Use department_name instead of department_id
+                        current_semester: user.current_studing_semester
                     };
                 } catch (error) {
-                    console.log(error)
+                    console.log(error);
+                    return null;
                 }
             }
         })
@@ -54,7 +64,8 @@ export const authOptions: NextAuthOptions = {
                 token.name = user.name;
                 token.username = user.username;
                 token.email = user.email;
-                token.department = user.department;
+                token.department = user.department; // Store department_name in token
+                token.current_semester = user.current_semester;
             }
             return token;
         },
@@ -65,8 +76,9 @@ export const authOptions: NextAuthOptions = {
                 session.user.prn = token.prn;
                 session.user.name = token.name;
                 session.user.username = token.username;
-                session.user.department = token.department;
+                session.user.department = token.department; // Store department_name in session
                 session.user.email = token.email;
+                session.user.current_semester = token.current_semester;
             }
             return session;
         }
@@ -79,4 +91,4 @@ export const authOptions: NextAuthOptions = {
         signIn: '/login'
     },
     secret: process.env.NEXTAUTH_SECRET
-}
+};

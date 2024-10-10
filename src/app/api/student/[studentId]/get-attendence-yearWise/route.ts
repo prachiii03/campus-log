@@ -10,24 +10,49 @@ export async function GET(req: NextRequest, { params }: { params: StudentIdParam
     }
 
     try {
-        const attendanceCount = await prisma.student_attendence.groupBy({
+
+        const trueStatusCount = await prisma.student_attendence.groupBy({
             by: ['semester'],
             where: {
                 student_id: studentId,
+                status: true,
             },
             _count: {
-                id: true,
+                id: true, // Count records where status is true
             },
             orderBy: {
                 semester: 'asc',
             },
         });
 
+        console.log({ trueStatusCount });
+
+        const attendanceCount = await prisma.student_attendence.groupBy({
+            by: ['semester'],
+
+            where: {
+                student_id: studentId,
+            },
+            _count: {
+                id: true,
+            },
+
+            orderBy: {
+                semester: 'asc',
+            },
+        });
+        console.log({ attendanceCount })
+
+
         const semesterData: Record<string, number> = {
             first_year: 0,
+            first_year_present: 0,
             second_year: 0,
+            second_year_present: 0,
             third_year: 0,
+            third_year_present: 0,
             fourth_year: 0,
+            fourth_year_present: 0,
         };
 
         attendanceCount.forEach((item) => {
