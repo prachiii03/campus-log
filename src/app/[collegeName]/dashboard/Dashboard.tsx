@@ -567,7 +567,7 @@ const Dashboard: React.FC = () => {
 
   const getYearwiseAttendance = async () => {
     const studentId = userSession.id; // Ensure that the studentId is correct
-    const url = `http://localhost:3000/api/student/${studentId}/get-attendence-yearWise`; // Fix spelling if needed
+    const url = `/api/student/${studentId}/get-attendence-yearWise`; // Fix spelling if needed
     
     try {
       const response = await fetch(url, {

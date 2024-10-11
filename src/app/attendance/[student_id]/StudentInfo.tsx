@@ -23,7 +23,7 @@ const StudentInfo = () => {
       console.log(session.user.id);
 
       const response = await fetch(
-        `http://localhost:3000/api/student/04766c58-d0b1-4786-a9a0-3f3d8594b88d/get-student-information`
+        `/api/student/04766c58-d0b1-4786-a9a0-3f3d8594b88d/get-student-information`
       );
       const res = await response.json();
 
