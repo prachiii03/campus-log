@@ -110,6 +110,8 @@ const AboutSectionOne = () => {
                 <Image
                   src={testimonial.photo}
                   alt={testimonial.name}
+                  width={50}
+                  height={50}
                   className="w-24 h-24 rounded-full object-cover border-4 border-blue-500 shadow-lg"
                 />
               </div>

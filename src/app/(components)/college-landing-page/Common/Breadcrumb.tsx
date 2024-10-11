@@ -9,9 +9,9 @@ const Breadcrumb = ({
 }) => {
   return (
     <>
-      <section className="relative z-10 overflow-hidden pt-28 lg:pt-[150px]">
+      <section className="relative z-10 overflow-hidden pt-28 lg:pt-[150px] lg:px-10">
         <div className="container">
-          <div className="-mx-4 flex flex-wrap items-center">
+          <div className="flex flex-wrap items-center">
             <div className="w-full px-4 md:w-8/12 lg:w-7/12">
               <div className="mb-8 max-w-[570px] md:mb-0 lg:mb-12">
                 <h1 className="mb-5 text-2xl font-bold text-black dark:text-white sm:text-3xl">
@@ -35,7 +35,7 @@ const Breadcrumb = ({
                     <span className="mr-3 block h-2 w-2 rotate-45 border-r-2 border-t-2 border-body-color"></span>
                   </li>
                   <li className="text-base font-medium text-primary">
-                    {pageName}
+                    About
                   </li>
                 </ul>
               </div>

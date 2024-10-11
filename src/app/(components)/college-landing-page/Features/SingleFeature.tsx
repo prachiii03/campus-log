@@ -1,10 +1,9 @@
 import { Feature } from "@/app/[collegeName]/types/feature";
 
-
 const SingleFeature = ({ feature }: { feature: Feature }) => {
   const { icon, title, paragraph } = feature;
   return (
-    <div className="w-full">
+    <div className="w-full p-3 rounded-lg shadow-md dark:bg-slate-900">
       <div className="wow fadeInUp" data-wow-delay=".15s">
         <div className="mb-10 flex h-[70px] w-[70px] items-center justify-center rounded-md bg-primary bg-opacity-10 text-primary">
           {icon}
