@@ -12,6 +12,7 @@ import ShinyButton from "../../../components/ui/shiny-button";
 import LandingPageSkeleton from "./LandingPageSkeleton";
 import logo from "../../../../public/assets/student-image.png";
 import Link from "next/link";
+import edutrackPro from '../../../../public/images/logo.png'
 
 type NavItem = {
   label: string;
@@ -96,7 +97,7 @@ export default function Navbar() {
       } backdrop-blur-md`}
     >
       <section ref={animationParent} className="flex items-center gap-10">
-        <Image src={""} alt="logo" width={120} height={120} />
+        <Image src={edutrackPro} alt="logo" width={120} height={120} />
 
         {isSideMenuOpen && <MobileNav closeSideMenu={closeSideMenu} />}
 

@@ -1,0 +1,11 @@
+.loader {
+    border-top-color: #3498db; /* Blue color for the loader's top */
+    animation: spinner 1s ease-in-out infinite;
+  }
+  
+  @keyframes spinner {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  

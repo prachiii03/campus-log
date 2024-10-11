@@ -16,7 +16,7 @@ const AttendenceHistory = () => {
 
   const getStudentAttendence = async () => {
     try {
-      const response = await fetch('http://localhost:3000/api/student/04766c58-d0b1-4786-a9a0-3f3d8594b88d/get-attendence-yearWise');
+      const response = await fetch('/api/student/04766c58-d0b1-4786-a9a0-3f3d8594b88d/get-attendence-yearWise');
       const res = await response.json();
       console.log(res.attendanceByYear);  
       setStudentAttendenceYearWise(res.attendanceByYear); // Update the state

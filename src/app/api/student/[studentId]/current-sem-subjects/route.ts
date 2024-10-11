@@ -34,6 +34,9 @@ export async function GET(req: NextRequest, { params }: { params: StudentIdParam
         },
         select: {
             subject_name: true, // Select only the subject_name field
+            subject_id: true,
+            habe_practicals: true
+
         },
     });
 
