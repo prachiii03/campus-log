@@ -3,7 +3,7 @@
 import type { Metadata } from "next";
 import { Epilogue } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+//import Navbar from "@/components/Navbar";
 
 const epilogue = Epilogue({ subsets: ["latin"] });
 
@@ -24,7 +24,7 @@ export default function RootLayout({
           process.env.NODE_ENV == "development" ? "debug-screens" : ""
         }`}
       >
-        <Navbar />
+        {/* <Navbar /> */}
         {children}
         
       </body>
