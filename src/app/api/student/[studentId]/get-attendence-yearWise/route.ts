@@ -5,6 +5,7 @@ import prisma from "@/lib/db";
 export async function GET(req: NextRequest, { params }: { params: StudentIdParams }) {
     const { studentId } = params;
 
+    console.log("APU hit with student id ", studentId)
     if (!studentId) {
         return NextResponse.json({ error: "Student ID not found" }, { status: 400 });
     }
@@ -68,6 +69,22 @@ export async function GET(req: NextRequest, { params }: { params: StudentIdParam
             } else if (semester === 7 || semester === 8) {
                 semesterData.fourth_year += count;
             }
+        });
+
+        trueStatusCount.forEach((item) => {
+            const semester = parseInt(item.semester);
+            const count = item._count.id;
+
+            if (semester === 1 || semester === 2) {
+                semesterData.first_year_present += count;
+            } else if (semester === 3 || semester === 4) {
+                semesterData.second_year_present += count;
+            } else if (semester === 5 || semester === 6) {
+                semesterData.third_year_present += count;
+            } else if (semester === 7 || semester === 8) {
+                semesterData.fourth_year_present += count;
+            }
+
         });
 
         return NextResponse.json({

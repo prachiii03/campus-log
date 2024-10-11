@@ -1,6 +1,7 @@
-import { Brand } from "@/app/sgmcoe/types/brand";
+
 import Image from "next/image";
 import brandsData from "./brandsData";
+import { Brand } from "@/app/[collegeName]/types/brand";
 
 const Brands = () => {
   return (

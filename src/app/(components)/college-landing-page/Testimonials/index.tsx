@@ -1,4 +1,5 @@
-import { Testimonial } from "@/app/sgmcoe/types/testimonial";
+
+import { Testimonial } from "@/app/[collegeName]/types/testimonial";
 import SectionTitle from "../Common/SectionTitle";
 import SingleTestimonial from "./SingleTestimonial";
 
@@ -40,7 +41,6 @@ const Testimonials = () => {
         title="Testimonials"
         paragraph="What Our Students say..."
         center
-        className="text-lg md:text-xl"
       />
 
         <div className="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
