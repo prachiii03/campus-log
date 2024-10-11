@@ -1,4 +1,5 @@
-import { Blog } from "@/app/sgmcoe/types/blog";
+import { Blog } from "@/app/[collegeName]/types/blog";
+
 
 const blogData: Blog[] = [
   {

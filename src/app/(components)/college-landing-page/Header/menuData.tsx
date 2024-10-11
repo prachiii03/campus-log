@@ -1,4 +1,5 @@
-import { Menu } from "@/app/sgmcoe/types/menu";
+import { Menu } from "@/app/[collegeName]/types/menu";
+
 
 const menuData: Menu[] = [
   {

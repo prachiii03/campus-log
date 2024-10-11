@@ -1,4 +1,5 @@
-import { Feature } from "@/app/sgmcoe/types/feature";
+import { Feature } from "@/app/[collegeName]/types/feature";
+
 
 const SingleFeature = ({ feature }: { feature: Feature }) => {
   const { icon, title, paragraph } = feature;
