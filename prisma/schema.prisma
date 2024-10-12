@@ -187,6 +187,7 @@ model subject {
   required_hours     Int
   habe_practicals    Boolean
   faculty_id         String               @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  semester           String?
   student_attendence student_attendence[]
   student_result     student_result[]
   study_material     study_material[]
@@ -223,6 +224,7 @@ model teaching_faculties {
   username                                                String
   department_id                                           String               @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   subjects                                                String[]
+  password                                                String
   department_department_hod_idToteaching_faculties        department[]         @relation("department_hod_idToteaching_faculties")
   department_teaching_faculties_department_idTodepartment department           @relation("teaching_faculties_department_idTodepartment", fields: [department_id], references: [department_id], onDelete: NoAction, onUpdate: NoAction, map: "teaching_faculties_department_id_fkey1")
   student_attendence                                      student_attendence[]
