@@ -861,8 +861,10 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from "next/navigation";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import the CSS for styling
+import { useCollege } from '@/context/college-name-provider/CollegeNameProvider';
 
 export default function SignInPage() {
+    const { collegeName } = useCollege();
     const router = useRouter();
     
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -883,7 +885,7 @@ export default function SignInPage() {
         }
         if (!response?.error) {
             toast.success("Login Successful!");
-            router.push('/sgmcoe/dashboard');
+            router.push(`/${collegeName}/dashboard`);
             router.refresh();
         } else {
             console.log(response.error)

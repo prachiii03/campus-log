@@ -1,6 +1,5 @@
 import { Menu } from "@/app/[collegeName]/types/menu";
 
-
 const menuData: Menu[] = [
   {
     id: 1,

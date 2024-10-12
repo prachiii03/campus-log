@@ -7,16 +7,17 @@ import { SidebarDemo } from "../../app/(components)/utils/sidebar/Sidebar";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import Header from "@/app/(components)/college-landing-page/Header";
-
+import { useCollege } from "../college-name-provider/CollegeNameProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function ClientRootLayout({ session, children }: { session: any, children: React.ReactNode }) {
   const pathname = usePathname();
+  const {collegeName} = useCollege();
 
   // Determine whether to show the Navbar and Sidebar
   const showNavbarAndSidebar = pathname !== "/";
 
-  const showCollegeNavbar = pathname ==='/sgmcoe'
+  const showCollegeNavbar = pathname ===`/${collegeName}`
   useEffect(() => {
     if (session) {
       // Storing the session data in sessionStorage

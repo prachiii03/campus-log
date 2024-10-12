@@ -34,6 +34,8 @@ import SectionTitle from "@/app/(components)/college-landing-page/Common/Section
 import { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
+
+import { useCollege } from "@/context/college-name-provider/CollegeNameProvider";
 export const metadata: Metadata = {
   title: "About SGMCOE",
   // description: "This is About Page for Startup Nextjs Template",
@@ -48,6 +50,7 @@ const checkIcon = (
 );
 
 const AboutPage = () => {
+  const {collegeName} = useCollege();
   const List = (prop:any) => (
     <p className="mb-5 flex items-center text-lg font-medium text-body-color">
       <span className="mr-4 flex h-[30px] w-[30px] items-center justify-center rounded-md bg-primary bg-opacity-10 text-primary">
@@ -67,10 +70,10 @@ const AboutPage = () => {
             <div className="w-full px-4">
               <div className="mx-auto max-w-[800px] text-center">
                 <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-                Welcome to SGMCOE – Where Dreams Take Flight
+                Welcome to `${collegeName}` – Where Dreams Take Flight
                 </h1>
                 <p className="mb-10 text-base leading-relaxed text-gray-700 dark:text-gray-300 sm:text-lg md:text-xl">
-                At SGMCOE, we believe in empowering students with the knowledge, skills, and experiences needed to lead and innovate in the fast-evolving global landscape. Established with the mission of shaping bright futures, our institution is committed to nurturing talent, fostering creativity, and cultivating leaders of tomorrow.
+                At `${collegeName}`, we believe in empowering students with the knowledge, skills, and experiences needed to lead and innovate in the fast-evolving global landscape. Established with the mission of shaping bright futures, our institution is committed to nurturing talent, fostering creativity, and cultivating leaders of tomorrow.
                 </p>
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
                   <Link
@@ -379,7 +382,7 @@ const AboutPage = () => {
     <section className="bg-gray-100 dark:bg-black py-12 px-6 md:px-16 lg:px-24">
       <div className="max-w-7xl mx-auto">
         <h2 className="text-3xl md:text-4xl font-bold text-center dark:text-white text-gray-800 mb-8">
-          Why Choose SGMCOE ?
+          Why Choose `${collegeName}` ?
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {/* Experienced Faculty */}

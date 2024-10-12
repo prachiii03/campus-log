@@ -1,7 +1,7 @@
 import Breadcrumb from "@/app/(components)/college-landing-page/Common/Breadcrumb";
 import { Metadata } from "next";
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
-
+import { useCollege } from "@/context/college-name-provider/CollegeNameProvider";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 };
 
 const ContactPage = () => {
+  const {collegeName} = useCollege();
   return (
     <>
       <Breadcrumb
@@ -37,7 +38,7 @@ const ContactPage = () => {
               <strong>Phone:</strong> <br /> +1 (123) 456-7890
             </p>
             <p className="text-gray-600 dark:text-slate-300">
-              <strong>Email:</strong> <br /> sgmcoe@gmail.com
+              <strong>Email:</strong> <br /> `${collegeName}`@gmail.com
             </p>
 
             {/* Office Hours */}
@@ -59,7 +60,7 @@ const ContactPage = () => {
               <strong>Phone:</strong> <br /> +1 (123) 456-7891
             </p>
             <p className="text-gray-600 dark:text-slate-300">
-              <strong>Email:</strong> <br /> admissions@sgmcoe.edu
+              <strong>Email:</strong> <br /> admissions@`${collegeName}`.edu
             </p>
 
             {/* Campus Visits */}
@@ -76,10 +77,10 @@ const ContactPage = () => {
         <div className="text-center mb-12">
           <h3 className="text-2xl font-semibold text-gray-800 dark:text-white mb-4">Follow Us on Social Media</h3>
           <div className="flex justify-center space-x-6">
-            <a href="https://www.facebook.com/SGMCOE/" className="text-gray-500 hover:text-blue-600">
+            <a href={`https://www.facebook.com/${collegeName}/`} className="text-gray-500 hover:text-blue-600">
               <FaFacebookF size={24} />
             </a>
-            <a href="https://x.com/sgmcoe_mahagaon" className="text-gray-500 hover:text-blue-400">
+            <a href={`https://x.com/${collegeName}_mahagaon"`} className="text-gray-500 hover:text-blue-400">
               <FaTwitter size={24} />
             </a>
             <a href="https://www.instagram.com/sgmcoe_mahagaon/" className="text-gray-500 hover:text-pink-500">
