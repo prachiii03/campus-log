@@ -429,6 +429,7 @@ import "./Dashboard.css";
 import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
+import { useCollege } from "@/context/college-name-provider/CollegeNameProvider";
 
 Chart.register(
   ArcElement,
@@ -512,6 +513,8 @@ const barChartOptions: ChartOptions<"bar"> = {
 };
 
 const Dashboard: React.FC = () => {
+  const { collegeName } = useCollege();
+
   const [loading, setLoading] = useState(true);
   const [pieChartData1, setPieChartData1] =
     useState<ChartData<"pie">>(initialPieChartData1);
@@ -620,11 +623,13 @@ const Dashboard: React.FC = () => {
   };
 
   useEffect(() => {
+    console.log(collegeName)
     const timer = setTimeout(() => setLoading(false), 2000);
     return () => clearTimeout(timer);
   }, []);
-
+  
   useEffect(() => {
+    console.log(collegeName)
     getCurrentSemesterAttendance();
     getYearwiseAttendance()
   }, []);

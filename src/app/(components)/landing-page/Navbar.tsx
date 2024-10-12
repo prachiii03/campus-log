@@ -157,6 +157,7 @@ export default function Navbar() {
       </section>
 
       <section className="hidden lg:flex items-center gap-8">
+        <Link href={"/login"} >
         <ShinyButton
           className={`h-fit transition-all px-4 py-2 rounded-md border-2 ${
             isDarkMode ? "border-white text-white" : "border-black text-black"
@@ -164,6 +165,7 @@ export default function Navbar() {
         >
           Login/Register
         </ShinyButton>
+          </Link>
 
         <div
           onClick={() => setIsDarkMode(!isDarkMode)}
