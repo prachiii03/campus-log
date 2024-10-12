@@ -10,6 +10,7 @@ import {
 import Image from "next/image";
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
+import { signOut } from 'next-auth/react';  // Import signOut from NextAuth
 
 const Navbar = () => {
     
@@ -35,6 +36,23 @@ const Navbar = () => {
             setIsProfileOpen(false);
         }
     };
+
+    const handleSignout = async () => {
+        const userSession = JSON.parse(sessionStorage.getItem("userSession") || "{}");
+    
+        if (userSession) {
+            sessionStorage.clear();
+            await signOut({ callbackUrl: '/login' });
+        }
+
+        const facultySession = JSON.parse(sessionStorage.getItem("facultySession") || "{}");
+
+        if(facultySession) {
+            sessionStorage.clear();
+        }
+
+    };
+    
 
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
@@ -81,7 +99,10 @@ const Navbar = () => {
                                 <p className="p-4">Username</p>
                                 <p className="text-sm p-4">Department</p>
                             </div>
-                            <button className="flex items-center w-full px-8 p-4 text-md hover:bg-gray-100 dark:hover:bg-gray-200">
+                            <button 
+                                className="flex items-center w-full px-8 p-4 text-md hover:bg-gray-100 dark:hover:bg-gray-200"
+                                onClick={handleSignout} // Call signOut on button click
+                            >
                                 <IconLogout className="h-5 w-5 mr-2" />
                                 Logout
                             </button>
