@@ -110,7 +110,7 @@ const FacultyProfile: React.FC = () => {
               onClick={handleTakePhoto}
               className="bg-gradient-to-r from-green-400 to-green-600 text-white px-6 py-2 rounded-full shadow-lg hover:scale-105 transition-transform flex items-center justify-center"
             >
-              Take Photo
+              Take Photoa
             </button>
           </div>
         </div>
