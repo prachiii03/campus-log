@@ -31,6 +31,7 @@ export default function RootLayout({
           {children}
           {/* <Footer /> */}
           <ScrollToTop />
+          <SidebarDemo/>
         </Providers>
       </body>
     </html>
@@ -40,4 +41,6 @@ export default function RootLayout({
 import { Providers } from "./providers";
 import Header from "../(components)/college-landing-page/Header";import Footer from "../(components)/landing-page/Footer";
 import ScrollToTop from "../(components)/college-landing-page/ScrollToTop";
+import { Sidebar } from "@/components/ui/sidebar";
+import { SidebarDemo } from "../(components)/utils/sidebar/Sidebar";
 

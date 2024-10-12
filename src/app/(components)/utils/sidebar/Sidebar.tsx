@@ -17,6 +17,7 @@ import { useState, useEffect } from "react";
 import Dashboard from "../../../[collegeName]/dashboard/Dashboard";
 import Student_Details from "../../../[collegeName]/student-details/StudentDetails";
 
+import { useCollege } from "@/context/college-name-provider/CollegeNameProvider";
 // Extend the Next.js AppRouterInstance type
 interface CustomRouter {
   asPath: string; // Add asPath to your custom router type
@@ -24,18 +25,20 @@ interface CustomRouter {
 }
 
 export function SidebarDemo() {
+
+  const {collegeName} = useCollege();
   const router = useRouter() as unknown as CustomRouter; // Type assertion
   const { asPath } = router; // Now you can access asPath
 
   const links: any[] = [
     {
       label: "Dashboard",
-      href: "/sgmcoe/dashboard",
+      href: `/${collegeName}/dashboard`,
       icon: <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />,
     },
     {
       label: "Attendance",
-      href: "/sgmcoe/attendance",
+      href: `/${collegeName}/attendance`,
       icon: <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />,
     },
     {
@@ -45,7 +48,7 @@ export function SidebarDemo() {
     },
     {
       label: "Student Details",
-      href: "/sgmcoe/student-details",
+      href: `/${collegeName}/student-details`,
       icon: <IconFileCheck className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />,
     },
     {
@@ -55,7 +58,7 @@ export function SidebarDemo() {
     },
     {
       label: "Faculty Index",
-      href: "/sgmcoe/faculty-index",
+      href: `/${collegeName}/faculty-index`,
       icon: <IconUsers className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />,
     },
     {
@@ -127,8 +130,8 @@ export function SidebarDemo() {
 
       {/* Main Content */}
       <div className="ml-auto">
-        {asPath === "/sgmcoe/dashboard" && <Dashboard />}
-        {asPath === "/sgmcoe/student-details" && <Student_Details id={""} />}
+        {asPath === `/${collegeName}/dashboard` && <Dashboard />}
+        {asPath === `/${collegeName}/student-details` && <Student_Details id={""} />}
       </div>
     </div>
   );

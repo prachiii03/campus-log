@@ -4,12 +4,14 @@ import StudentInfo from "./StudentInformation";
 import CurrentYearSubjects from "./CurrentYearSubjects";
 import SubjectWiseAttendance from "./SubjectWiseAttendance";
 import YearWiseAttendance from "./YearWiseAttendance";
+import { useCollege } from "@/context/college-name-provider/CollegeNameProvider";
 
 const DashboardPage = () => {
   const [selectedSubject, setSelectedSubject] = useState<{ subjectId: string; subjectName: string } | null>(null);
-
+  const {collegeName}  = useCollege();
   return (
     <div className="grid grid-rows-3 h-screen p-8 bg-blue-50 gap-2 mt-12 ml-12">
+
       {/* 1/3rd height for this section */}
       <div className="grid grid-cols-2 row-span-1 gap-2">
         {/* Top-left: Student Info */}
@@ -35,7 +37,8 @@ const DashboardPage = () => {
           {selectedSubject ? (
             <SubjectWiseAttendance subjectId={selectedSubject.subjectId} subjectName={selectedSubject.subjectName} />
           ) : (
-            <p className="text-gray-600 text-center">Please select a subject to view attendance.</p>
+            <p className="text-gray-600 text-center">Please select a subject to view attendance. {collegeName } </p>
+            
           )}
         </div>
       </div>

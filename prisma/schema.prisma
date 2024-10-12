@@ -37,6 +37,7 @@ model college_info {
   college_address      Json
   teaching_staff_count Int?
   non_teaching_staff   Int?
+  college_code         String
   department           department[]
 
   @@schema("college")

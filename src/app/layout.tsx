@@ -144,6 +144,7 @@ import ClientRootLayout from "../context/current-path-service/CurrentPathService
 import { Metadata } from "next";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/options";
+import { CollegeProvider } from "@/context/college-name-provider/CollegeNameProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -163,7 +164,9 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <CollegeProvider>
         <ClientRootLayout session={session}>{children}</ClientRootLayout>
+        </CollegeProvider>
       </body>
     </html>
   );
