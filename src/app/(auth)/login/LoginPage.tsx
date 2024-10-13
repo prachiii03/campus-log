@@ -1028,6 +1028,8 @@
 
 
 //==============================================================================
+'use client';
+
 import campuslogo from '../../../../public/images/campusLog-logo.png';
 import college from '../../../../public/images/collegeImage.png';
 import Image from 'next/image';
@@ -1043,10 +1045,16 @@ export default function SignInPage() {
     const { collegeName } = useCollege();
     const router = useRouter();
     const [role, setRole] = useState<'student' | 'faculty'>('student'); // Default to 'student'
+    const [isLoggingIn, setIsLoggingIn] = useState(false); // Track login state
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
+
+        // Show toast for login progress
+        const toastId = toast.loading("Logging into your account...");
+
+        setIsLoggingIn(true); // Indicate login is in progress
 
         if (role === 'student') {
             // Student login logic
@@ -1056,15 +1064,20 @@ export default function SignInPage() {
                 redirect: false
             });
 
+            setIsLoggingIn(false); // Reset login state
+
             if (response?.status == 401) {
+                toast.dismiss(toastId)
                 toast.error("Username or Password is wrong...");
             } else if (!response?.error) {
+                toast.dismiss(toastId)
                 toast.success("Login Successful!");
                 sessionStorage.clear(); // Clear any existing session
                 sessionStorage.setItem('userSession', JSON.stringify(response)); // Store student session
                 router.push(`/${collegeName}/dashboard`);
                 router.refresh();
             } else {
+                toast.dismiss(toastId)
                 toast.error(response.error || "Something went wrong");
             }
         } else if (role === 'faculty') {
@@ -1074,9 +1087,11 @@ export default function SignInPage() {
     };
 
     const facultyLogin = async (formData: any) => {
+        const toastId = toast.loading("Logging into your account..."); // Show login progress
         try {
             const id = formData.get("prn") as string;
             const password = formData.get("password") as string;
+
 
             const response = await fetch(`/api/auth/faculty/login`, {
                 method: "POST",
@@ -1089,15 +1104,18 @@ export default function SignInPage() {
             const result = await response.json();
 
             if (result.message === "Logged in successfully") {
+                toast.dismiss(toastId)
                 toast.success("Faculty Login Successful!");
                 sessionStorage.clear(); // Clear any existing session
                 sessionStorage.setItem('facultySession', JSON.stringify(result.newFaculty)); // Store faculty session
                 router.push(`/${collegeName}/faculty/faculty-details`);
                 router.refresh();
             } else {
+                toast.dismiss(toastId)
                 toast.error("Faculty Login Failed. Please check your credentials.");
             }
         } catch (error) {
+            toast.dismiss(toastId)
             console.error("Login failed:", error);
             toast.error("An error occurred during login.");
         }
@@ -1114,6 +1132,9 @@ export default function SignInPage() {
         setTimeout(() => {
             setLoading(false);
         }, 1500);
+
+        // Show a toast message to prompt login on the first render
+        toast.info("Please login to access other pages.");
     }, []);
 
     return (
@@ -1206,8 +1227,9 @@ export default function SignInPage() {
                                         <button
                                             type="submit"
                                             className="btn btn-primary w-full py-2 text-sm font-bold bg-blue-500 text-white rounded"
+                                            disabled={isLoggingIn} // Disable button when logging in
                                         >
-                                            Login
+                                            {isLoggingIn ? "Logging in..." : "Login"}
                                         </button>
                                         <div className="text-center mt-4">
                                             <a onClick={() => togglePanel('signup')} className="text-blue-500 cursor-pointer text-sm">Dont have an account? Sign up</a>

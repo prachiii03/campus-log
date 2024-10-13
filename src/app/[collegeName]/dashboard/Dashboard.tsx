@@ -430,6 +430,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 import { useCollege } from "@/context/college-name-provider/CollegeNameProvider";
+import studentProtectRoute from "@/app/(components)/utils/protect-route/StudentProtectRoute";
 
 Chart.register(
   ArcElement,
@@ -548,7 +549,7 @@ const Dashboard: React.FC = () => {
       console.log("Attendance Data: ", data);
 
       // Success toast when data is fetched successfully
-      toast.success("Attendance data fetched successfully!");
+      //toast.success("Attendance data fetched successfully!");
 
       // Update pie chart data with new attendance values
       setPieChartData1({
@@ -564,7 +565,7 @@ const Dashboard: React.FC = () => {
     } catch (error) {
       console.error("Failed to fetch attendance:", error);
       // Error toast when the fetch fails
-      toast.error("Failed to fetch attendance data!");
+      toast.error("Failed to fetch attendance data.. \n Please refresh the page...");
     }
   };
 
@@ -584,7 +585,7 @@ const Dashboard: React.FC = () => {
       console.log("Yearwise Attendance: ", data);
 
       // Success toast when data is fetched successfully
-      toast.success("Yearwise attendance fetched successfully!");
+      // toast.success("Yearwise attendance fetched successfully!");
 
       setbarCharData({
         labels: ["First Year", "Second Year", "Third Year", "Final Year"],
@@ -618,7 +619,7 @@ const Dashboard: React.FC = () => {
     } catch (error) {
       console.error("Failed to fetch yearwise attendance:", error);
       // Error toast for failure
-      toast.error("Failed to fetch yearwise attendance!");
+      toast.error("Failed to fetch yearwise attendance  \n Please refresh the page...");
     }
   };
 
@@ -656,4 +657,4 @@ const Dashboard: React.FC = () => {
   );
 };
 
-export default Dashboard;
+export default studentProtectRoute(Dashboard);

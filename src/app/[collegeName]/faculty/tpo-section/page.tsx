@@ -3,7 +3,8 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import SkeletonFacultyTPOSection from './SkeletonFacultyTPOSection';
 import { useCollege } from '@/context/college-name-provider/CollegeNameProvider';
-export default function FacultyTPOSection() {
+import facultyProtectRoute from '@/app/(components)/utils/protect-route/FacultyProtectRoute';
+const FacultyTPOSection = ()=> {
     const {collegeName} = useCollege();
     const [isLoading, setIsLoading] = useState(true);
 
@@ -42,3 +43,6 @@ export default function FacultyTPOSection() {
         </div>
     );
 }
+
+
+export default facultyProtectRoute(FacultyTPOSection);

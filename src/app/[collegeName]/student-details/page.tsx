@@ -2,8 +2,9 @@ import { getServerSession } from 'next-auth';
 import StudentDetails from './StudentDetails';
 import { authOptions } from '@/app/api/auth/[...nextauth]/options';
 import Student_Details from './StudentDetails';
+import studentProtectRoute from '@/app/(components)/utils/protect-route/StudentProtectRoute';
 
-export default async function Home() {
+const Home = async()=> {
     const session = await getServerSession(authOptions)
     console.log({session})
     return (
@@ -13,3 +14,5 @@ export default async function Home() {
         </>
     );
 }
+
+export default studentProtectRoute(Home);

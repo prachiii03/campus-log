@@ -1,6 +1,7 @@
 "use client";
 import { FormEvent, useEffect, useState } from 'react';
 import AttendanceSkeleton from './attendanceSkeleton';
+import facultyProtectRoute from '@/app/(components)/utils/protect-route/FacultyProtectRoute';
 
 interface Faculty {
   faculty_id: string;
@@ -43,7 +44,7 @@ interface SemesterSubjects {
   subjects: Subject[];
 }
 
-export default function AttendancePage() {
+const AttendancePage:React.FC = ()=> {
   const [faculty, setFaculty] = useState<Faculty>({
     faculty_id: '',
     first_name: '',
@@ -302,3 +303,6 @@ export default function AttendancePage() {
     </div>
   );
 }
+
+
+export default facultyProtectRoute(AttendancePage)

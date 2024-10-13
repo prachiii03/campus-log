@@ -1,5 +1,6 @@
 "use client";
 
+import facultyProtectRoute from "@/app/(components)/utils/protect-route/FacultyProtectRoute";
 import React, { useEffect, useState } from "react";
 import { FaUserGraduate } from "react-icons/fa";
 
@@ -23,6 +24,7 @@ type Faculty = {
 };
 
 const FacultyProfile: React.FC = () => {
+
   const [faculty, setFaculty] = useState<Faculty>({
     faculty_id: "",
     first_name: "",
@@ -67,12 +69,33 @@ const FacultyProfile: React.FC = () => {
   const handleTakePhoto = async () => {
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: true,
-        });
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        
         const video = document.createElement("video");
         video.srcObject = stream;
         video.play();
+  
+        // Create a video container to manage it more effectively
+        const videoContainer = document.createElement("div");
+        videoContainer.id = "videoContainer";
+        videoContainer.appendChild(video);
+        document.body.appendChild(videoContainer); // Add to the DOM
+  
+        // Handle stop stream on component unmount or when video stops
+        const stopStream = () => {
+          stream.getTracks().forEach(track => track.stop()); // Stop camera stream
+          if (videoContainer && videoContainer.parentNode) {
+            videoContainer.parentNode.removeChild(videoContainer); // Safely remove the video
+          }
+        };
+  
+        video.addEventListener('ended', stopStream);
+  
+        // You could add a manual stop button if needed
+        setTimeout(() => {
+          stopStream();
+        }, 5000); // Auto-stop the video after 5 seconds (example)
+  
       } catch (error) {
         console.error("Error accessing camera:", error);
       }
@@ -80,8 +103,10 @@ const FacultyProfile: React.FC = () => {
       alert("Camera not supported on this device.");
     }
   };
+  
 
   const handleUploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+
     if (e.target.files && e.target.files[0]) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -228,4 +253,4 @@ const FacultyProfile: React.FC = () => {
   );
 };
 
-export default FacultyProfile;
+export default facultyProtectRoute(FacultyProfile);
