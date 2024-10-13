@@ -47,7 +47,9 @@ export const authOptions: NextAuthOptions = {
                         email: user.email,
                         department: user.department.department_name, // Use department_name instead of department_id
                         current_semester: user.current_studing_semester,
-                        profession: "student"
+                        profession: "student",
+                        activeBacklogs: user.active_backlogs,
+                        currentGPA: user.current_gpa
                     };
                 } catch (error) {
                     console.log(error);
@@ -68,6 +70,8 @@ export const authOptions: NextAuthOptions = {
                 token.department = user.department; // Store department_name in token
                 token.current_semester = user.current_semester;
                 token.profession = user.profession
+                token.activeBacklogs = user.activeBacklogs,
+                    token.currentGPA = user.currentGPA
             }
             return token;
         },
@@ -82,6 +86,8 @@ export const authOptions: NextAuthOptions = {
                 session.user.email = token.email;
                 session.user.current_semester = token.current_semester;
                 session.user.profession = token.profession
+                session.user.currentGPA = token.currentGPA;
+                session.user.activeBacklogs = token.activeBacklogs
             }
             return session;
         }

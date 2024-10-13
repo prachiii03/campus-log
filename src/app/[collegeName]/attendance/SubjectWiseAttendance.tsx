@@ -60,12 +60,14 @@ const SubjectWiseAttendance: React.FC<SubjectWiseAttendanceProps> = ({
   const [attendanceData, setAttendanceData] = useState<AttendanceRecord[]>([]);
   const [loading, setLoading] = useState(true); // Loading state
 
+  const userSession = JSON.parse(sessionStorage.getItem("userSession") || "{}");
+
   useEffect(() => {
     const fetchAttendanceData = async () => {
       setLoading(true); // Start loading
       try {
         const response = await fetch(
-          `/api/student/1d353384-baf8-4efa-a2aa-07cc5fea4b67/attendence`,
+          `/api/student/${userSession.id}/attendence`,
           {
             method: "POST",
             headers: {

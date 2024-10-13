@@ -21,8 +21,10 @@ const TopRightComponent: React.FC = () => {
 
   useEffect(() => {
     const fetchAttendance = async () => {
+      const userSession = JSON.parse(sessionStorage.getItem("userSession") || "{}");
+
       try {
-        const response = await fetch("/api/student/1d353384-baf8-4efa-a2aa-07cc5fea4b67/get-attendence-yearWise");
+        const response = await fetch(`/api/student/${userSession.id}/get-attendence-yearWise`);
         const data = await response.json();
         if (response.ok) {
           setAttendance(data.attendanceByYear);

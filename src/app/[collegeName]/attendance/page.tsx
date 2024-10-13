@@ -8,9 +8,9 @@ import { useCollege } from "@/context/college-name-provider/CollegeNameProvider"
 
 const DashboardPage = () => {
   const [selectedSubject, setSelectedSubject] = useState<{ subjectId: string; subjectName: string } | null>(null);
-  const {collegeName}  = useCollege();
+  const { collegeName } = useCollege();
   return (
-    <div className="grid grid-rows-3 h-screen p-8 bg-blue-50 gap-2 mt-12 ml-12">
+    <div className="grid grid-rows-2 h-fit p-8 bg-blue-50 gap-2 mt-[15vh] ml-11"> {/* Added 15% space from top */}
 
       {/* 1/3rd height for this section */}
       <div className="grid grid-cols-2 row-span-1 gap-2">
@@ -37,8 +37,7 @@ const DashboardPage = () => {
           {selectedSubject ? (
             <SubjectWiseAttendance subjectId={selectedSubject.subjectId} subjectName={selectedSubject.subjectName} />
           ) : (
-            <p className="text-gray-600 text-center">Please select a subject to view attendance. {collegeName } </p>
-            
+            <p className="text-gray-600 text-center">Please select a subject to view attendance. {collegeName}</p>
           )}
         </div>
       </div>
