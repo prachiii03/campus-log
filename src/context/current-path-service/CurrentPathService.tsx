@@ -5,49 +5,60 @@ import Navbar from "@/app/(components)/landing-page/Navbar";
 import DashboardNavbar from '../../app/(components)/utils/navbar/Navbar';
 import { SidebarDemo } from "../../app/(components)/utils/sidebar/Sidebar";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Header from "@/app/(components)/college-landing-page/Header";
 import { useCollege } from "../college-name-provider/CollegeNameProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function ClientRootLayout({ session, children }: { session: any, children: React.ReactNode }) {
   const pathname = usePathname();
-  const {collegeName} = useCollege();
+  const { collegeName } = useCollege();
 
+  const [isFaculty, setIsFaculty] = useState(false);
   // Determine whether to show the Navbar and Sidebar
   const showNavbarAndSidebar = pathname !== "/";
+  const showCollegeNavbar = pathname === `/${collegeName}`;
 
-  const showCollegeNavbar = pathname ===`/${collegeName}`
   useEffect(() => {
     if (session) {
       // Storing the session data in sessionStorage
       sessionStorage.setItem("userSession", JSON.stringify(session.user));
       console.log("Session stored in sessionStorage", session.user);
     }
+
+    const facultySession = sessionStorage.getItem("facultySession");
+    if (facultySession) {
+      setIsFaculty(true);
+    }
   }, [session]);
+
   return (
-
     <>
-    {showNavbarAndSidebar && 
-      <>
-      
-      {showCollegeNavbar? <Header/> :  <DashboardNavbar/>}
-        
-         <SidebarDemo/>
-         {children}
-       </>
-    }
-    {!showNavbarAndSidebar && 
-      <>
-      <Navbar/>
-      {children}
-      </>
-    }
-
-{/* 
-      {showNavbarAndSidebar && <Navbar />}
-      {showNavbarAndSidebar && <SidebarDemo />}
-      {children} */}
+      {isFaculty ? (
+        <>
+          {/* If the user is faculty, render Sidebar and children */}
+          <SidebarDemo />
+          {children}
+        </>
+      ) : (
+        <>
+          {/* If not faculty, render based on other conditions */}
+          {showNavbarAndSidebar ? (
+            <>
+              {/* Render Header or DashboardNavbar based on the route */}
+              {showCollegeNavbar ? <Header /> : <DashboardNavbar />}
+              <SidebarDemo />
+              {children}
+            </>
+          ) : (
+            <>
+              {/* Render only the main landing Navbar */}
+              <Navbar />
+              {children}
+            </>
+          )}
+        </>
+      )}
     </>
   );
 }

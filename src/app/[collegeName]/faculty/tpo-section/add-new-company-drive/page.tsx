@@ -1,8 +1,9 @@
 'use client'
 import { useEffect, useState } from 'react';
 import RecruitmentFormSkeleton from './Form-Skeleton';
+import facultyProtectRoute from '@/app/(components)/utils/protect-route/FacultyProtectRoute';
 
-export default function RecruitmentForm() {
+const RecruitmentForm = ()=> {
     const [loading, setLoading] = useState(true);
     const [companyName, setCompanyName] = useState('');
     const [jobPosition, setJobPosition] = useState('');
@@ -236,3 +237,4 @@ export default function RecruitmentForm() {
     );
 }
 
+export default facultyProtectRoute(RecruitmentForm);

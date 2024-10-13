@@ -1,6 +1,7 @@
 "use client";
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import studentProtectRoute from '@/app/(components)/utils/protect-route/StudentProtectRoute';
 
 interface EvaluationParameter {
   parameter: string;
@@ -88,4 +89,4 @@ const FacultyEvaluation: React.FC = () => {
   );
 };
 
-export default FacultyEvaluation;
+export default studentProtectRoute(FacultyEvaluation);
