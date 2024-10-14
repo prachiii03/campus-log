@@ -60,7 +60,7 @@ const Attendance = ({ onSelectSubject }: AttendanceProps) => {
           <tr>
             <th className="border-t border-blue-200 px-4 py-3">Subject Code</th>
             <th className="border-t border-blue-200 px-4 py-3">Subject Name</th>
-            <th className="border-t border-blue-200 px-4 py-3">Theory/Practical</th>
+            <th className="border-t border-blue-200 px-4 py-3">Th/Pr</th>
             <th className="border-t border-blue-200 px-4 py-3">Action</th>
           </tr>
         </thead>
