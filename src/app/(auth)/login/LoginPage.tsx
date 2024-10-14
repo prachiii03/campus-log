@@ -1052,11 +1052,11 @@ export default function SignInPage() {
         const formData = new FormData(e.currentTarget);
 
         // Show toast for login progress
-        const toastId = toast.loading("Logging into your account...");
-
+        
         setIsLoggingIn(true); // Indicate login is in progress
-
+        
         if (role === 'student') {
+            const toastId = toast.loading("Logging into your account...");
             // Student login logic
             const response = await signIn('credentials', {
                 prn: formData.get("prn") as string,
@@ -1087,7 +1087,7 @@ export default function SignInPage() {
     };
 
     const facultyLogin = async (formData: any) => {
-        const toastId = toast.loading("Logging into your account..."); // Show login progress
+         const toastId = toast.loading("Logging into your account..."); // Show login progress
         try {
             const id = formData.get("prn") as string;
             const password = formData.get("password") as string;

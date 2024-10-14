@@ -640,17 +640,17 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboardContainer">
       <ToastContainer /> {/* Toast container to display messages */}
-      <div className="pie-charts-container">
-        <div className="pie-chart-wrapper">
+      <div className="pieChartsContainer">
+        <div className="pieChartWrapper">
           <PieChart data={pieChartData1} options={pieChartOptions} />
         </div>
-        <div className="pie-chart-wrapper">
+        <div className="pieChartWrapper">
           <PieChart data={pieChartData2} options={pieChartOptions} />
         </div>
       </div>
-      <div className="bar-chart-container">
+      <div className="barChartContainer">
         <BarChart data={barCharData} options={barChartOptions} />
       </div>
     </div>

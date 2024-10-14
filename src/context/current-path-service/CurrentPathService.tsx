@@ -40,7 +40,7 @@ export default function ClientRootLayout({ session, children }: { session: any, 
       {isFaculty ? (
         <>
           {/* If the user is faculty, render Sidebar and children */}
-        
+          <SidebarDemo />
           {children}
         </>
       ) : (
@@ -49,7 +49,7 @@ export default function ClientRootLayout({ session, children }: { session: any, 
           {showNavbarAndSidebar ? (
             <>
               {/* Render Header or DashboardNavbar based on the route */}
-         
+              <SidebarDemo />
               {children}
             </>
           ) : (

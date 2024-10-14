@@ -1,0 +1,41 @@
+.dashboardContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 10px;
+    margin: 40px auto;
+    width: 100%;
+    max-width: 1200px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .pieChartsContainer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .pieChartWrapper {
+    width: 60%;
+    height: 260px;
+  }
+  
+  .barChartContainer {
+    width: 80%;
+    height: 330px;
+  }
+  
+  /* For larger screens (width above 768px) */
+  @media (min-width: 768px) {
+    .pieChartWrapper {
+      width: 48%; /* 50% minus some margin for spacing */
+    }
+  
+    .barChartContainer {
+      width: 100%;
+    }
+  }
+  

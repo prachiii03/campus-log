@@ -10,7 +10,7 @@ const DashboardPage = () => {
   const [selectedSubject, setSelectedSubject] = useState<{ subjectId: string; subjectName: string } | null>(null);
   const { collegeName } = useCollege();
   return (
-    <div className="grid grid-rows-2 h-fit p-8 bg-blue-50 gap-2 mt-[15vh] ml-11"> {/* Added 15% space from top */}
+    <div className="grid grid-rows-2 h-fit p-6 bg-blue-50 gap-2 mt-[15vh] px-4"> {/* Added 15% space from top */}
 
       {/* 1/3rd height for this section */}
       <div className="grid grid-cols-2 row-span-1 gap-2">
