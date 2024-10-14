@@ -42,9 +42,23 @@ export async function registerStudent(data: any) {
                 adhar_card_no: data.adharCardNo,
                 material_status: data.materialStatus,
                 guardian_contact_no: data.guardianContactNo,
-                password: hashedPassword
+                password: hashedPassword,
+                current_gpa: data.currentGpa || 0,  // Default GPA if not provided
+                active_backlogs: data.activeBacklogs || 0,  // Default active backlogs
+
+                // Connecting existing `prn_list`
+                prn_list: {
+                    connect: { prn: data.prn },
+                },
+
+                // Connecting existing `department`
+                department: {
+                    connect: { department_id: data.departmentId },
+                },
             },
         });
+
+
 
         if (!newStudent) {
             return ({ message: "Unable to register", success: false, staus: 500 })
