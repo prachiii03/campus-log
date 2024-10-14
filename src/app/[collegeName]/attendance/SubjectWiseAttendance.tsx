@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-
+import { FaCheck, FaTimes } from 'react-icons/fa';
 // Define the structure of an attendance record
 type AttendanceRecord = {
   id: string;
@@ -133,11 +133,22 @@ const SubjectWiseAttendance: React.FC<SubjectWiseAttendanceProps> = ({
                     {new Date(record.date).toLocaleDateString()}
                   </td>
                   <td className="border-t border-blue-200 px-4 py-3">
-                    {new Date(record.lecture_start_time).toLocaleTimeString()} to{" "}
-                    {new Date(record.lecture_end_time).toLocaleTimeString()}
-                  </td>
+  {new Date(record.lecture_start_time).toLocaleTimeString("en-GB", {
+    timeZone: "UTC",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  })}{" "}
+  to{" "}
+  {new Date(record.lecture_end_time).toLocaleTimeString("en-GB", {
+    timeZone: "UTC",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  })}
+</td>
                   <td className="border-t border-blue-200 px-4 py-3">
-                    {record.status ? "Present" : "Absent"}
+                    {record.status ? <FaCheck className="text-green-500 text-2xl" /> :  <FaTimes className="text-red-500 text-2xl" />}
                   </td>
                 </tr>
               ))

@@ -38,6 +38,7 @@ export async function POST(req: NextRequest, { params }: { params: StudentIdPara
         },
     });
 
+    console.log(attendanceRecords)
     if (attendanceRecords.length === 0) {
         return NextResponse.json({ message: "No attendance records found" }, { status: 404 });
     }
