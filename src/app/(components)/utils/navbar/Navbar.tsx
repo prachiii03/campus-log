@@ -11,9 +11,12 @@ import Image from "next/image";
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { signOut } from 'next-auth/react';  // Import signOut from NextAuth
-
+import { useCollege } from '@/context/college-name-provider/CollegeNameProvider';
 const Navbar = () => {
-    
+    const {collegeName} = useCollege();
+    const userSession = JSON.parse(sessionStorage.getItem("userSession") || "{}");
+    const facultySession = JSON.parse(sessionStorage.getItem("facultySession") || "{}");
+
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const profileRef = useRef<HTMLDivElement>(null);
@@ -69,9 +72,18 @@ const Navbar = () => {
             </div>
             
             <ul className="hidden md:flex space-x-6">
-                <li><Link href="/dashboard">Home</Link></li>
-                <li><Link href="/about">About</Link></li>
-                <li><Link href="/contact">Contact</Link></li>
+                {facultySession.faculty_id &&<>
+                <li><Link href={`/${collegeName}/faculty/faculty-details`}>Faculty Details</Link></li>
+                <li><Link href={`/${collegeName}/faculty/attendance`}>Attendancce</Link></li>
+                <li><Link href={`/${collegeName}/faculty/tpo-section`}>TPO Section</Link></li>
+                </>}
+                {userSession.id &&<>
+                <li><Link href={`/${collegeName}/dashboard`}>Dashboard</Link></li>
+                <li><Link href={`/${collegeName}/attendance`}>Attendancce</Link></li>
+                <li><Link href={`/${collegeName}/student-details`}>Student Details</Link></li>
+                <li><Link href={`/${collegeName}/faculty-index`}>Faculty Index</Link></li>
+                <li><Link href={`/${collegeName}/tpo-section`}>TPO Section</Link></li>
+                </>}
             </ul>
 
             <div className="flex items-center space-x-4">

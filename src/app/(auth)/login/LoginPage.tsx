@@ -1074,7 +1074,7 @@ export default function SignInPage() {
                 toast.success("Login Successful!");
                 sessionStorage.clear(); // Clear any existing session
                 sessionStorage.setItem('userSession', JSON.stringify(response)); // Store student session
-                router.push(`/${collegeName}`);
+                router.push(`/${collegeName}/dashboard`);
                 router.refresh();
             } else {
                 toast.dismiss(toastId)
@@ -1109,7 +1109,7 @@ export default function SignInPage() {
                 toast.success("Faculty Login Successful!");
                 sessionStorage.clear(); // Clear any existing session
                 sessionStorage.setItem('facultySession', JSON.stringify(result.newFaculty)); // Store faculty session
-                router.push(`/${collegeName}`);
+                router.push(`/${collegeName}/faculty`);
                 router.refresh();
             } else {
                 toast.dismiss(toastId)
