@@ -2,7 +2,9 @@
 import { FormEvent, useEffect, useState } from 'react';
 import AttendanceSkeleton from './attendanceSkeleton';
 import facultyProtectRoute from '@/app/(components)/utils/protect-route/FacultyProtectRoute';
-
+import { toast, ToastContainer } from 'react-toastify';
+import { useRouter } from "next/navigation";
+import { useCollege } from '@/context/college-name-provider/CollegeNameProvider';
 interface Faculty {
   faculty_id: string;
   first_name: string;
@@ -45,6 +47,8 @@ interface SemesterSubjects {
 }
 
 const AttendancePage:React.FC = ()=> {
+  const {collegeName} = useCollege();
+  const router = useRouter();
   const [faculty, setFaculty] = useState<Faculty>({
     faculty_id: '',
     first_name: '',
@@ -142,6 +146,7 @@ const AttendancePage:React.FC = ()=> {
     console.log('Attendance data:', attendanceData);
 
     try {
+      const toastId = toast.loading("Updating attendance ...");
       const response = await fetch(`/api/faculty/${faculty.faculty_id}/update-attendance`, {
         method: 'POST',
         headers: {
@@ -150,13 +155,18 @@ const AttendancePage:React.FC = ()=> {
         body: JSON.stringify(attendanceData),
       });
 
-      const res = await response.json();
+      toast.dismiss(toastId)
       if (response.ok) {
+        toast.success("Attendance updated successfully.");
+        router.push(`${collegeName}/faculty`);
+            router.refresh();
         console.log('Attendance updated successfully');
       } else {
+        toast.error("Oops.. Failed to update attendance.. \n Try again!");
         console.error('Failed to update attendance');
       }
     } catch (error) {
+      toast.error("Internal Server Error.. Try again");
       console.error('Error updating attendance:', error);
     }
   };
@@ -306,3 +316,6 @@ const AttendancePage:React.FC = ()=> {
 
 
 export default facultyProtectRoute(AttendancePage)
+
+
+

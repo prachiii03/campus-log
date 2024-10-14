@@ -21,8 +21,10 @@ const Attendance = ({ onSelectSubject }: AttendanceProps) => {
   // Function to fetch the subjects data from the API
   const fetchSubjects = async () => {
     try {
+      const userSession = JSON.parse(sessionStorage.getItem("userSession") || "{}");
+
       const response = await fetch(
-        "/api/student/1d353384-baf8-4efa-a2aa-07cc5fea4b67/current-sem-subjects"
+        `/api/student/${userSession.id}/current-sem-subjects`
       );
       const data = await response.json();
 
