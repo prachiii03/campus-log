@@ -2,8 +2,13 @@
 import { useEffect, useState } from 'react';
 import RecruitmentFormSkeleton from './Form-Skeleton';
 import facultyProtectRoute from '@/app/(components)/utils/protect-route/FacultyProtectRoute';
-
+import { toast, ToastContainer } from 'react-toastify';
+import { useRouter } from "next/navigation";
+import { useCollege } from '@/context/college-name-provider/CollegeNameProvider';
 const RecruitmentForm = () => {
+  const router = useRouter();
+  const {collegeName} = useCollege();
+
   const [loading, setLoading] = useState(true);
   const [companyName, setCompanyName] = useState('');
   const [jobPosition, setJobPosition] = useState('');
@@ -37,15 +42,17 @@ const RecruitmentForm = () => {
       job_description: eligibilityCriteria,
       job_roll: jobPosition,
       minimu_gpa: parseFloat(minGPA),
-      offering_ctc: parseFloat(packageOffered) * 100000, // Convert Lakh to actual value
+      offering_ctc: parseFloat(packageOffered), // Convert Lakh to actual value
       kt_allow: ktAllowed,
       application_deadline: formattedDeadline,
       registration_link: registrationLink,
     };
 
     // Send the POST request
+    const toastId = toast.loading("Adding new recruitment drive...")
     try {
-      const response = await fetch('http://localhost:3000/api/faculty/tpo/add-new-company', {
+      console.log(requestBody)
+      const response = await fetch('/api/faculty/tpo/add-new-company', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -54,6 +61,8 @@ const RecruitmentForm = () => {
       });
 
       if (!response.ok) {
+        toast.dismiss(toastId);
+        toast.error(" OOPS..!  problem while adding new drive \n Please try again")
         throw new Error('Error adding company');
       }
 
@@ -69,7 +78,12 @@ const RecruitmentForm = () => {
       setMinGPA('');
       setKtAllowed(false);
       setRegistrationLink('');
+      toast.success("New drive added successfully...")
+      router.push(`/${collegeName}/faculty`);
+            router.refresh();
     } catch (error) {
+      toast.dismiss(toastId);
+      toast.error("Internal server error..")
       console.error('Failed to add company:', error);
     }
   };
@@ -87,7 +101,7 @@ const RecruitmentForm = () => {
           <input
             type="text"
             id="companyName"
-            className="w-full p-2 border rounded-md bg-slate-600"
+            className="w-full p-2 border rounded-md bg-slate-300"
             value={companyName}
             onChange={(e) => setCompanyName(e.target.value)}
             required
@@ -102,7 +116,7 @@ const RecruitmentForm = () => {
           <input
             type="text"
             id="jobPosition"
-            className="w-full p-2 border rounded-md bg-slate-600"
+            className="w-full p-2 border rounded-md bg-slate-300"
             value={jobPosition}
             onChange={(e) => setJobPosition(e.target.value)}
             required
@@ -116,7 +130,7 @@ const RecruitmentForm = () => {
           </label>
           <textarea
             id="eligibilityCriteria"
-            className="w-full p-2 border rounded-md bg-slate-600"
+            className="w-full p-2 border rounded-md bg-slate-300"
             value={eligibilityCriteria}
             onChange={(e) => setEligibilityCriteria(e.target.value)}
             rows={4}
@@ -132,7 +146,7 @@ const RecruitmentForm = () => {
           <input
             type="text"
             id="packageOffered"
-            className="w-full p-2 border rounded-md bg-slate-600"
+            className="w-full p-2 border rounded-md bg-slate-300"
             value={packageOffered}
             onChange={(e) => setPackageOffered(e.target.value)}
             required
@@ -147,7 +161,7 @@ const RecruitmentForm = () => {
           <input
             type="date"
             id="applicationDeadline"
-            className="w-full p-2 border rounded-md bg-slate-600"
+            className="w-full p-2 border rounded-md bg-slate-300"
             value={applicationDeadline}
             onChange={(e) => setApplicationDeadline(e.target.value)}
             required
@@ -162,7 +176,7 @@ const RecruitmentForm = () => {
           <input
             type="text"
             id="minGPA"
-            className="w-full p-2 border rounded-md bg-slate-600"
+            className="w-full p-2 border rounded-md bg-slate-300"
             value={minGPA}
             onChange={(e) => setMinGPA(e.target.value)}
             required
@@ -177,7 +191,7 @@ const RecruitmentForm = () => {
           <input
             type="text"
             id="registrationLink"
-            className="w-full p-2 border rounded-md bg-slate-600"
+            className="w-full p-2 border rounded-md bg-slate-300"
             value={registrationLink}
             onChange={(e) => setRegistrationLink(e.target.value)}
             required

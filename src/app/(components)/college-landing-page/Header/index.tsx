@@ -585,7 +585,11 @@ import ThemeToggler from "./ThemeToggler"; // Ensure the prop is properly passed
 import menuData from "./menuData";
 
 import { useCollege } from "@/context/college-name-provider/CollegeNameProvider";
+import ShinyButton from "@/components/ui/shiny-button";
 const Header = () => {
+  const userSession = JSON.parse(sessionStorage.getItem("userSession") || "{}");
+  const facultySession = JSON.parse(sessionStorage.getItem("facultySession") || "{}");
+const [isLoggedIn, setisLoggedIn] = useState(false)
   const {collegeName} = useCollege();
   // Navbar toggle
   const [navbarOpen, setNavbarOpen] = useState<boolean>(false);
@@ -604,6 +608,16 @@ const Header = () => {
   };
 
   useEffect(() => {
+    const userSession = JSON.parse(sessionStorage.getItem("userSession") || "{}");
+    const facultySession = JSON.parse(sessionStorage.getItem("facultySession") || "{}");
+  
+    // Check if any meaningful data exists in userSession or facultySession
+    if (userSession?.id || facultySession?.faculty_id) { // Replace `.id` with whatever field identifies your valid session
+      setisLoggedIn(true);
+    } else {
+      setisLoggedIn(false);
+    }
+  
     window.addEventListener("scroll", handleStickyNavbar);
     return () => {
       window.removeEventListener("scroll", handleStickyNavbar); // Clean up the event listener
@@ -752,18 +766,24 @@ const Header = () => {
               </nav>
             </div>
             <div className="flex items-center justify-end pr-16 lg:pr-0">
-              <Link
-                href= {`/${collegeName}/signin`}
+              {/* <Link
+                href= {"/login"}
                 className="hidden px-3 py-3 text-base font-medium text-dark hover:opacity-70 dark:text-white md:block"
+                
               >
-                Sign In
-              </Link>
-              <Link
-                href= {`/${collegeName}/signup`}
-                className="ease-in-up shadow-btn hover:shadow-btn-hover hidden rounded-sm bg-primary px-8 py-3 text-base font-medium text-black transition duration-300 hover:bg-opacity-90 md:block md:px-9 lg:px-6 xl:px-9"
-              >
-                Sign Up
-              </Link>
+                Login
+              </Link> */}
+              {!isLoggedIn && (
+    <Link href="/login">
+        <ShinyButton
+            className={`h-fit transition-all px-4 py-2 rounded-md border-2 ${
+                isDarkMode ? "border-white text-white" : "border-black text-black"
+            } hover:opacity-90`}
+        >
+            Login
+        </ShinyButton>
+    </Link>
+)}
 
               {/* Theme toggler */}
               <div className="pl-4 md:pl-6">

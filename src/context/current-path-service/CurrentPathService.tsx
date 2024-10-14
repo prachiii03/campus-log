@@ -11,6 +11,7 @@ import { useCollege } from "../college-name-provider/CollegeNameProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export default function ClientRootLayout({ session, children }: { session: any, children: React.ReactNode }) {
+
   const pathname = usePathname();
   const { collegeName } = useCollege();
 
@@ -26,18 +27,20 @@ export default function ClientRootLayout({ session, children }: { session: any, 
       console.log("Session stored in sessionStorage", session.user);
     }
 
-    const facultySession = sessionStorage.getItem("facultySession");
-    if (facultySession) {
+    const facultySession = JSON.parse(sessionStorage.getItem("facultySession") || "{}");
+    if (facultySession.faculty_id) {
       setIsFaculty(true);
     }
-  }, [session]);
+  }, []);
 
   return (
     <>
+    {showCollegeNavbar? <Header/> : <DashboardNavbar/>}
+        
       {isFaculty ? (
         <>
           {/* If the user is faculty, render Sidebar and children */}
-          <SidebarDemo />
+        
           {children}
         </>
       ) : (
@@ -46,8 +49,7 @@ export default function ClientRootLayout({ session, children }: { session: any, 
           {showNavbarAndSidebar ? (
             <>
               {/* Render Header or DashboardNavbar based on the route */}
-              {showCollegeNavbar ? <Header /> : <DashboardNavbar />}
-              <SidebarDemo />
+         
               {children}
             </>
           ) : (

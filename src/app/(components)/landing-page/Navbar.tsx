@@ -12,6 +12,7 @@ import ShinyButton from "../../../components/ui/shiny-button";
 import LandingPageSkeleton from "./LandingPageSkeleton";
 import logo from "../../../../public/assets/student-image.png";
 import Link from "next/link";
+import { useCollege } from "@/context/college-name-provider/CollegeNameProvider";
 import edutrackPro from '../../../../public/images/logo.png'
 
 type NavItem = {
@@ -45,6 +46,7 @@ const navItems: NavItem[] = [
 ];
 
 export default function Navbar() {
+  const {collegeName} = useCollege();
   const [animationParent] = useAutoAnimate();
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -157,13 +159,13 @@ export default function Navbar() {
       </section>
 
       <section className="hidden lg:flex items-center gap-8">
-        <Link href={"/login"} >
+        <Link href={`/${collegeName? collegeName : "sgmcoe"}`} >
         <ShinyButton
           className={`h-fit transition-all px-4 py-2 rounded-md border-2 ${
             isDarkMode ? "border-white text-white" : "border-black text-black"
           } hover:opacity-90`}
         >
-          Login/Register
+          Get Started
         </ShinyButton>
           </Link>
 

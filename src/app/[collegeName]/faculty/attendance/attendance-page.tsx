@@ -158,7 +158,7 @@ const AttendancePage:React.FC = ()=> {
       toast.dismiss(toastId)
       if (response.ok) {
         toast.success("Attendance updated successfully.");
-        router.push(`${collegeName}/faculty`);
+        router.push(`/${collegeName}/faculty`);
             router.refresh();
         console.log('Attendance updated successfully');
       } else {
