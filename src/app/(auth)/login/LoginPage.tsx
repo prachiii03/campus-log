@@ -1103,6 +1103,7 @@ export default function SignInPage() {
 
             const result = await response.json();
 
+            setIsLoggingIn(false)
             if (result.message === "Logged in successfully") {
                 toast.dismiss(toastId)
                 toast.success("Faculty Login Successful!");
