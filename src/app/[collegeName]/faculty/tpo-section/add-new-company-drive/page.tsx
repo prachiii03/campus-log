@@ -141,7 +141,7 @@ const RecruitmentForm = () => {
         {/* Package Offered */}
         <div>
           <label className="block mb-2 text-xl text-slate-950" htmlFor="packageOffered">
-            Package Offered (Lakh/Year)
+            Package Offered
           </label>
           <input
             type="text"
