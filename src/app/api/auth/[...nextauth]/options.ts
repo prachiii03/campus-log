@@ -32,8 +32,8 @@ export const authOptions: NextAuthOptions = {
                         throw new Error("No user found with provided PRN number");
                     }
 
-                    const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
-
+                    //const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
+                    const isPasswordCorrect = credentials.password == user.password;
                     if (!isPasswordCorrect) {
                         throw new Error("Password does not match");
                     }

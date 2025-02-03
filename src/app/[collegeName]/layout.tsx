@@ -25,13 +25,13 @@ export default function RootLayout({
       */}
       <head />
 
-      <body className={`bg-[#FCFCFC] dark:bg-black ${inter.className}`}>
+      <body className={`bg-[#FCFCFC] ${inter.className}`}>
         <Providers>
-          
+
           {children}
           {/* <Footer /> */}
           <ScrollToTop />
-          <SidebarDemo/>
+          <SidebarDemo />
         </Providers>
       </body>
     </html>
@@ -39,7 +39,7 @@ export default function RootLayout({
 }
 
 import { Providers } from "./providers";
-import Header from "../(components)/college-landing-page/Header";import Footer from "../(components)/landing-page/Footer";
+import Header from "../(components)/college-landing-page/Header"; import Footer from "../(components)/landing-page/Footer";
 import ScrollToTop from "../(components)/college-landing-page/ScrollToTop";
 import { Sidebar } from "@/components/ui/sidebar";
 import { SidebarDemo } from "../(components)/utils/sidebar/Sidebar";

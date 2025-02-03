@@ -13,7 +13,7 @@ import { useEffect, useRef, useState } from 'react';
 import { signOut } from 'next-auth/react';  // Import signOut from NextAuth
 import { useCollege } from '@/context/college-name-provider/CollegeNameProvider';
 const Navbar = () => {
-    const {collegeName} = useCollege();
+    const { collegeName } = useCollege();
     const userSession = JSON.parse(sessionStorage.getItem("userSession") || "{}");
     const facultySession = JSON.parse(sessionStorage.getItem("facultySession") || "{}");
 
@@ -42,7 +42,7 @@ const Navbar = () => {
 
     const handleSignout = async () => {
         const userSession = JSON.parse(sessionStorage.getItem("userSession") || "{}");
-    
+
         if (userSession) {
             sessionStorage.clear();
             await signOut({ callbackUrl: '/login' });
@@ -50,12 +50,12 @@ const Navbar = () => {
 
         const facultySession = JSON.parse(sessionStorage.getItem("facultySession") || "{}");
 
-        if(facultySession) {
+        if (facultySession) {
             sessionStorage.clear();
         }
 
     };
-    
+
 
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
@@ -70,25 +70,27 @@ const Navbar = () => {
                 <Image src={Edutrackpro} alt="Brand Logo" className="rounded-full h-8 w-8 mr-2" />
                 <span className="text-xl font-semibold">EduTrackPro</span>
             </div>
-            
+
             <ul className="hidden md:flex space-x-6">
-                {facultySession.faculty_id &&<>
-                <li><Link href={`/${collegeName}/faculty/faculty-details`}>Faculty Details</Link></li>
-                <li><Link href={`/${collegeName}/faculty/attendance`}>Attendancce</Link></li>
-                <li><Link href={`/${collegeName}/faculty/tpo-section`}>TPO Section</Link></li>
+                {facultySession.faculty_id && <>
+                    <li><Link href={`/${collegeName}/faculty/faculty-details`}>Faculty Details</Link></li>
+                    <li><Link href={`/${collegeName}/faculty/attendance`}>Attendancce</Link></li>
+                    <li><Link href={`/${collegeName}/faculty/tpo-section`}>TPO Section</Link></li>
+                    <li><Link href={`/${collegeName}/faculty/subjects`}>Subjects</Link></li>
                 </>}
-                {userSession.id &&<>
-                <li><Link href={`/${collegeName}/dashboard`}>Dashboard</Link></li>
-                <li><Link href={`/${collegeName}/attendance`}>Attendancce</Link></li>
-                <li><Link href={`/${collegeName}/student-details`}>Student Details</Link></li>
-                <li><Link href={`/${collegeName}/faculty-index`}>Faculty Index</Link></li>
-                <li><Link href={`/${collegeName}/tpo-section`}>TPO Section</Link></li>
+                {userSession.id && <>
+                    <li><Link href={`/${collegeName}/dashboard`}>Dashboard</Link></li>
+                    <li><Link href={`/${collegeName}/attendance`}>Attendancce</Link></li>
+                    <li><Link href={`/${collegeName}/student-details`}>Student Details</Link></li>
+                    <li><Link href={`/${collegeName}/faculty-index`}>Faculty Index</Link></li>
+                    <li><Link href={`/${collegeName}/tpo-section`}>TPO Section</Link></li>
+                    <li><Link href={`/${collegeName}/subjects`}>Subjects</Link></li>
                 </>}
             </ul>
 
             <div className="flex items-center space-x-4">
                 <IconBell className="h-6 w-6 cursor-pointer" />
-                
+
                 <button onClick={toggleDarkMode}>
                     {isDarkMode ? (
                         <IconSun className="h-6 w-6 text-yellow-500 cursor-pointer" />
@@ -104,14 +106,14 @@ const Navbar = () => {
                         className="h-8 w-8 rounded-full cursor-pointer"
                         onClick={toggleProfileDropdown}
                     />
-                    
+
                     {isProfileOpen && (
                         <div className={`absolute right-0 mt-6 w-80 shadow-md rounded-md py-2 z-50 ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-800'}`}>
                             <div className="px-4 py-2 text-xl">
                                 <p className="p-4">Username</p>
                                 <p className="text-sm p-4">Department</p>
                             </div>
-                            <button 
+                            <button
                                 className="flex items-center w-full px-8 p-4 text-md hover:bg-gray-100 dark:hover:bg-gray-200"
                                 onClick={handleSignout} // Call signOut on button click
                             >
