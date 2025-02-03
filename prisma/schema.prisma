@@ -174,8 +174,9 @@ model study_material {
   id                 BigInt             @id @default(autoincrement())
   subject_id         String             @db.Uuid
   faculty_id         String             @db.Uuid
-  notes              Json?
-  exams              Json?
+  topic              String
+  title              String?
+  url                String?
   teaching_faculties teaching_faculties @relation(fields: [faculty_id], references: [faculty_id], onDelete: NoAction, onUpdate: NoAction)
   subject            subject            @relation(fields: [subject_id], references: [subject_id], onDelete: NoAction, onUpdate: NoAction)
 
