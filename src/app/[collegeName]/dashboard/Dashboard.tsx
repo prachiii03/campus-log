@@ -409,6 +409,8 @@
 
 // export default Dashboard;
 
+
+
 "use client";
 import {
   ArcElement,
@@ -640,21 +642,51 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="dashboardContainer">
+    <div className="dashboardContainer min-h-screen bg-gradient-to-r from-blue-50 to-purple-100">
       <ToastContainer /> {/* Toast container to display messages */}
+
       <div className="pieChartsContainer">
+        {/* Pie Chart 1 - Attendance */}
         <div className="pieChartWrapper">
+          <h3 className="chartTitle">Current Semester Attendance</h3>
           <PieChart data={pieChartData1} options={pieChartOptions} />
+          <div className="chartInfo">
+            <p>
+              <span className="absentColor">Absent: {pieChartData1.datasets[0].data[0]}</span> |
+              <span className="presentColor"> Present: {pieChartData1.datasets[0].data[1]}</span>
+            </p>
+          </div>
         </div>
+
+        {/* Pie Chart 2 - Year-wise Performance */}
         <div className="pieChartWrapper">
+          <h3 className="chartTitle">Year-wise Performance</h3>
           <PieChart data={pieChartData2} options={pieChartOptions} />
+          <div className="chartInfo">
+            <p>
+              <span className="greenColor">Green: {pieChartData2.datasets[0].data[0]}</span> |
+              <span className="purpleColor"> Purple: {pieChartData2.datasets[0].data[1]}</span> |
+              <span className="orangeColor"> Orange: {pieChartData2.datasets[0].data[2]}</span>
+            </p>
+          </div>
         </div>
       </div>
+
+      {/* Bar Chart - Placed Lower */}
       <div className="barChartContainer">
+        <h3 className="chartTitle">Year-wise Attendance</h3>
+        <div className="chartInfo">
+          <p>
+            <span className="totalLecturesColor">Total Lectures: {barCharData.datasets[0].data.reduce((a, b) => a + b, 0)}</span> |
+            <span className="attendedLecturesColor"> Attended Lectures: {barCharData.datasets[1].data.reduce((a, b) => a + b, 0)}</span>
+          </p>
+        </div>
         <BarChart data={barCharData} options={barChartOptions} />
       </div>
     </div>
   );
+
+
 };
 
 export default studentProtectRoute(Dashboard);

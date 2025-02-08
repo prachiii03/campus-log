@@ -163,7 +163,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-white`}>
+      <body className={`${inter.className} `}>
         <CollegeProvider>
           <ClientRootLayout session={session}>{children}</ClientRootLayout>
         </CollegeProvider>
