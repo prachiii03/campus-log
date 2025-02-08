@@ -122,9 +122,9 @@ model student_details {
   category                 String?
   cast                     String?
   blood_group              String?
-  adhar_card_no            String
-  material_status          Boolean
-  guardian_contact_no      String
+  adhar_card_no            String?
+  material_status          Boolean?
+  guardian_contact_no      String?
   password                 String
   profile_pic              String?
   registered_at            DateTime?            @default(now()) @db.Time(6)
@@ -135,6 +135,17 @@ model student_details {
   guardian_date_of_birth   DateTime?            @db.Date
   current_gpa              Float                @db.Real
   active_backlogs          Int                  @db.SmallInt
+  academic_year            String?
+  program                  String?
+  course                   String?
+  class                    String?
+  mother_full_name         String?
+  state                    String?
+  district                 String?
+  taluka                   String?
+  religion                 String?
+  mother_tongue            String?
+  family_income            Float?
   student_attendence       student_attendence[]
   department               department           @relation(fields: [department_id], references: [department_id], onDelete: NoAction, onUpdate: NoAction, map: "studen_department_id_fkey")
   prn_list                 prn_list             @relation(fields: [prn_no], references: [prn], onDelete: NoAction, onUpdate: NoAction, map: "studen_prn_no_fkey")
@@ -193,9 +204,11 @@ model subject {
   semester           String?
   student_attendence student_attendence[]
   student_result     student_result[]
+  notes              notes[]
   study_material     study_material[]
   teaching_faculties teaching_faculties   @relation(fields: [faculty_id], references: [faculty_id], onDelete: NoAction, onUpdate: NoAction, map: "syllabus_faculty_id_fkey")
   syllabus           syllabus[]
+  tests              tests[]
 
   @@schema("study_material")
 }
@@ -207,6 +220,8 @@ model syllabus {
   faculty_id          String             @db.Uuid
   reference_book_link Json
   practical_link      Json
+  title               String?
+  doc_link            String?
   teaching_faculties  teaching_faculties @relation(fields: [faculty_id], references: [faculty_id], onDelete: NoAction, onUpdate: NoAction, map: "syllabus_faculty_id_fkey1")
   subject             subject?           @relation(fields: [subject_id], references: [subject_id], onDelete: NoAction, onUpdate: NoAction)
 
@@ -231,9 +246,11 @@ model teaching_faculties {
   department_department_hod_idToteaching_faculties        department[]         @relation("department_hod_idToteaching_faculties")
   department_teaching_faculties_department_idTodepartment department           @relation("teaching_faculties_department_idTodepartment", fields: [department_id], references: [department_id], onDelete: NoAction, onUpdate: NoAction, map: "teaching_faculties_department_id_fkey1")
   student_attendence                                      student_attendence[]
+  notes                                                   notes[]
   study_material                                          study_material[]
   subject                                                 subject[]
   syllabus                                                syllabus[]
+  tests                                                   tests[]
 
   @@schema("college")
 }
@@ -252,6 +269,36 @@ model upcoming_companies {
   registration_link    String?
 
   @@schema("TPO")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model notes {
+  id                 String              @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at         DateTime            @default(now()) @db.Timestamptz(6)
+  faculty_id         String?             @db.Uuid
+  subject_id         String?             @db.Uuid
+  title              String?
+  doc_url            String?
+  teaching_faculties teaching_faculties? @relation(fields: [faculty_id], references: [faculty_id], onDelete: NoAction, onUpdate: NoAction)
+  subject            subject?            @relation(fields: [subject_id], references: [subject_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("study_material")
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model tests {
+  id                 BigInt             @id @default(autoincrement())
+  created_at         DateTime           @default(now()) @db.Timestamptz(6)
+  faculty_id         String             @db.Uuid
+  subject_id         String             @db.Uuid
+  test_link          String
+  start_ts           DateTime           @db.Timestamptz(6)
+  duration           Float              @db.Real
+  title              String?
+  teaching_faculties teaching_faculties @relation(fields: [faculty_id], references: [faculty_id], onDelete: NoAction, onUpdate: NoAction)
+  subject            subject            @relation(fields: [subject_id], references: [subject_id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@schema("study_material")
 }
 
 /// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.

@@ -572,7 +572,7 @@ const Dashboard: React.FC = () => {
   const getYearwiseAttendance = async () => {
     const studentId = userSession.id; // Ensure that the studentId is correct
     const url = `/api/student/${studentId}/get-attendence-yearWise`; // Fix spelling if needed
-    
+
     try {
       const response = await fetch(url, {
         method: "GET",
@@ -628,7 +628,7 @@ const Dashboard: React.FC = () => {
     const timer = setTimeout(() => setLoading(false), 2000);
     return () => clearTimeout(timer);
   }, []);
-  
+
   useEffect(() => {
     console.log(collegeName)
     getCurrentSemesterAttendance();
