@@ -409,6 +409,8 @@
 
 // export default Dashboard;
 
+
+
 "use client";
 import {
   ArcElement,
@@ -531,7 +533,7 @@ const Dashboard: React.FC = () => {
 
     try {
       const response = await fetch(
-        `/api/student/${studentId}/get-current-semester-attendance?semester=${semester}`,
+        `/api/student/${studentId}/get-current-semester-attendance?semester=${8}`,
         {
           method: "GET",
           headers: {
@@ -572,7 +574,7 @@ const Dashboard: React.FC = () => {
   const getYearwiseAttendance = async () => {
     const studentId = userSession.id; // Ensure that the studentId is correct
     const url = `/api/student/${studentId}/get-attendence-yearWise`; // Fix spelling if needed
-    
+
     try {
       const response = await fetch(url, {
         method: "GET",
@@ -628,7 +630,7 @@ const Dashboard: React.FC = () => {
     const timer = setTimeout(() => setLoading(false), 2000);
     return () => clearTimeout(timer);
   }, []);
-  
+
   useEffect(() => {
     console.log(collegeName)
     getCurrentSemesterAttendance();
@@ -640,21 +642,51 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="dashboardContainer">
+    <div className="dashboardContainer min-h-screen bg-gradient-to-r from-blue-50 to-purple-100">
       <ToastContainer /> {/* Toast container to display messages */}
+
       <div className="pieChartsContainer">
+        {/* Pie Chart 1 - Attendance */}
         <div className="pieChartWrapper">
+          <h3 className="chartTitle">Current Semester Attendance</h3>
           <PieChart data={pieChartData1} options={pieChartOptions} />
+          <div className="chartInfo">
+            <p>
+              <span className="absentColor">Absent: {pieChartData1.datasets[0].data[0]}</span> |
+              <span className="presentColor"> Present: {pieChartData1.datasets[0].data[1]}</span>
+            </p>
+          </div>
         </div>
+
+        {/* Pie Chart 2 - Year-wise Performance */}
         <div className="pieChartWrapper">
+          <h3 className="chartTitle">Year-wise Performance</h3>
           <PieChart data={pieChartData2} options={pieChartOptions} />
+          <div className="chartInfo">
+            <p>
+              <span className="greenColor">Green: {pieChartData2.datasets[0].data[0]}</span> |
+              <span className="purpleColor"> Purple: {pieChartData2.datasets[0].data[1]}</span> |
+              <span className="orangeColor"> Orange: {pieChartData2.datasets[0].data[2]}</span>
+            </p>
+          </div>
         </div>
       </div>
+
+      {/* Bar Chart - Placed Lower */}
       <div className="barChartContainer">
+        <h3 className="chartTitle">Year-wise Attendance</h3>
+        <div className="chartInfo">
+          <p>
+            <span className="totalLecturesColor">Total Lectures: {barCharData.datasets[0].data.reduce((a, b) => (Number(a) || 0) + (Number(b) || 0), 0)}</span> |
+            <span className="attendedLecturesColor"> Attended Lectures: {barCharData.datasets[1].data.reduce((a, b) => (Number(a) || 0) + (Number(b) || 0), 0)}</span>
+          </p>
+        </div>
         <BarChart data={barCharData} options={barChartOptions} />
       </div>
     </div>
   );
+
+
 };
 
 export default studentProtectRoute(Dashboard);

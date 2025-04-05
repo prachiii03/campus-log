@@ -290,6 +290,8 @@
 import Link from "next/link";
 
 const Hero = () => {
+
+
   return (
     <>
       <section
@@ -301,10 +303,10 @@ const Hero = () => {
             <div className="w-full px-4">
               <div className="mx-auto max-w-[800px] text-center">
                 <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-                Empowering Future Leaders through Excellence in Education
+                  Empowering Future Leaders through Excellence in Education
                 </h1>
                 <p className="mb-10 text-base leading-relaxed text-gray-700 dark:text-gray-300 sm:text-lg md:text-xl">
-                we are committed to providing a transformative educational experience that fosters innovation, critical thinking, and leadership. Our world-class faculty, cutting-edge facilities, and industry-relevant courses prepare students for success in a dynamic global environment. Join us as we shape the future together.
+                  we are committed to providing a transformative educational experience that fosters innovation, critical thinking, and leadership. Our world-class faculty, cutting-edge facilities, and industry-relevant courses prepare students for success in a dynamic global environment. Join us as we shape the future together.
                 </p>
                 <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
                   <Link

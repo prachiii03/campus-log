@@ -1,28 +1,29 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 interface StudentInformation {
   name: string;
   prnNo: string;
   class: string;
-  branch: string;
+  brannch: string;
 }
 
 const TopLeftComponent: React.FC = () => {
   const [studentInfo, setStudentInfo] = useState<StudentInformation>();
+
   const router = useRouter();
 
   const handleBack = () => {
-    router.push("/dashboard");
+    router.push('/dashboard');
   };
 
   const userSession = JSON.parse(sessionStorage.getItem("userSession") || "{}");
 
   const getStudentInfo = async () => {
     if (!userSession) {
-      toast.error("User not found. Please log in.");
+      toast.error("User not found.. please login");
     }
 
     let studentCurrentClass = "";
@@ -40,7 +41,7 @@ const TopLeftComponent: React.FC = () => {
       name: userSession.username,
       prnNo: userSession.prn,
       class: studentCurrentClass,
-      branch: userSession.department,
+      brannch: userSession.department,
     };
 
     setStudentInfo(currUser);
@@ -51,8 +52,8 @@ const TopLeftComponent: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex justify-center items-center h-full w-full bg-gradient-to-br from-blue-500 to-purple-200 text-white shadow-xl rounded-lg p-6 transform transition-transform hover:scale-105">
-      <div className="w-full">
+    <div className="flex flex-wrap justify-center items-center h-full w-full text-black bg-white shadow-lg rounded-lg border border-gray-200">
+      <div className="h-full w-full p-4">
         <button
           onClick={handleBack}
           className="bg-white text-blue-600 font-semibold rounded-lg shadow-md hover:bg-blue-700 hover:text-white transition duration-300 px-6 py-2 mb-6 transform hover:scale-110"
@@ -62,7 +63,7 @@ const TopLeftComponent: React.FC = () => {
 
         {/* Academic Year Dropdown */}
         <div className="mt-4">
-          <label htmlFor="academic-year" className="block text-sm font-semibold text-white">
+          <label htmlFor="academic-year" className="block text-sm font-semibold text-black">
             Academic Year
           </label>
           <select
@@ -90,7 +91,7 @@ const TopLeftComponent: React.FC = () => {
           </div>
           <div className="flex items-center space-x-2">
             <p className="text-gray-600 font-semibold">Branch:</p>
-            <p className="text-gray-800">{studentInfo?.branch}</p>
+            <p className="text-gray-800">{studentInfo?.brannch}</p>
           </div>
         </div>
       </div>

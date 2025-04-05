@@ -38,15 +38,15 @@ const evaluationData: EvaluationParameter[] = [
 ];
 
 const FacultyEvaluation: React.FC = () => {
-  const router = useRouter(); 
+  const router = useRouter();
 
   return (
-    <div className="p-4 mt-24 ml-20">
+    <div className="p-4 mt-24 ml-20 text-black">
       {/* Back Button */}
       <div className="mb-4">
-        <button 
-          className="bg-purple-600 text-white px-4 py-2 rounded-md shadow-md transition duration-300 hover:bg-purple-700 hover:shadow-lg" 
-          onClick={() => router.back()} 
+        <button
+          className="bg-purple-600 text-white px-4 py-2 rounded-md shadow-md transition duration-300 hover:bg-purple-700 hover:shadow-lg"
+          onClick={() => router.back()}
         >
           Back
         </button>
@@ -54,7 +54,7 @@ const FacultyEvaluation: React.FC = () => {
 
       <div className="bg-white shadow-lg rounded-lg p-6">
         <h1 className="text-4xl font-bold text-center mb-8 text-purple-800">
-          Faculty Evaluation - 
+          Faculty Evaluation -
           <span className="inline-block gradient-text text-transparent animate-gradient">
             EduTrack Pro Secure
           </span>

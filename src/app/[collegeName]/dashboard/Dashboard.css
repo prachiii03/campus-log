@@ -1,41 +1,93 @@
 .dashboardContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 10px;
-    margin: 40px auto;
-    width: 100%;
-    max-width: 1200px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .pieChartsContainer {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 20px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 85px;
+  margin: 0px auto;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.pieChartsContainer {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.pieChartWrapper {
+  width: 35%;
+  height: 200px;
+}
+
+.barChartContainer {
+  width: 80%;
+  height: 330px;
+}
+
+/* For larger screens (width above 768px) */
+@media (min-width: 768px) {
   .pieChartWrapper {
-    width: 60%;
-    height: 260px;
+    width: 48%; /* 50% minus some margin for spacing */
   }
-  
+
   .barChartContainer {
-    width: 80%;
-    height: 330px;
+    width: 100%;
   }
-  
-  /* For larger screens (width above 768px) */
-  @media (min-width: 768px) {
-    .pieChartWrapper {
-      width: 48%; /* 50% minus some margin for spacing */
-    }
-  
-    .barChartContainer {
-      width: 100%;
-    }
-  }
-  
+}
+.chartTitle {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.chartInfo {
+  text-align: center;
+  font-size: 1rem;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.chartInfo p {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  font-weight: bold;
+  flex-wrap: wrap;
+}
+
+.absentColor {
+  color: #FF6384;
+}
+
+.presentColor {
+  color: #36A2EB;
+}
+
+.greenColor {
+  color: #4BC0C0;
+}
+
+.purpleColor {
+  color: #9966FF;
+}
+
+.orangeColor {
+  color: #FF9F40;
+}
+
+.totalLecturesColor {
+  color: rgba(75,192,192,1);
+}
+
+.attendedLecturesColor {
+  color: rgba(153,102,255,1);
+}
+
+.barChartContainer {
+  margin-top: 80px; /* Moves the bar chart slightly lower */
+  padding-top: 20px;
+}

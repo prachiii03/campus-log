@@ -140,11 +140,13 @@ const TopRightComponent: React.FC = () => {
   };
 
   return (
-    <div className="h-auto p-6 bg-gradient-to-br from-blue-400 to-purple-200 text-white shadow-xl rounded-lg transform transition-transform hover:scale-105">
-      <h2 className="text-xl font-bold text-center mb-4">Attendance Record</h2>
+    <div className="h-auto p-4 bg-white text-black shadow-lg rounded-lg">
+      <h2 className="text-xl font-bold text-blue-700 text-center mb-4">
+        Attendance Record
+      </h2>
       <div className="overflow-x-auto w-full">
-        <table className="table-auto w-full bg-white shadow-md rounded-lg overflow-hidden">
-          <thead className="text-white bg-gradient-to-r from-purple-300 to-blue-300">
+        <table className="table-auto w-full bg-white border border-blue-200 rounded-lg">
+          <thead className="bg-blue-200 text-white" style={{ backgroundColor: 'linear-gradient(#642bff, #ff22e6)' }}>
             <tr>
               <th className="px-4 py-2">Roll No</th>
               <th className="px-4 py-2">Class</th>
@@ -162,10 +164,10 @@ const TopRightComponent: React.FC = () => {
                   <td className="px-4 py-2 border-t border-gray-300 font-semibold">
                     {calculateAttendancePercentage(
                       year,
-                      index === 0 ? attendance.first_year_present : 
-                      index === 1 ? attendance.second_year_present : 
-                      index === 2 ? attendance.third_year_present : 
-                      attendance.fourth_year_present
+                      index === 0 ? attendance.first_year_present :
+                        index === 1 ? attendance.second_year_present :
+                          index === 2 ? attendance.third_year_present :
+                            attendance.fourth_year_present
                     )}%
                   </td>
                 </tr>

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useCollege } from '@/context/college-name-provider/CollegeNameProvider';
 const RecruitmentForm = () => {
   const router = useRouter();
-  const {collegeName} = useCollege();
+  const { collegeName } = useCollege();
 
   const [loading, setLoading] = useState(true);
   const [companyName, setCompanyName] = useState('');
@@ -80,7 +80,7 @@ const RecruitmentForm = () => {
       setRegistrationLink('');
       toast.success("New drive added successfully...")
       router.push(`/${collegeName}/faculty`);
-            router.refresh();
+      router.refresh();
     } catch (error) {
       toast.dismiss(toastId);
       toast.error("Internal server error..")
@@ -89,7 +89,7 @@ const RecruitmentForm = () => {
   };
 
   return (
-    <div className="space-y-6 py-11 px-10 md:px-28 md:py-16 lg:px-28 lg:py-20 mt-6 bg-white">
+    <div className="space-y-6 py-11 px-10 md:px-28 md:py-16 lg:px-28 lg:py-20 mt-6 bg-white text-black">
       <h2 className="text-2xl text-black font-semibold mb-4">Add New Company Recruitment</h2>
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 md:grid-cols-2">

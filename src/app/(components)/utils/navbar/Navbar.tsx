@@ -73,29 +73,86 @@ const Navbar = () => {
         <>
             <nav className={`fixed top-0 w-full z-50 flex items-center justify-between p-4 shadow-lg ${isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`}>
                 <div className="flex items-center">
-                    <Image src={Edutrackpro} alt="Brand Logo" className="rounded-full h-8 w-8 mr-2" priority />
+                    <Image src={Edutrackpro} alt="Brand Logo" className="rounded-full h-8 w-8 mr-2" />
                     <span className="text-xl font-semibold">EduTrackPro</span>
                 </div>
 
                 <ul className="hidden md:flex space-x-6">
-                    {facultySession.faculty_id && (
-                        <>
-                            <li><Link href={`/${collegeName}/faculty/faculty-details`}>Faculty Details</Link></li>
-                            <li><Link href={`/${collegeName}/faculty/attendance`}>Attendance</Link></li>
-                            <li><Link href={`/${collegeName}/faculty/tpo-section`}>TPO Section</Link></li>
-                        </>
-                    )}
-                    {userSession.id && (
-                        <>
-                            <li><Link href={`/${collegeName}/dashboard`}>Dashboard</Link></li>
-                            <li><Link href={`/${collegeName}/attendance`}>Attendance</Link></li>
-                            <li><Link href={`/${collegeName}/student-details`}>Student Details</Link></li>
-                            <li><Link href={`/${collegeName}/faculty-index`}>Faculty Index</Link></li>
-                            <li><Link href={`/${collegeName}/tpo-section`}>TPO Section</Link></li>
-                        </>
-                    )}
+                    {facultySession.faculty_id && <>
+                        <li><Link href={`/${collegeName}/faculty/faculty-details`}>Faculty Details</Link></li>
+                        <li><Link href={`/${collegeName}/faculty/attendance`}>Attendancce</Link></li>
+                        <li><Link href={`/${collegeName}/faculty/tpo-section`}>TPO Section</Link></li>
+                        <li><Link href={`/${collegeName}/faculty/subjects`}>Subjects</Link></li>
+                        <Link href="https://sgm-feedback-system.vercel.app/" target="_blank" rel="noopener noreferrer">
+                            Feedback
+                        </Link>                </>}
+                    {userSession.id && <>
+                        <li><Link href={`/${collegeName}/dashboard`}>Dashboard</Link></li>
+                        <li><Link href={`/${collegeName}/attendance`}>Attendancce</Link></li>
+                        <li><Link href={`/${collegeName}/student-details`}>Student Details</Link></li>
+                        <li><Link href={`/${collegeName}/faculty-index`}>Faculty Index</Link></li>
+                        <li><Link href={`/${collegeName}/tpo-section`}>TPO Section</Link></li>
+                        <li><Link href={`/${collegeName}/subjects`}>Subjects</Link></li>
+                        <Link href="https://sgm-feedback-system.vercel.app/" target="_blank" rel="noopener noreferrer">
+                            Feedback
+                        </Link>                </>}
                 </ul>
 
+                <div className="flex items-center space-x-4">
+                    <IconBell className="h-6 w-6 cursor-pointer" />
+
+                    <button onClick={toggleDarkMode}>
+                        {isDarkMode ? (
+                            <IconSun className="h-6 w-6 text-yellow-500 cursor-pointer" />
+                        ) : (
+                            <IconMoon className="h-6 w-6 cursor-pointer" />
+                        )}
+                    </button>
+
+                    <div className="relative" ref={profileRef}>
+                        <Image
+                            src={User}
+                            alt="Profile"
+                            className="h-8 w-8 rounded-full cursor-pointer"
+                            onClick={toggleProfileDropdown}
+                        />
+
+                        {isProfileOpen && (
+                            <div className={`absolute right-0 mt-6 w-80 shadow-md rounded-md py-2 z-50 ${isDarkMode ? 'bg-gray-700 text-white' : 'bg-white text-gray-800'}`}>
+                                <div className="px-4 py-2 text-xl">
+                                    <p className="p-4">Username</p>
+                                    <p className="text-sm p-4">Department</p>
+                                </div>
+                                <button
+                                    className="flex items-center w-full px-8 p-4 text-md hover:bg-gray-100 dark:hover:bg-gray-200"
+                                    onClick={handleSignout} // Call signOut on button click
+                                >
+                                    <IconLogout className="h-5 w-5 mr-2" />
+                                    Logout
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
+                    <ul className="hidden md:flex space-x-6">
+                        {facultySession.faculty_id && (
+                            <>
+                                <li><Link href={`/${collegeName}/faculty/faculty-details`}>Faculty Details</Link></li>
+                                <li><Link href={`/${collegeName}/faculty/attendance`}>Attendance</Link></li>
+                                <li><Link href={`/${collegeName}/faculty/tpo-section`}>TPO Section</Link></li>
+                            </>
+                        )}
+                        {userSession.id && (
+                            <>
+                                <li><Link href={`/${collegeName}/dashboard`}>Dashboard</Link></li>
+                                <li><Link href={`/${collegeName}/attendance`}>Attendance</Link></li>
+                                <li><Link href={`/${collegeName}/student-details`}>Student Details</Link></li>
+                                <li><Link href={`/${collegeName}/faculty-index`}>Faculty Index</Link></li>
+                                <li><Link href={`/${collegeName}/tpo-section`}>TPO Section</Link></li>
+                            </>
+                        )}
+                    </ul>
+                </div>
                 <div className="flex items-center space-x-4">
                     <IconBell className="h-6 w-6 cursor-pointer" aria-label="Notifications" />
 
@@ -118,9 +175,8 @@ const Navbar = () => {
 
                         {isProfileOpen && (
                             <div
-                                className={`absolute right-0 mt-6 w-72 rounded-lg shadow-lg z-50 transform transition-all duration-300 ${
-                                    isDarkMode ? "bg-gray-800 text-white" : "bg-white text-gray-800"
-                                }`}
+                                className={`absolute right-0 mt-6 w-72 rounded-lg shadow-lg z-50 transform transition-all duration-300 ${isDarkMode ? "bg-gray-800 text-white" : "bg-white text-gray-800"
+                                    }`}
                             >
                                 <div className="flex flex-col items-center relative -top-6">
                                     <Image

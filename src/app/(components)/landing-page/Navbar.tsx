@@ -26,12 +26,12 @@ const navItems: NavItem[] = [
   {
     label: "Home",
     link: "#home",
-   
+
   },
   {
     label: "About Us",
     link: "#about",
-    
+
   },
   {
     label: "Services",
@@ -46,7 +46,7 @@ const navItems: NavItem[] = [
 ];
 
 export default function Navbar() {
-  const {collegeName} = useCollege();
+  const { collegeName } = useCollege();
   const [animationParent] = useAutoAnimate();
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -83,7 +83,7 @@ export default function Navbar() {
     // Simulate a loading state for demonstration
     const timer = setTimeout(() => {
       setIsLoading(false);
-    },950); 
+    }, 950);
 
     return () => clearTimeout(timer);
   }, []);
@@ -94,9 +94,8 @@ export default function Navbar() {
 
   return (
     <div
-      className={`mx-auto flex w-full max-w-[100%] justify-between px-4 py-3 text-lg font-semibold fixed top-0 left-0 right-0 z-50 ${
-        isDarkMode ? "bg-gray-900/50 text-white" : "bg-white/30 text-black"
-      } backdrop-blur-md`}
+      className={`mx-auto flex w-full max-w-[100%] justify-between px-4 py-3 text-lg font-semibold fixed top-0 left-0 right-0 z-50 ${isDarkMode ? "bg-gray-900/50 text-white" : "bg-white/30 text-black"
+        } backdrop-blur-md`}
     >
       <section ref={animationParent} className="flex items-center gap-10">
         <Image src={edutrackPro} alt="logo" width={120} height={120} />
@@ -108,9 +107,8 @@ export default function Navbar() {
           {navItems.map((item, index) => (
             <div
               key={index}
-              className={`relative group px-4 py-3 transition-all text-lg ${
-                activeItem === item.label ? "text-white" : "text-gray-500"
-              }`}
+              className={`relative group px-4 py-3 transition-all text-lg ${activeItem === item.label ? "text-white" : "text-gray-500"
+                }`}
             >
               <p
                 className="flex cursor-pointer items-center gap-2"
@@ -159,15 +157,16 @@ export default function Navbar() {
       </section>
 
       <section className="hidden lg:flex items-center gap-8">
-        <Link href={`/${collegeName? collegeName : "sgmcoe"}`} >
-        <ShinyButton
-          className={`h-fit transition-all px-4 py-2 rounded-md border-2 ${
-            isDarkMode ? "border-white text-white" : "border-black text-black"
-          } hover:opacity-90`}
-        >
-          Get Started
-        </ShinyButton>
-          </Link>
+        <button onClick={() => {
+          window.location.href = `/${collegeName ? collegeName : "sgmcoe"}`
+        }}  >
+          <ShinyButton
+            className={`h-fit transition-all px-4 py-2 rounded-md border-2 ${isDarkMode ? "border-white text-white" : "border-black text-black"
+              } hover:opacity-90`}
+          >
+            Get Started
+          </ShinyButton>
+        </button>
 
         <div
           onClick={() => setIsDarkMode(!isDarkMode)}
@@ -247,9 +246,8 @@ function SingleNavItem({ label, link, children, iconImage }: NavItem) {
         <span>{label}</span>
         {children && (
           <IoIosArrowDown
-            className={`ml-auto transition-transform duration-200 ${
-              isItemOpen ? "rotate-180" : ""
-            }`}
+            className={`ml-auto transition-transform duration-200 ${isItemOpen ? "rotate-180" : ""
+              }`}
           />
         )}
       </Link>

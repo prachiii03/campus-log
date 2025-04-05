@@ -22,6 +22,7 @@ export async function POST(req: NextRequest, { params }: { params: StudentIdPara
         where: {
             student_id: studentId,
             subject_id: reqBody.subject,
+            semester: "8"
         },
         include: {
             subject: {

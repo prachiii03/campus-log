@@ -47,13 +47,13 @@
 //                     />
 //                     <span className="fa fa-eye-slash absolute right-3 top-3 cursor-pointer"></span>
 //                 </div>
-                // <div className="flex justify-between items-center mb-4">
-                //     <label className="flex items-center text-sm text-slate-600">
-                //     <input type="checkbox" className="mr-2" />
-                //     Remember me
-                //     </label>
-                //     <a onClick={togglePanel} className="text-blue-500 cursor-pointer text-sm">Forgot password?</a>
-                // </div>
+// <div className="flex justify-between items-center mb-4">
+//     <label className="flex items-center text-sm text-slate-600">
+//     <input type="checkbox" className="mr-2" />
+//     Remember me
+//     </label>
+//     <a onClick={togglePanel} className="text-blue-500 cursor-pointer text-sm">Forgot password?</a>
+// </div>
 //                 <button
 //                     type="submit"
 //                     className="btn btn-primary w-full py-2 text-sm font-bold bg-blue-500 text-white rounded"
@@ -643,11 +643,11 @@
 
 // export default function SignInPage() {
 //     const router = useRouter();
-    
+
 //     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 //         e.preventDefault();
 //         const formData = new FormData(e.currentTarget);
-        
+
 //         const response = await signIn('credentials', {
 //             prn: formData.get("prn") as string,
 //             password: formData.get("password") as string,
@@ -655,7 +655,7 @@
 //         });
 
 //         console.log(response)
-        
+
 //         if(response?.status == 401) {
 //             console.log(response.error)
 //             toast.error("Password did not matched")
@@ -866,11 +866,11 @@
 // export default function SignInPage() {
 //     const { collegeName } = useCollege();
 //     const router = useRouter();
-    
+
 //     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 //         e.preventDefault();
 //         const formData = new FormData(e.currentTarget);
-        
+
 //         const response = await signIn('credentials', {
 //             prn: formData.get("prn") as string,
 //             password: formData.get("password") as string,
@@ -878,7 +878,7 @@
 //         });
 
 //         console.log(response)
-        
+
 //         if(response?.status == 401) {
 //             console.log(response.error)
 //             toast.error("Username or Password is wrong...");
@@ -897,7 +897,7 @@
 //         try {
 //             const id = formData.get("prn") as string;
 //             const password = formData.get("password") as string;
-    
+
 //             const response = await fetch(`/api/auth/faculty/login`, {
 //                 method: "POST",
 //                 headers: {
@@ -905,14 +905,14 @@
 //                 },
 //                 body: JSON.stringify({ id,password }) // Send the password in the body
 //             });
-    
+
 //             const result = await response.json();
 //             console.log(result);
 //         } catch (error) {
 //             console.error("Login failed:", error);
 //         }
 //     };
-    
+
 //     const [activePanel, setActivePanel] = useState<'login' | 'signup' | 'forgot'>('login');
 //     const [loading, setLoading] = useState(true);
 
@@ -1030,7 +1030,7 @@
 //==============================================================================
 'use client';
 
-import campuslogo from '../../../../public/images/campusLog-logo.png';
+import campuslogo from '../../../../public/assets/edutrackpro.jpg';
 import college from '../../../../public/images/collegeImage.png';
 import Image from 'next/image';
 import { FormEvent, useEffect, useState } from 'react';
@@ -1052,9 +1052,9 @@ export default function SignInPage() {
         const formData = new FormData(e.currentTarget);
 
         // Show toast for login progress
-        
+
         setIsLoggingIn(true); // Indicate login is in progress
-        
+
         if (role === 'student') {
             const toastId = toast.loading("Logging into your account...");
             // Student login logic
@@ -1087,7 +1087,7 @@ export default function SignInPage() {
     };
 
     const facultyLogin = async (formData: any) => {
-         const toastId = toast.loading("Logging into your account..."); // Show login progress
+        const toastId = toast.loading("Logging into your account..."); // Show login progress
         try {
             const id = formData.get("prn") as string;
             const password = formData.get("password") as string;
