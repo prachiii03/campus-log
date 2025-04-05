@@ -154,17 +154,20 @@ const TopRightComponent: React.FC = () => {
               <th className="px-4 py-2">Attendance %</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="text-gray-800">
             {[attendance.first_year, attendance.second_year, attendance.third_year, attendance.fourth_year].map(
               (year, index) => (
-                <tr key={index} className="hover:bg-blue-100 transition-colors">
-                  <td className="px-4 py-2 border-t border-blue-200">{userSession.prn}</td>
-                  <td className="px-4 py-2 border-t border-blue-200">{index + 1} Year B.Tech.</td>
-                  <td className="px-4 py-2 border-t border-blue-200">Computer Science and IT</td>
-                  <td className="px-4 py-2 border-t border-blue-200">
+                <tr key={index} className="hover:bg-purple-100 transition-colors">
+                  <td className="px-4 py-2 border-t border-gray-300">{userSession.prn}</td>
+                  <td className="px-4 py-2 border-t border-gray-300">{index + 1} Year B.Tech.</td>
+                  <td className="px-4 py-2 border-t border-gray-300">Computer Science and IT</td>
+                  <td className="px-4 py-2 border-t border-gray-300 font-semibold">
                     {calculateAttendancePercentage(
                       year,
-                      index === 0 ? attendance.first_year_present : index === 1 ? attendance.second_year_present : index === 2 ? attendance.third_year_present : attendance.fourth_year_present
+                      index === 0 ? attendance.first_year_present :
+                        index === 1 ? attendance.second_year_present :
+                          index === 2 ? attendance.third_year_present :
+                            attendance.fourth_year_present
                     )}%
                   </td>
                 </tr>
