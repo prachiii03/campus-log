@@ -677,8 +677,8 @@ const Dashboard: React.FC = () => {
         <h3 className="chartTitle">Year-wise Attendance</h3>
         <div className="chartInfo">
           <p>
-            <span className="totalLecturesColor">Total Lectures: {barCharData.datasets[0].data.reduce((a, b) => a + b, 0)}</span> |
-            <span className="attendedLecturesColor"> Attended Lectures: {barCharData.datasets[1].data.reduce((a, b) => a + b, 0)}</span>
+            <span className="totalLecturesColor">Total Lectures: {barCharData.datasets[0].data.reduce((a, b) => (Number(a) || 0) + (Number(b) || 0), 0)}</span> |
+            <span className="attendedLecturesColor"> Attended Lectures: {barCharData.datasets[1].data.reduce((a, b) => (Number(a) || 0) + (Number(b) || 0), 0)}</span>
           </p>
         </div>
         <BarChart data={barCharData} options={barChartOptions} />
