@@ -639,6 +639,7 @@ interface StudentDetailsProps {
 }
 
 interface Address {
+  address: string;
   city: string;
   state: string;
   district: string;
@@ -646,7 +647,7 @@ interface Address {
 }
 
 interface AcademicPerformance {
-  academicYear: string;
+  academic_year: string;
   studyYear: string;
   marksObtained: number;
   outOf: number;
@@ -655,7 +656,7 @@ interface AcademicPerformance {
 }
 
 interface SemesterPerformance {
-  academicYear: string;
+  academic_year: string;
   studyYear: string;
   semester: string;
   marksObtained: number;
@@ -666,24 +667,31 @@ interface SemesterPerformance {
 
 interface StudentInformation {
   applicationId: string;
+  first_name: string;
+  last_name: string;
+  middle_name: string;
   candidateFullName: string;
-  fathersFullName: string;
-  mothersFullName: string;
-  dateOfBirth: string;
+  guardian_name: string;
+  mother_full_name: string;
+  date_of_birth: string;
   gender: string;
-  bloodGroup: string;
+  blood_group: string;
   religion: string;
   category: string;
-  caste: string;
+  cast: string;
   mobileNumber: string;
-  parentContactNumber: string;
-  emailId: string;
-  address: Address;
-  motherTongue: string;
-  familyIncome: string;
+  guardian_contact_no: string;
+  email: string;
+  address: string;
+  city: string;
+  state: string;
+  district: string;
+  taluka: string;
+  mother_tongue: string;
+  family_income: string;
   ebcScholarshipMinority: string;
-  prnNo: string;
-  academicYear: string;
+  prn_no: string;
+  academic_year: string;
   program: string;
   course: string;
   class: string;
@@ -713,6 +721,7 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
         throw new Error("Failed to fetch student data");
       }
       const res = await response.json();
+      console.log({ res })
       setStudentInfo(res.studentInfo);
       setProfilePic(res.studentInfo.profilePic || User.src); // Set profile picture from API or default
       setLoading(false);
@@ -884,7 +893,7 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
             type="text"
             className="p-2 border rounded mb-2 bg-white"
             name="candidateFullName"
-            value={studentInfo?.candidateFullName || ""}
+            value={`${studentInfo?.first_name} ${studentInfo?.middle_name} ${studentInfo?.last_name}` || ""}
             placeholder="Not Available"
             onChange={handleChange}
           />
@@ -892,8 +901,8 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
           <input
             type="email"
             className="p-2 border rounded mb-2 bg-white"
-            name="emailId"
-            value={studentInfo?.emailId || ""}
+            name="email"
+            value={studentInfo?.email || ""}
             placeholder="Not Available"
             onChange={handleChange}
           />
@@ -901,8 +910,8 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
           <input
             type="text"
             className="p-2 border rounded mb-2 bg-white"
-            name="prnNo"
-            value={studentInfo?.prnNo || ""}
+            name="prn_no"
+            value={studentInfo?.prn_no || ""}
             placeholder="Not Available"
             onChange={handleChange}
           />
@@ -942,7 +951,7 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
               type="text"
               className="p-2 border rounded mb-2 w-full bg-white"
               name="academicYear"
-              value={studentInfo?.academicYear || ""}
+              value={studentInfo?.academic_year || ""}
               placeholder="Not Available"
               onChange={handleChange}
             />
@@ -986,7 +995,7 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
               type="text"
               className="p-2 border rounded mb-2 w-full bg-white"
               name="fathersFullName"
-              value={studentInfo?.fathersFullName || ""}
+              value={studentInfo?.guardian_name || ""}
               placeholder="Not Available"
               onChange={handleChange}
             />
@@ -996,8 +1005,8 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
             <input
               type="text"
               className="p-2 border rounded mb-2 w-full bg-white"
-              name="mothersFullName"
-              value={studentInfo?.mothersFullName || ""}
+              name="mother_full_name"
+              value={studentInfo?.mother_full_name || ""}
               placeholder="Not Available"
               onChange={handleChange}
             />
@@ -1007,8 +1016,8 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
             <input
               type="date"
               className="p-2 border rounded mb-2 w-full bg-white"
-              name="dateOfBirth"
-              value={studentInfo?.dateOfBirth || ""}
+              name="date_of_birth"
+              value={studentInfo?.date_of_birth || ""}
               placeholder="Not Available"
               onChange={handleChange}
             />
@@ -1029,8 +1038,8 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
             <input
               type="text"
               className="p-2 border rounded mb-2 w-full bg-white"
-              name="bloodGroup"
-              value={studentInfo?.bloodGroup || ""}
+              name="blood_group"
+              value={studentInfo?.blood_group || ""}
               placeholder="Not Available"
               onChange={handleChange}
             />
@@ -1066,8 +1075,8 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
             <input
               type="text"
               className="p-2 border rounded mb-2 w-full bg-white"
-              name="caste"
-              value={studentInfo?.caste || ""}
+              name="cast"
+              value={studentInfo?.cast || ""}
               placeholder="Not Available"
               onChange={handleChange}
             />
@@ -1088,8 +1097,8 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
             <input
               type="text"
               className="p-2 border rounded mb-2 w-full bg-white"
-              name="parentContactNumber"
-              value={studentInfo?.parentContactNumber || ""}
+              name="guardian_contact_no"
+              value={studentInfo?.guardian_contact_no || ""}
               placeholder="Not Available"
               onChange={handleChange}
             />
@@ -1099,8 +1108,8 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
             <input
               type="email"
               className="p-2 border rounded mb-2 w-full bg-white"
-              name="emailId"
-              value={studentInfo?.emailId || ""}
+              name="email"
+              value={studentInfo?.email || ""}
               placeholder="Not Available"
               onChange={handleChange}
             />
@@ -1111,7 +1120,7 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
               type="text"
               className="p-2 border rounded mb-2 w-full bg-white"
               name="address"
-              value={studentInfo?.address.city || ""}
+              value={studentInfo?.address || ""}
               placeholder="Not Available"
               onChange={handleChange}
             />
@@ -1122,7 +1131,7 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
               type="text"
               className="p-2 border rounded mb-2 w-full bg-white"
               name="city"
-              value={studentInfo?.address.city || ""}
+              value={studentInfo?.address || ""}
               placeholder="Not Available"
               onChange={handleChange}
             />
@@ -1133,7 +1142,7 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
               type="text"
               className="p-2 border rounded mb-2 w-full bg-white"
               name="state"
-              value={studentInfo?.address.state || ""}
+              value={studentInfo?.state || ""}
               placeholder="Not Available"
               onChange={handleChange}
             />
@@ -1144,7 +1153,7 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
               type="text"
               className="p-2 border rounded mb-2 w-full bg-white"
               name="district"
-              value={studentInfo?.address.district || ""}
+              value={studentInfo?.district || ""}
               placeholder="Not Available"
               onChange={handleChange}
             />
@@ -1155,7 +1164,7 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
               type="text"
               className="p-2 border rounded mb-2 w-full bg-white"
               name="taluka"
-              value={studentInfo?.address.taluka || ""}
+              value={studentInfo?.taluka || ""}
               placeholder="Not Available"
               onChange={handleChange}
             />
@@ -1165,8 +1174,8 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
             <input
               type="text"
               className="p-2 border rounded mb-2 w-full bg-white"
-              name="motherTongue"
-              value={studentInfo?.motherTongue || ""}
+              name="mother_tongue"
+              value={studentInfo?.mother_tongue || ""}
               placeholder="Not Available"
               onChange={handleChange}
             />
@@ -1176,8 +1185,8 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
             <input
               type="text"
               className="p-2 border rounded mb-2 w-full bg-white"
-              name="familyIncome"
-              value={studentInfo?.familyIncome || ""}
+              name="family_income"
+              value={studentInfo?.family_income || ""}
               placeholder="Not Available"
               onChange={handleChange}
             />
@@ -1218,7 +1227,7 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
                   {studentInfo?.sscPerformance.map((performance, index) => (
                     <tr key={index}>
                       <td className="border p-2">{index + 1}</td>
-                      <td className="border p-2">{performance.academicYear}</td>
+                      <td className="border p-2">{performance.academic_year}</td>
                       <td className="border p-2">{performance.studyYear}</td>
                       <td className="border p-2">{performance.marksObtained}</td>
                       <td className="border p-2">{performance.outOf}</td>
@@ -1233,7 +1242,7 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
                   {studentInfo?.hscPerformance.map((performance, index) => (
                     <tr key={index}>
                       <td className="border p-2">{index + 1}</td>
-                      <td className="border p-2">{performance.academicYear}</td>
+                      <td className="border p-2">{performance.academic_year}</td>
                       <td className="border p-2">{performance.studyYear}</td>
                       <td className="border p-2">{performance.marksObtained}</td>
                       <td className="border p-2">{performance.outOf}</td>
@@ -1249,7 +1258,7 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
                   {studentInfo?.diplomaPerformance.map((performance, index) => (
                     <tr key={index}>
                       <td className="border p-2">{index + 1}</td>
-                      <td className="border p-2">{performance.academicYear}</td>
+                      <td className="border p-2">{performance.academic_year}</td>
                       <td className="border p-2">{performance.studyYear}</td>
                       <td className="border p-2">{performance.marksObtained}</td>
                       <td className="border p-2">{performance.outOf}</td>
@@ -1287,7 +1296,7 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
                   {studentInfo?.semesterPerformance.map((performance, index) => (
                     <tr key={index}>
                       <td className="border p-2">{index + 1}</td>
-                      <td className="border p-2">{performance.academicYear}</td>
+                      <td className="border p-2">{performance.academic_year}</td>
                       <td className="border p-2">{performance.studyYear}</td>
                       <td className="border p-2">{performance.semester}</td>
                       <td className="border p-2">{performance.marksObtained}</td>

@@ -104,48 +104,48 @@
 
 "use client";
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation'; 
+import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
 interface StudentInformation {
-    name: string;
-    prnNo: string;
-    class: string;
-    brannch: string;
+  name: string;
+  prnNo: string;
+  class: string;
+  brannch: string;
 }
 
 const TopLeftComponent: React.FC = () => {
   const [studentInfo, setStudentInfo] = useState<StudentInformation>();
 
-  const router = useRouter(); 
+  const router = useRouter();
 
   const handleBack = () => {
-    router.push('/dashboard');  
+    router.push('/dashboard');
   };
 
   const userSession = JSON.parse(sessionStorage.getItem("userSession") || "{}");
 
   const getStudentInfo = async () => {
     if (!userSession) {
-        toast.error("User not found.. please login");
+      toast.error("User not found.. please login");
     }
 
     let studentCurrentClass = '';
     if (parseInt(userSession.current_semester) === 1 || parseInt(userSession.current_semester) === 2) {
-        studentCurrentClass = "First Year";
+      studentCurrentClass = "First Year";
     } else if (parseInt(userSession.current_semester) === 3 || parseInt(userSession.current_semester) === 4) {
-        studentCurrentClass = "Second Year";
+      studentCurrentClass = "Second Year";
     } else if (parseInt(userSession.current_semester) === 5 || parseInt(userSession.current_semester) === 6) {
-        studentCurrentClass = "Third Year";
+      studentCurrentClass = "Third Year";
     } else {
-        studentCurrentClass = "Final Year";
+      studentCurrentClass = "Final Year";
     }
 
     const currUser: StudentInformation = {
-        name: userSession.username,
-        prnNo: userSession.prn,
-        class: studentCurrentClass,
-        brannch: userSession.department,
+      name: userSession.username,
+      prnNo: userSession.prn,
+      class: studentCurrentClass,
+      brannch: userSession.department,
     };
 
     setStudentInfo(currUser);
@@ -156,7 +156,7 @@ const TopLeftComponent: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex flex-wrap justify-center items-center h-full w-full bg-white shadow-lg rounded-lg border border-gray-200"> 
+    <div className="flex flex-wrap justify-center items-center h-full w-full text-black bg-white shadow-lg rounded-lg border border-gray-200">
       <div className="h-full w-full p-4">
         <button
           onClick={handleBack}
@@ -167,7 +167,7 @@ const TopLeftComponent: React.FC = () => {
 
         {/* Academic Year Dropdown */}
         <div className="mt-4">
-          <label htmlFor="academic-year" className="block text-sm font-semibold text-gray-800">
+          <label htmlFor="academic-year" className="block text-sm font-semibold text-black">
             Academic Year
           </label>
           <select

@@ -54,6 +54,7 @@ export const getAllTestlinkForSUbjectAction = async (subjectId: string) => {
                 test_link: true,
                 duration: true,
                 start_ts: true,
+                title: true
 
             }
         })

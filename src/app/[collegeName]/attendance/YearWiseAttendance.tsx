@@ -140,13 +140,13 @@ const TopRightComponent: React.FC = () => {
   };
 
   return (
-    <div className="h-auto p-4 bg-white shadow-lg rounded-lg">
+    <div className="h-auto p-4 bg-white text-black shadow-lg rounded-lg">
       <h2 className="text-xl font-bold text-blue-700 text-center mb-4">
         Attendance Record
       </h2>
       <div className="overflow-x-auto w-full">
         <table className="table-auto w-full bg-white border border-blue-200 rounded-lg">
-          <thead className="bg-blue-200 text-white" style={{backgroundColor: 'linear-gradient(#642bff, #ff22e6)'}}>
+          <thead className="bg-blue-200 text-white" style={{ backgroundColor: 'linear-gradient(#642bff, #ff22e6)' }}>
             <tr>
               <th className="px-4 py-2">Roll No</th>
               <th className="px-4 py-2">Class</th>

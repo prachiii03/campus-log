@@ -50,6 +50,7 @@ const AddSourcePage = () => {
         test_link: string;
         start_ts: Date;
         duration: number;
+        title: string;
     }[]>();
 
     const pathname = usePathname();
@@ -134,7 +135,7 @@ const AddSourcePage = () => {
     const getAllTestLink = async () => {
         const data = await getAllTestlinkForSUbjectAction(subjectId);
         if (data.data && data.data.length > 0) {
-            setTestLinks(data.data)
+            setTestLinks(data.data.filter((link: { title: string | null }) => link.title !== null) as { test_link: string; start_ts: Date; duration: number; title: string; }[])
             setLoading
                 (false)
         }
@@ -243,11 +244,12 @@ const AddSourcePage = () => {
                             {testLinks && <>
                                 {testLinks.map((link, index) => (
                                     <li key={index} className="bg-red-50 p-2 rounded-md flex items-center gap-2">
-                                        <Link size={18} className="text-gray-600" />
+
 
                                         <a href={link.test_link} target="_blank" rel="noopener noreferrer" className="text-red-600 hover:underline">
-                                            view
+                                            {link.title}
                                         </a>
+
                                         duration : {link.duration}
                                     </li>
                                 ))}

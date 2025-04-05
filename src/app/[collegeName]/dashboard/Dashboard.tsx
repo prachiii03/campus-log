@@ -533,7 +533,7 @@ const Dashboard: React.FC = () => {
 
     try {
       const response = await fetch(
-        `/api/student/${studentId}/get-current-semester-attendance?semester=${semester}`,
+        `/api/student/${studentId}/get-current-semester-attendance?semester=${8}`,
         {
           method: "GET",
           headers: {

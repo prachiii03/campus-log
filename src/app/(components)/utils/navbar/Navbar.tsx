@@ -77,7 +77,9 @@ const Navbar = () => {
                     <li><Link href={`/${collegeName}/faculty/attendance`}>Attendancce</Link></li>
                     <li><Link href={`/${collegeName}/faculty/tpo-section`}>TPO Section</Link></li>
                     <li><Link href={`/${collegeName}/faculty/subjects`}>Subjects</Link></li>
-                </>}
+                    <Link href="https://sgm-feedback-system.vercel.app/" target="_blank" rel="noopener noreferrer">
+                        Feedback
+                    </Link>                </>}
                 {userSession.id && <>
                     <li><Link href={`/${collegeName}/dashboard`}>Dashboard</Link></li>
                     <li><Link href={`/${collegeName}/attendance`}>Attendancce</Link></li>
@@ -85,7 +87,9 @@ const Navbar = () => {
                     <li><Link href={`/${collegeName}/faculty-index`}>Faculty Index</Link></li>
                     <li><Link href={`/${collegeName}/tpo-section`}>TPO Section</Link></li>
                     <li><Link href={`/${collegeName}/subjects`}>Subjects</Link></li>
-                </>}
+                    <Link href="https://sgm-feedback-system.vercel.app/" target="_blank" rel="noopener noreferrer">
+                        Feedback
+                    </Link>                </>}
             </ul>
 
             <div className="flex items-center space-x-4">

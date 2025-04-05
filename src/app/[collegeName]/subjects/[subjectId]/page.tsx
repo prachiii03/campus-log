@@ -19,9 +19,11 @@ const SubjectSourcePage = () => {
         test_link: string;
         start_ts: Date;
         duration: number;
+        title: string;
     }[]>();
     const [isLoading, setIsLoading] = useState(true); // Loading state
     const [subjectName, setSubjectName] = useState("")
+
     useEffect(() => {
         getAllNotes()
         getSubjectName()
@@ -29,7 +31,7 @@ const SubjectSourcePage = () => {
         getAllTestLink()
         setTimeout(() => {
             setIsLoading(false); // Simulating a delay before content loads
-        }, 2000); // 2 seconds delay
+        }, 5000); // 2 seconds delay
     }, []);
 
     const getAllNotes = async () => {
@@ -42,7 +44,6 @@ const SubjectSourcePage = () => {
                 title: note.title,
                 url: note.doc_url
             })))
-
     }
 
     const getSubjectName = async () => {
@@ -67,9 +68,10 @@ const SubjectSourcePage = () => {
     const getAllTestLink = async () => {
         const data = await getAllTestlinkForSUbjectAction(subjectId);
         if (data.data && data.data.length > 0) {
-            setTestLinks(data.data)
+            setTestLinks(data.data.filter((test: { title: string | null }) => test.title !== null) as { test_link: string; start_ts: Date; duration: number; title: string }[])
         }
     }
+
     return (
         <div className="min-h-screen w-full bg-gradient-to-r from-blue-50 to-purple-100 py-10 mt-16">
             <div className="max-w-6xl mx-auto px-6">
@@ -90,23 +92,17 @@ const SubjectSourcePage = () => {
                             </div>
                         ) : (
                             <ul className="text-gray-700 text-sm space-y-2">
-                                {syllabusFiles &&
-                                    <>
-                                        {syllabusFiles.map((file, index) => (
-                                            <li key={index} className="flex justify-between items-center bg-blue-50 p-2 rounded-md">
-                                                {file.url &&
-
-                                                    <a href={file.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline flex items-center gap-2">
-                                                        <FileText size={18} className="text-gray-600" />
-                                                        {file.title}
-                                                    </a>
-                                                }
-                                                <Download className="hover:cursor-pointer" size={18} />
-                                            </li>
-                                        ))}
-                                    </>
-                                }
-
+                                {syllabusFiles && syllabusFiles.map((file, index) => (
+                                    <li key={index} className="flex justify-between items-center bg-blue-50 p-2 rounded-md">
+                                        {file.url &&
+                                            <a href={file.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline flex items-center gap-2">
+                                                <FileText size={18} className="text-gray-600" />
+                                                {file.title}
+                                            </a>
+                                        }
+                                        <Download className="hover:cursor-pointer" size={18} />
+                                    </li>
+                                ))}
                             </ul>
                         )}
                     </div>
@@ -123,23 +119,17 @@ const SubjectSourcePage = () => {
                             </div>
                         ) : (
                             <ul className="text-gray-700 text-sm space-y-2">
-                                {notesFiles &&
-                                    <>
-                                        {notesFiles.map((file, index) => (
-                                            <li key={index} className="flex justify-between items-center bg-green-50 p-2 rounded-md">
-                                                {file.url &&
-                                                    <a href={file?.url} target="_blank" rel="noopener noreferrer" className="text-green-600 hover:underline flex items-center gap-2">
-                                                        <FileText size={18} className="text-gray-600" />
-                                                        {file.title}
-                                                    </a>
-                                                }
-                                                <Download className="hover:cursor-pointer" size={18} />
-
-                                            </li>
-                                        ))}
-                                    </>
-                                }
-
+                                {notesFiles && notesFiles.map((file, index) => (
+                                    <li key={index} className="flex justify-between items-center bg-green-50 p-2 rounded-md">
+                                        {file.url &&
+                                            <a href={file?.url} target="_blank" rel="noopener noreferrer" className="text-green-600 hover:underline flex items-center gap-2">
+                                                <FileText size={18} className="text-gray-600" />
+                                                {file.title}
+                                            </a>
+                                        }
+                                        <Download className="hover:cursor-pointer" size={18} />
+                                    </li>
+                                ))}
                             </ul>
                         )}
                     </div>
@@ -156,18 +146,15 @@ const SubjectSourcePage = () => {
                             </div>
                         ) : (
                             <ul className="text-gray-700 text-sm space-y-2">
-                                {testLinks && <>
-                                    {testLinks.map((link, index) => (
-                                        <li key={index} className="bg-red-50 p-2 rounded-md flex items-center gap-2">
-                                            <Link size={18} className="text-gray-600" />
-
-                                            <a href={link.test_link} target="_blank" rel="noopener noreferrer" className="text-red-600 hover:underline">
-                                                view
-                                            </a>
-                                            duration : {link.duration}
-                                        </li>
-                                    ))}
-                                </>}
+                                {testLinks && testLinks.map((link, index) => (
+                                    <li key={index} className="bg-red-50 p-2 rounded-md flex items-center gap-2">
+                                        <Link size={18} className="text-gray-600" />
+                                        <a href={link.test_link} target="_blank" rel="noopener noreferrer" className="text-red-600 hover:underline">
+                                            {link.title}
+                                        </a>
+                                        duration: {link.duration} minutes
+                                    </li>
+                                ))}
                             </ul>
                         )}
                     </div>

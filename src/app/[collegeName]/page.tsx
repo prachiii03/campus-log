@@ -13,13 +13,18 @@ import Hero from "../(components)/college-landing-page/Hero";
 import Testimonials from "../(components)/college-landing-page/Testimonials";
 //import Video from "./components/Video";
 import Video from "../(components)/college-landing-page/Video";
+import { useEffect } from "react";
 
 export const metadata: Metadata = {
   title: "SGMCOE",
   description: "",
 };
 
+
+
+
 export default function Home() {
+
   return (
     <>
       <ScrollUp />
