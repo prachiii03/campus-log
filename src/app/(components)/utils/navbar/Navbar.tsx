@@ -83,9 +83,11 @@ const Navbar = () => {
                         <li><Link href={`/${collegeName}/faculty/attendance`}>Attendancce</Link></li>
                         <li><Link href={`/${collegeName}/faculty/tpo-section`}>TPO Section</Link></li>
                         <li><Link href={`/${collegeName}/faculty/subjects`}>Subjects</Link></li>
-                        <Link href="https://sgm-feedback-system.vercel.app/" target="_blank" rel="noopener noreferrer">
+                        <li><Link href="https://sgm-feedback-system.vercel.app/" target="_blank" rel="noopener noreferrer">
                             Feedback
-                        </Link>                </>}
+                        </Link> </li>
+                        <li><li><Link href={`/${collegeName}/faculty/onboard`}>Admin</Link></li></li>
+                    </>}
                     {userSession.id && <>
                         <li><Link href={`/${collegeName}/dashboard`}>Dashboard</Link></li>
                         <li><Link href={`/${collegeName}/attendance`}>Attendancce</Link></li>
@@ -99,17 +101,17 @@ const Navbar = () => {
                 </ul>
 
                 <div className="flex items-center space-x-4">
-                    <IconBell className="h-6 w-6 cursor-pointer" />
+                    {/* <IconBell className="h-6 w-6 cursor-pointer" /> */}
 
-                    <button onClick={toggleDarkMode}>
+                    {/* <button onClick={toggleDarkMode}>
                         {isDarkMode ? (
                             <IconSun className="h-6 w-6 text-yellow-500 cursor-pointer" />
                         ) : (
                             <IconMoon className="h-6 w-6 cursor-pointer" />
                         )}
-                    </button>
+                    </button> */}
 
-                    <div className="relative" ref={profileRef}>
+                    {/* <div className="relative" ref={profileRef}>
                         <Image
                             src={User}
                             alt="Profile"
@@ -132,9 +134,9 @@ const Navbar = () => {
                                 </button>
                             </div>
                         )}
-                    </div>
+                    </div> */}
 
-                    <ul className="hidden md:flex space-x-6">
+                    {/* <ul className="hidden md:flex space-x-6">
                         {facultySession.faculty_id && (
                             <>
                                 <li><Link href={`/${collegeName}/faculty/faculty-details`}>Faculty Details</Link></li>
@@ -151,18 +153,18 @@ const Navbar = () => {
                                 <li><Link href={`/${collegeName}/tpo-section`}>TPO Section</Link></li>
                             </>
                         )}
-                    </ul>
+                    </ul> */}
                 </div>
                 <div className="flex items-center space-x-4">
                     <IconBell className="h-6 w-6 cursor-pointer" aria-label="Notifications" />
 
-                    <button onClick={toggleDarkMode} aria-label="Toggle Dark Mode">
+                    {/* <button onClick={toggleDarkMode} aria-label="Toggle Dark Mode">
                         {isDarkMode ? (
                             <IconSun className="h-6 w-6 text-yellow-500 cursor-pointer" />
                         ) : (
                             <IconMoon className="h-6 w-6 cursor-pointer" />
                         )}
-                    </button>
+                    </button> */}
 
                     <div className="relative" ref={profileRef}>
                         <Image
