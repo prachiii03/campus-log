@@ -7,42 +7,42 @@ import { Button } from "../../../components/ui/moving-border";
 import { BorderBeam } from "@/components/ui/border-beam";
 import ShineBorder from "@/components/ui/shine-border";
 import Footer from "./Footer";
-import SkeletonNavbar from "./LandingPageSkeleton"; 
+import SkeletonNavbar from "./LandingPageSkeleton";
 
 const HeroSection: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   type BillingCycle = 'monthly' | 'yearly';
 
-const pricing: {
-  Basic: { [key in BillingCycle]: number };
-  Pro: { [key in BillingCycle]: number };
-  Enterprise: { [key in BillingCycle]: number };
-} = {
-  Basic: {
-    monthly: 10,
-    yearly: 100,
-  },
-  Pro: {
-    monthly: 20,
-    yearly: 200,
-  },
-  Enterprise: {
-    monthly: 50,
-    yearly: 500,
-  },
-};
+  const pricing: {
+    Basic: { [key in BillingCycle]: number };
+    Pro: { [key in BillingCycle]: number };
+    Enterprise: { [key in BillingCycle]: number };
+  } = {
+    Basic: {
+      monthly: 10,
+      yearly: 100,
+    },
+    Pro: {
+      monthly: 20,
+      yearly: 200,
+    },
+    Enterprise: {
+      monthly: 50,
+      yearly: 500,
+    },
+  };
 
-const [activeButton, setActiveButton] = useState<"Basic" | "Pro" | "Enterprise">("Basic");
+  const [activeButton, setActiveButton] = useState<"Basic" | "Pro" | "Enterprise">("Basic");
 
-const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
+  const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
 
 
   useEffect(() => {
     // Simulate a loading state for demonstration
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 950); 
+    }, 950);
 
     return () => clearTimeout(timer);
   }, []);
@@ -54,38 +54,38 @@ const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
   return (
     <div className="w-full bg-white bg-[radial-gradient(60%_120%_at_50%_50%,hsla(0,0%,100%,0)_0,rgba(252,205,238,.5)_100%)]">
       <section className="relative w-full p-10 min-h-screen flex flex-col lg:flex-row items-center justify-between lg:space-x-16 pt-24">
-  {/* Text Content */}
-  <div className="lg:w-1/2 w-full text-center lg:text-left order-2 lg:order-1 mt-8 lg:mt-0 flex flex-col justify-center">
-    <h1 className="text-3xl lg:text-5xl font-semibold lg:font-bold mb-4">
-      Secure and Efficient Educational Management with{" "}
-      <span className="inline-block gradient-text text-transparent animate-gradient">
-        EduTrack Pro Secure
-      </span>
-    </h1>
-    <p className="text-sm lg:text-lg text-gray-700 mb-6">
-      EduTrack Pro Secure helps streamline communication and data management between students, teachers, and parents through robust encryption, role-based access control, and comprehensive record management.
-    </p>
-    <div className="flex space-x-4 justify-center lg:justify-start mt-4 lg:mt-0">
-      <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white border-neutral-200 px-4 py-2 text-sm lg:text-base">
-        Get Started
-      </Button>
-      <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white border-neutral-200 px-4 py-2 text-sm lg:text-base">
-        Learn More
-      </Button>
-    </div>
-  </div>
+        {/* Text Content */}
+        <div className="lg:w-1/2 w-full text-center lg:text-left order-2 lg:order-1 mt-8 lg:mt-0 flex flex-col justify-center">
+          <h1 className="text-3xl lg:text-5xl font-semibold lg:font-bold mb-4">
+            Secure and Efficient Educational Management with{" "}
+            <span className="inline-block gradient-text text-transparent animate-gradient">
+              EduTrack Pro Secure
+            </span>
+          </h1>
+          <p className="text-sm lg:text-lg text-gray-700 mb-6">
+            EduTrack Pro Secure helps streamline communication and data management between students, teachers, and parents through robust encryption, role-based access control, and comprehensive record management.
+          </p>
+          <div className="flex space-x-4 justify-center lg:justify-start mt-4 lg:mt-0">
+            <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white border-neutral-200 px-4 py-2 text-sm lg:text-base">
+              Get Started
+            </Button>
+            <Button className="bg-gradient-to-r from-purple-500 to-blue-500 text-white border-neutral-200 px-4 py-2 text-sm lg:text-base">
+              Learn More
+            </Button>
+          </div>
+        </div>
 
-  {/* Image Content */}
-  <div className="lg:w-1/2 w-full flex justify-center order-1 lg:order-2 mt-8 lg:mt-0">
-    <Image
-      src={studentimg}
-      alt="EduTrack Pro illustration"
-      width={400}
-      height={400}
-      className="rounded-full shadow-lg lg:w-[600px] lg:h-[600px]"
-    />
-  </div>
-</section>
+        {/* Image Content */}
+        <div className="lg:w-1/2 w-full flex justify-center order-1 lg:order-2 mt-8 lg:mt-0">
+          <Image
+            src={studentimg}
+            alt="EduTrack Pro illustration"
+            width={400}
+            height={400}
+            className="rounded-full shadow-lg lg:w-[600px] lg:h-[600px]"
+          />
+        </div>
+      </section>
 
 
       {/* Why Choose EduTrack Pro Section */}
@@ -267,7 +267,7 @@ const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
 
       {/* How It Works Section */}
       <section className="py-8 md:py-16 text-center relative bg-white bg-[radial-gradient(60%_120%_at_50%_50%,hsla(0,0%,100%,0)_0,rgba(252,205,238,.5)_100%)]">
-      <div className="container mx-auto px-4 lg:px-44">
+        <div className="container mx-auto px-4 lg:px-44">
           <h2 className="text-4xl font-bold mb-4 text-purple-700 mt-8 md:mt-12">
             How It{" "}
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-blue-500">
@@ -302,106 +302,105 @@ const [billingCycle, setBillingCycle] = useState<BillingCycle>('monthly');
       </section>
 
       <section className="py-8 md:py-16 text-center relative bg-white bg-[radial-gradient(60%_120%_at_50%_50%,hsla(0,0%,100%,0)_0,rgba(252,205,238,.5)_100%)]">
-      <h2 className="text-4xl font-bold mb-6 text-gray-900">
-        Choose the Best Plan for{" "}
-        <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-blue-500">
-          EduTrack Pro
-        </span>
-      </h2>
-      <p className="text-lg text-gray-600 mb-8">
-        Find the perfect plan to manage and track your educational progress
-        effortlessly.
-      </p>
-
-      {/* Toggle Button for Monthly/Yearly */}
-      <div className="flex justify-center items-center mb-8">
-        <span className={`text-sm ${billingCycle === "monthly" ? "text-gray-900" : "text-gray-500"}`}>
-          Monthly
-        </span>
-        <div
-          className="relative inline-block w-16 mx-4 align-middle select-none transition duration-200 ease-in"
-          onClick={() => {
-            setBillingCycle(billingCycle === "monthly" ? "yearly" : "monthly");
-          }}
-        >
-          <div className="w-full h-8 bg-gray-200 rounded-full shadow-inner"></div>
-          <div
-            className={`${
-              billingCycle === "monthly" ? "translate-x-1" : "translate-x-8"
-            } absolute top-1 left-1 w-6 h-6 bg-purple-500 rounded-full transition transform ease-in-out duration-200`}
-          ></div>
-        </div>
-        <span className={`text-sm ${billingCycle === "yearly" ? "text-gray-900" : "text-gray-500"}`}>
-          Yearly
-        </span>
-      </div>
-
-      {/* Cards Container */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10 justify-items-center px-6 lg:px-24">
-        {/* Basic Plan */}
-        <div className="bg-white text-gray-800 p-6 rounded-lg shadow-lg w-full max-w-sm">
-          <h2 className="text-xl font-semibold mb-4 text-purple-700">Basic</h2>
-          <p className="price text-4xl font-bold mb-2">${pricing.Basic[billingCycle]}</p>
-          <span className="text-sm text-gray-500">/ {billingCycle}</span>
-          <p className="mb-4">Ideal for small institutions</p>
-          <ul className="text-left mt-4 space-y-2">
-            <li>✅ Up to 100 students</li>
-            <li>✅ 1 Teacher</li>
-            <li>✅ Core features</li>
-            <li>✅ .</li>
-          </ul>
-          <button
-            className={`mt-6 w-full py-2 rounded-lg ${activeButton === "Basic" ? "bg-blue-600" : "bg-black"} text-white hover:bg-gray-800`}
-            onClick={() => setActiveButton("Basic")}
-          >
-            Start for free
-          </button>
-        </div>
-
-        {/* Pro Plan */}
-        <div className="bg-white text-gray-800 p-6 rounded-lg shadow-lg w-full max-w-sm relative">
-          <span className="absolute top-2 right-2 px-3 py-1 text-xs font-semibold text-blue-700 bg-blue-100 rounded-full">
-            Most popular
+        <h2 className="text-4xl font-bold mb-6 text-gray-900">
+          Choose the Best Plan for{" "}
+          <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-500 to-blue-500">
+            EduTrack Pro
           </span>
-          <h2 className="text-xl font-semibold mb-4 text-purple-700">Pro</h2>
-          <p className="price text-4xl font-bold mb-2">${pricing.Pro[billingCycle]}</p>
-          <span className="text-sm text-gray-500">/ {billingCycle}</span>
-          <p className="mb-4">Perfect for growing institutions</p>
-          <ul className="text-left mt-4 space-y-2">
-            <li>✅ Unlimited students</li>
-            <li>✅ 10 Teachers</li>
-            <li>✅ Advanced analytics</li>
-            <li>✅ Custom reports</li>
-          </ul>
-          <button
-            className={`mt-6 w-full py-2 rounded-lg ${activeButton === "Pro" ? "bg-blue-600" : "bg-blue-600"} text-white hover:bg-blue-500`}
-            onClick={() => setActiveButton("Pro")}
+        </h2>
+        <p className="text-lg text-gray-600 mb-8">
+          Find the perfect plan to manage and track your educational progress
+          effortlessly.
+        </p>
+
+        {/* Toggle Button for Monthly/Yearly */}
+        <div className="flex justify-center items-center mb-8">
+          <span className={`text-sm ${billingCycle === "monthly" ? "text-gray-900" : "text-gray-500"}`}>
+            Monthly
+          </span>
+          <div
+            className="relative inline-block w-16 mx-4 align-middle select-none transition duration-200 ease-in"
+            onClick={() => {
+              setBillingCycle(billingCycle === "monthly" ? "yearly" : "monthly");
+            }}
           >
-            Upgrade to Pro
-          </button>
+            <div className="w-full h-8 bg-gray-200 rounded-full shadow-inner"></div>
+            <div
+              className={`${billingCycle === "monthly" ? "translate-x-1" : "translate-x-8"
+                } absolute top-1 left-1 w-6 h-6 bg-purple-500 rounded-full transition transform ease-in-out duration-200`}
+            ></div>
+          </div>
+          <span className={`text-sm ${billingCycle === "yearly" ? "text-gray-900" : "text-gray-500"}`}>
+            Yearly
+          </span>
         </div>
 
-        {/* Enterprise Plan */}
-        <div className="bg-white text-gray-800 p-6 rounded-lg shadow-lg w-full max-w-sm">
-          <h2 className="text-xl font-semibold mb-4 text-purple-700">Enterprise</h2>
-          <p className="price text-4xl font-bold mb-2">${pricing.Enterprise[billingCycle]}</p>
-          <span className="text-sm text-gray-500">/ {billingCycle}</span>
-          <p className="mb-4">For large educational institutions</p>
-          <ul className="text-left mt-4 space-y-2">
-            <li>✅ Unlimited students & teachers</li>
-            <li>✅ Custom integrations</li>
-            <li>✅ Priority support (24/7)</li>
-            <li>✅ Dedicated account manager</li>
-          </ul>
-          <button
-            className={`mt-6 w-full py-2 rounded-lg ${activeButton === "Enterprise" ? "bg-blue-600" : "bg-black"} text-white hover:bg-gray-800`}
-            onClick={() => setActiveButton("Enterprise")}
-          >
-            Upgrade to Enterprise
-          </button>
+        {/* Cards Container */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-10 justify-items-center px-6 lg:px-24">
+          {/* Basic Plan */}
+          <div className="bg-white text-gray-800 p-6 rounded-lg shadow-lg w-full max-w-sm">
+            <h2 className="text-xl font-semibold mb-4 text-purple-700">Basic</h2>
+            <p className="price text-4xl font-bold mb-2">${pricing.Basic[billingCycle]}</p>
+            <span className="text-sm text-gray-500">/ {billingCycle}</span>
+            <p className="mb-4">Ideal for small institutions</p>
+            <ul className="text-left mt-4 space-y-2">
+              <li>✅ Up to 100 students</li>
+              <li>✅ 1 Teacher</li>
+              <li>✅ Core features</li>
+              <li>✅ .</li>
+            </ul>
+            <button
+              className={`mt-6 w-full py-2 rounded-lg ${activeButton === "Basic" ? "bg-blue-600" : "bg-black"} text-white hover:bg-gray-800`}
+              onClick={() => setActiveButton("Basic")}
+            >
+              Start for free
+            </button>
+          </div>
+
+          {/* Pro Plan */}
+          <div className="bg-white text-gray-800 p-6 rounded-lg shadow-lg w-full max-w-sm relative">
+            <span className="absolute top-2 right-2 px-3 py-1 text-xs font-semibold text-blue-700 bg-blue-100 rounded-full">
+              Most popular
+            </span>
+            <h2 className="text-xl font-semibold mb-4 text-purple-700">Pro</h2>
+            <p className="price text-4xl font-bold mb-2">${pricing.Pro[billingCycle]}</p>
+            <span className="text-sm text-gray-500">/ {billingCycle}</span>
+            <p className="mb-4">Perfect for growing institutions</p>
+            <ul className="text-left mt-4 space-y-2">
+              <li>✅ Unlimited students</li>
+              <li>✅ 10 Teachers</li>
+              <li>✅ Advanced analytics</li>
+              <li>✅ Custom reports</li>
+            </ul>
+            <button
+              className={`mt-6 w-full py-2 rounded-lg ${activeButton === "Pro" ? "bg-blue-600" : "bg-blue-600"} text-white hover:bg-blue-500`}
+              onClick={() => setActiveButton("Pro")}
+            >
+              Upgrade to Pro
+            </button>
+          </div>
+
+          {/* Enterprise Plan */}
+          <div className="bg-white text-gray-800 p-6 rounded-lg shadow-lg w-full max-w-sm">
+            <h2 className="text-xl font-semibold mb-4 text-purple-700">Enterprise</h2>
+            <p className="price text-4xl font-bold mb-2">${pricing.Enterprise[billingCycle]}</p>
+            <span className="text-sm text-gray-500">/ {billingCycle}</span>
+            <p className="mb-4">For large educational institutions</p>
+            <ul className="text-left mt-4 space-y-2">
+              <li>✅ Unlimited students & teachers</li>
+              <li>✅ Custom integrations</li>
+              <li>✅ Priority support (24/7)</li>
+              <li>✅ Dedicated account manager</li>
+            </ul>
+            <button
+              className={`mt-6 w-full py-2 rounded-lg ${activeButton === "Enterprise" ? "bg-blue-600" : "bg-black"} text-white hover:bg-gray-800`}
+              onClick={() => setActiveButton("Enterprise")}
+            >
+              Upgrade to Enterprise
+            </button>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
       <Footer />
     </div>

@@ -144,8 +144,8 @@ const OnboardFacultyPage = () => {
 
     // Faculty Success Component
     const FacultySuccess = () => (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900 pt-20 pb-10 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-8 text-center">
+        <div className="min-h-screen  bg-gray-50 pt-20 pb-10 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-2xl p-8 text-center">
                 <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
@@ -154,8 +154,8 @@ const OnboardFacultyPage = () => {
                 >
                     <IconCheck className="text-green-600 dark:text-green-300" size={40} />
                 </motion.div>
-                <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">Faculty Onboarded Successfully!</h2>
-                <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+                <h2 className="text-3xl font-bold text-gray-800 mb-4">Faculty Onboarded Successfully!</h2>
+                <p className="text-lg text-gray-600  mb-8">
                     {facultyData.firstName} {facultyData.lastName} has been successfully added to the system.
                 </p>
                 <button
@@ -198,8 +198,8 @@ const OnboardFacultyPage = () => {
                 >
                     <IconCheck className="text-green-600 dark:text-green-300" size={40} />
                 </motion.div>
-                <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-4">Student Onboarded Successfully!</h2>
-                <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
+                <h2 className="text-3xl font-bold text-gray-800 mb-4">Student Onboarded Successfully!</h2>
+                <p className="text-lg text-gray-600  mb-8">
                     Student has been successfully added to the system.
                 </p>
                 <button
@@ -220,14 +220,14 @@ const OnboardFacultyPage = () => {
     if (isStudentSubmitted) return <StudentSuccess />;
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900 pt-20 pb-10 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 pt-20 pb-10 px-4 sm:px-6 lg:px-8">
             <div className="max-w-6xl mx-auto">
                 {/* Tab selector */}
                 <div className="flex justify-center mb-6">
-                    <div className="inline-flex rounded-md shadow-sm bg-white dark:bg-gray-800 p-1">
+                    <div className="inline-flex rounded-md shadow-sm bg-white">
                         <button
                             onClick={() => setActiveTab('faculty')}
-                            className={`px-6 py-3 text-sm font-medium rounded-lg transition-all ${activeTab === 'faculty' ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md' : 'bg-transparent text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'}`}
+                            className={`px-6 py-3 text-sm font-medium rounded-lg transition-all ${activeTab === 'faculty' ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md' : 'bg-transparent text-black  hover:bg-gray-100'}`}
                         >
                             <div className="flex items-center">
                                 <IconUser className="mr-2" size={18} />
@@ -236,7 +236,7 @@ const OnboardFacultyPage = () => {
                         </button>
                         <button
                             onClick={() => setActiveTab('student')}
-                            className={`px-6 py-3 text-sm font-medium rounded-lg transition-all ${activeTab === 'student' ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md' : 'bg-transparent text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'}`}
+                            className={`px-6 py-3 text-sm font-medium rounded-lg transition-all ${activeTab === 'student' ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md' : 'bg-transparent text-black hover:bg-gray-100'}`}
                         >
                             <div className="flex items-center">
                                 <IconUserPlus className="mr-2" size={18} />
@@ -250,10 +250,10 @@ const OnboardFacultyPage = () => {
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="bg-white dark:bg-gray-800 shadow-2xl rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700"
+                        className="bg-white shadow-2xl rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700"
                     >
                         <div className="p-6 sm:p-8">
-                            <h2 className="text-3xl font-semibold text-gray-800 dark:text-white mb-6 flex items-center justify-center">
+                            <h2 className="text-3xl font-semibold text-gray-800 mb-6 flex items-center justify-center">
                                 <IconUser className="mr-2 text-blue-500" size={30} />
                                 Faculty Onboarding Form
                             </h2>
@@ -263,7 +263,7 @@ const OnboardFacultyPage = () => {
                                     {/* Profile Image Upload */}
                                     <div className="md:col-span-2">
                                         <div className="flex flex-col items-center">
-                                            <div className="relative w-32 h-32 rounded-full bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 mb-4 overflow-hidden border-4 border-white dark:border-gray-600 shadow-lg">
+                                            <div className="relative w-32 h-32 rounded-full bg-gradient-to-br from-gray-200 to-gray-300  mb-4 overflow-hidden border-4 border-white  shadow-lg">
                                                 {imagePreview ? (
                                                     <img
                                                         src={imagePreview}
@@ -300,7 +300,7 @@ const OnboardFacultyPage = () => {
 
                                     {/* Faculty ID */}
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        <label className="block text-sm font-medium text-black mb-1">
                                             Faculty ID <span className="text-red-500">*</span>
                                             <span className="text-xs text-gray-500 ml-1">(Can be UUID or custom format, between 3-36 characters)</span>
                                         </label>
@@ -309,7 +309,7 @@ const OnboardFacultyPage = () => {
                                             name="facultyId"
                                             value={facultyData.facultyId}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                            className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white bg-white"
                                             placeholder="Faculty Id"
                                             required
                                             pattern=".{3,36}" // Minimum 3 chars, maximum 36
@@ -319,7 +319,7 @@ const OnboardFacultyPage = () => {
 
                                     {/* Name Fields */}
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        <label className="block text-sm font-medium text-gray-700  mb-1">
                                             First Name <span className="text-red-500">*</span>
                                         </label>
                                         <input
@@ -327,13 +327,13 @@ const OnboardFacultyPage = () => {
                                             name="firstName"
                                             value={facultyData.firstName}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                            className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                             placeholder="e.g. John"
                                             required
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        <label className="block text-sm font-medium text-gray-700  mb-1">
                                             Middle Name
                                         </label>
                                         <input
@@ -341,12 +341,12 @@ const OnboardFacultyPage = () => {
                                             name="middleName"
                                             value={facultyData.middleName}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                            className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white bg-white"
                                             placeholder="e.g. Den"
                                         />
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        <label className="block text-sm font-medium text-gray-700  mb-1">
                                             Last Name <span className="text-red-500">*</span>
                                         </label>
                                         <input
@@ -354,7 +354,7 @@ const OnboardFacultyPage = () => {
                                             name="lastName"
                                             value={facultyData.lastName}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                            className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                             placeholder="e.g. Smith"
                                             required
                                         />
@@ -362,14 +362,14 @@ const OnboardFacultyPage = () => {
 
                                     {/* Gender */}
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        <label className="block text-sm font-medium text-gray-700  mb-1">
                                             Gender <span className="text-red-500">*</span>
                                         </label>
                                         <select
                                             name="gender"
                                             value={facultyData.gender}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                            className="w-full px-4 py-2 border border-white bg-gray-200  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all text-black"
                                             required
                                         >
                                             <option value="Male">Male</option>
@@ -380,7 +380,7 @@ const OnboardFacultyPage = () => {
 
                                     {/* Highest Education */}
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        <label className="block text-sm font-medium text-gray-700  mb-1">
                                             Highest Education <span className="text-red-500">*</span>
                                         </label>
                                         <input
@@ -388,7 +388,7 @@ const OnboardFacultyPage = () => {
                                             name="highestEducation"
                                             value={facultyData.highestEducation}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                            className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                             placeholder="e.g. B Tech"
                                             required
                                         />
@@ -396,14 +396,14 @@ const OnboardFacultyPage = () => {
 
                                     {/* Address */}
                                     <div className="md:col-span-2">
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        <label className="block text-sm font-medium text-gray-700  mb-1">
                                             Address <span className="text-red-500">*</span>
                                         </label>
                                         <textarea
                                             name="address"
                                             value={facultyData.address}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                            className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                             rows={3}
                                             placeholder="e.g. Delhi"
                                             required
@@ -412,7 +412,7 @@ const OnboardFacultyPage = () => {
 
                                     {/* Contact Information */}
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        <label className="block text-sm font-medium text-gray-700  mb-1">
                                             Email <span className="text-red-500">*</span>
                                         </label>
                                         <input
@@ -420,7 +420,7 @@ const OnboardFacultyPage = () => {
                                             name="email"
                                             value={facultyData.email}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                            className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                             placeholder="e.g. johnsmith@gmail.com"
                                             required
                                         />
@@ -429,7 +429,7 @@ const OnboardFacultyPage = () => {
                                         )}
                                     </div>
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        <label className="block text-sm font-medium text-gray-700  mb-1">
                                             Contact No <span className="text-red-500">*</span>
                                         </label>
                                         <input
@@ -437,7 +437,7 @@ const OnboardFacultyPage = () => {
                                             name="contactNo"
                                             value={facultyData.contactNo}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                            className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                             placeholder="e.g. 9845673425"
                                             required
                                         />
@@ -448,7 +448,7 @@ const OnboardFacultyPage = () => {
 
                                     {/* Username */}
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        <label className="block text-sm font-medium text-gray-700  mb-1">
                                             Username <span className="text-red-500">*</span>
                                         </label>
                                         <input
@@ -456,7 +456,7 @@ const OnboardFacultyPage = () => {
                                             name="username"
                                             value={facultyData.username}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                            className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                             placeholder="e.g. johnsmith"
                                             required
                                         />
@@ -464,7 +464,7 @@ const OnboardFacultyPage = () => {
 
                                     {/* Department ID */}
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        <label className="block text-sm font-medium text-gray-700  mb-1">
                                             Department ID <span className="text-red-500">*</span>
                                         </label>
                                         <input
@@ -472,7 +472,7 @@ const OnboardFacultyPage = () => {
                                             name="departmentId"
                                             value={facultyData.departmentId}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                            className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                             placeholder="e.g. DEP-CSE"
                                             required
                                             pattern=".{3,36}"
@@ -482,7 +482,7 @@ const OnboardFacultyPage = () => {
 
                                     {/* Subjects */}
                                     <div className="md:col-span-2">
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                                        <label className="block text-sm font-medium text-gray-700  mb-1">
                                             Subjects <span className="text-red-500">*</span>
                                         </label>
                                         <div className="flex flex-wrap gap-2 mb-2">
@@ -507,7 +507,7 @@ const OnboardFacultyPage = () => {
                                                 type="text"
                                                 value={currentSubject}
                                                 onChange={(e) => setCurrentSubject(e.target.value)}
-                                                className="flex-grow px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                                className="flex-grow px-4 py-2 border border-gray-300 bg-white text-black  rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all"
                                                 placeholder="e.g. Python, Deep Learning"
                                                 onKeyPress={(e) => e.key === 'Enter' && handleAddSubject()}
                                             />
@@ -588,7 +588,7 @@ const StudentOnboardForm = ({
         return /^[0-9]{10}$/.test(phone);
     };
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setStudentData(prev => ({
             ...prev,
@@ -636,10 +636,10 @@ const StudentOnboardForm = ({
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white dark:bg-gray-800 shadow-2xl rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700"
+            className="bg-white shadow-2xl rounded-xl overflow-hidden border border-gray-200 "
         >
             <div className="p-6 sm:p-8">
-                <h2 className="text-3xl font-semibold text-gray-800 dark:text-white mb-6 flex items-center justify-center">
+                <h2 className="text-3xl font-semibold text-black  mb-6 flex items-center justify-center">
                     <IconSchool className="mr-2 text-green-500" size={32} />
                     Student Onboarding Form
                 </h2>
@@ -648,13 +648,13 @@ const StudentOnboardForm = ({
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         {/* Basic Information */}
                         <div className="md:col-span-2">
-                            <h3 className="text-lg font-bold font-medium text-gray-800 dark:text-white mb-4 border-b pb-2 border-gray-200 dark:border-gray-700">
+                            <h3 className="text-lg  font-medium text-gray-800 mb-4 border-b pb-2 border-gray-200 dark:border-gray-700">
                                 Personal Information
                             </h3>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-medium text-black  mb-1">
                                 Full Name <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -662,14 +662,14 @@ const StudentOnboardForm = ({
                                 name="fullName"
                                 value={studentData.fullName}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 placeholder="e.g. John Doe"
                                 required
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-medium text-black  mb-1">
                                 Email ID <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -677,7 +677,7 @@ const StudentOnboardForm = ({
                                 name="email"
                                 value={studentData.email}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 placeholder="e.g. john@example.com"
                                 required
                             />
@@ -687,7 +687,7 @@ const StudentOnboardForm = ({
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-medium text-black  mb-1">
                                 PRN No <span className="text-red-500">*</span>
                                 <span className="text-xs text-gray-500 ml-1">(University identification number)</span>
                             </label>
@@ -696,7 +696,7 @@ const StudentOnboardForm = ({
                                 name="prnNo"
                                 value={studentData.prnNo}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 placeholder="e.g. 2023BCS1234 or STU-001"
                                 required
                                 pattern=".{4,20}" // Minimum 4 chars, maximum 20
@@ -705,7 +705,7 @@ const StudentOnboardForm = ({
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-medium text-black  mb-1">
                                 Contact No <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -713,7 +713,7 @@ const StudentOnboardForm = ({
                                 name="contactNo"
                                 value={studentData.contactNo}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 placeholder="e.g. 9876543210"
                                 required
                             />
@@ -723,7 +723,7 @@ const StudentOnboardForm = ({
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-medium text-black  mb-1">
                                 Date of Birth <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -731,20 +731,20 @@ const StudentOnboardForm = ({
                                 name="dob"
                                 value={studentData.dob}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 required
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-medium text-black  mb-1">
                                 Gender <span className="text-red-500">*</span>
                             </label>
                             <select
                                 name="gender"
                                 value={studentData.gender}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 required
                             >
                                 <option value="Male">Male</option>
@@ -754,14 +754,14 @@ const StudentOnboardForm = ({
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-medium text-black  mb-1">
                                 Blood Group
                             </label>
                             <select
                                 name="bloodGroup"
                                 value={studentData.bloodGroup}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                             >
                                 <option value="">Select</option>
                                 <option value="A+">A+</option>
@@ -776,14 +776,14 @@ const StudentOnboardForm = ({
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-medium text-black  mb-1">
                                 Category <span className="text-red-500">*</span>
                             </label>
                             <select
                                 name="category"
                                 value={studentData.category}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 required
                             >
                                 <option value="General">General</option>
@@ -796,20 +796,20 @@ const StudentOnboardForm = ({
 
                         {/* Academic Information */}
                         <div className="md:col-span-2 mt-4">
-                            <h3 className="text-lg font-bold font-medium text-gray-800 dark:text-white mb-4 border-b pb-2 border-gray-200 dark:border-gray-700">
+                            <h3 className="text-lg font-bold font-medium text-gray-800 mb-4 border-b pb-2 border-gray-200 dark:border-gray-700">
                                 Academic Information
                             </h3>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-medium text-black  mb-1">
                                 Program <span className="text-red-500">*</span>
                             </label>
                             <select
                                 name="program"
                                 value={studentData.program}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 required
                             >
                                 <option value="">Select Program</option>
@@ -820,14 +820,14 @@ const StudentOnboardForm = ({
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-medium text-black  mb-1">
                                 Course <span className="text-red-500">*</span>
                             </label>
                             <select
                                 name="course"
                                 value={studentData.course}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 required
                             >
                                 <option value="">Select Course</option>
@@ -840,14 +840,14 @@ const StudentOnboardForm = ({
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-medium text-black  mb-1">
                                 Class <span className="text-red-500">*</span>
                             </label>
                             <select
                                 name="class"
                                 value={studentData.class}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 required
                             >
                                 <option value="">Select Class</option>
@@ -865,13 +865,13 @@ const StudentOnboardForm = ({
 
                         {/* Family Information */}
                         <div className="md:col-span-2 mt-4">
-                            <h3 className="text-lg font-bold font-medium text-gray-800 dark:text-white mb-4 border-b pb-2 border-gray-200 dark:border-gray-700">
+                            <h3 className="text-lg font-bold font-medium text-gray-800 mb-4 border-b pb-2 border-gray-200 dark:border-gray-700">
                                 Family Information
                             </h3>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-medium text-black  mb-1">
                                 Father full Name <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -879,14 +879,14 @@ const StudentOnboardForm = ({
                                 name="fatherName"
                                 value={studentData.fatherName}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 placeholder="e.g. Robert Doe"
                                 required
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-medium text-black  mb-1">
                                 Mother Full Name <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -894,14 +894,14 @@ const StudentOnboardForm = ({
                                 name="motherName"
                                 value={studentData.motherName}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 placeholder="e.g. Mary Doe"
                                 required
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-medium text-black  mb-1">
                                 Mother Tongue
                             </label>
                             <input
@@ -909,13 +909,13 @@ const StudentOnboardForm = ({
                                 name="motherTongue"
                                 value={studentData.motherTongue}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 placeholder="e.g. English"
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-medium text-black  mb-1">
                                 Family Income (₹)
                             </label>
                             <input
@@ -923,27 +923,27 @@ const StudentOnboardForm = ({
                                 name="familyIncome"
                                 value={studentData.familyIncome}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 placeholder="e.g. 500000"
                             />
                         </div>
 
                         {/* Address Information */}
                         <div className="md:col-span-2 mt-4">
-                            <h3 className="text-lg font-bold font-medium text-gray-800 dark:text-white mb-4 border-b pb-2 border-gray-200 dark:border-gray-700">
+                            <h3 className="text-lg font-bold font-medium text-gray-800 mb-4 border-b pb-2 border-gray-200 dark:border-gray-700">
                                 Address Information
                             </h3>
                         </div>
 
                         <div className="md:col-span-2">
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-medium text-black  mb-1">
                                 Address <span className="text-red-500">*</span>
                             </label>
                             <textarea
                                 name="address"
                                 value={studentData.address}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 rows={3}
                                 placeholder="Full address"
                                 required
@@ -951,7 +951,7 @@ const StudentOnboardForm = ({
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-medium text-black  mb-1">
                                 City <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -959,14 +959,14 @@ const StudentOnboardForm = ({
                                 name="city"
                                 value={studentData.city}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 placeholder="e.g. Mumbai"
                                 required
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-medium text-black  mb-1">
                                 State <span className="text-red-500">*</span>
                             </label>
                             <input
@@ -974,14 +974,14 @@ const StudentOnboardForm = ({
                                 name="state"
                                 value={studentData.state}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 placeholder="e.g. Maharashtra"
                                 required
                             />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+                            <label className="block text-sm font-medium text-black  mb-1">
                                 District
                             </label>
                             <input
@@ -989,7 +989,7 @@ const StudentOnboardForm = ({
                                 name="district"
                                 value={studentData.district}
                                 onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 placeholder="e.g. Mumbai Suburban"
                             />
                         </div>
