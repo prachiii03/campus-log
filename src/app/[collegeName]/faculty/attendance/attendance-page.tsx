@@ -8,6 +8,8 @@ import { useCollege } from '@/context/college-name-provider/CollegeNameProvider'
 import { getAllAttendenceAction } from '@/actions/attendence';
 
 import { useRef } from "react";
+import AttendanceReportTable from './AttendanceReportTable';
+import MonthlyAttendanceSummary from './MonthlyAttendanceSummary';
 
 interface Faculty {
   faculty_id: string;
@@ -64,6 +66,14 @@ interface PreviousAttendance {
   presentCount: number | null
   absentCount: number | null
 
+
+}
+
+export interface AttendanceRow {
+  prn: string;
+  name: string;
+  student_id: string;
+  attendance: Record<string, boolean>; // date -> status
 }
 
 const AttendancePage: React.FC = () => {
@@ -102,6 +112,12 @@ const AttendancePage: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState(""); // 'present' or 'absent'
   const [filteredAttendance, setFilteredAttendance] = useState<PreviousAttendance[]>([]);
   const [isFilterApplied, setIsFilterApplied] = useState<boolean>(false)
+
+
+  const [attendanceData, setAttendanceData] = useState<AttendanceRow[]>([]);
+  const [filteredData, setFilteredData] = useState(attendanceData);
+  const [viewByMonth, setViewByMonth] = useState(false);
+
   const getAllSemesterAndSubjects = async () => {
     try {
       const response = await fetch(`/api/faculty/${faculty.faculty_id}/get-all-sem-and-subjects`);
@@ -126,6 +142,34 @@ const AttendancePage: React.FC = () => {
   //   getAllAttendence();
   // }, [selectedSemester])
 
+  const filterByDateRange = (startDate: Date, endDate: Date) => {
+    const filtered: typeof attendanceData = attendanceData.map((student) => {
+      const filteredAttendance: Record<string, boolean> = {};
+
+      Object.entries(student.attendance).forEach(([date, status]) => {
+        const current = new Date(date.split('/').reverse().join('-')); // "dd/mm/yyyy" → Date
+        if (current >= startDate && current <= endDate) {
+          filteredAttendance[date] = status;
+        }
+      });
+
+      return {
+        ...student,
+        attendance: filteredAttendance,
+      };
+    }).filter((s) => Object.keys(s.attendance).length > 0); // remove students with no records
+
+    return filtered;
+  };
+
+  // On filter button click
+  const handleDateFilter = () => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const result = filterByDateRange(start, end);
+    setFilteredData(result);
+    setIsFilterApplied(true);
+  };
   const getAllAttendence = async () => {
     const data = await getAllAttendenceAction(selectedSubjectId, selectedSemester)
     console.log("data in getAllAttendence : ", data)
@@ -144,81 +188,121 @@ const AttendancePage: React.FC = () => {
         absentCount: null,
         student_details: item.student_details || {} as Student,
       })));
+      //setAttendanceData(data.data);
+
+      const formattedAttendance: PreviousAttendance[] = data.data.map((item: any) => ({
+        createdAt: item.createdAt || '',
+        date: item.date || null,
+        id: item.id || '',
+        lecture_start_time: item.lecture_start_time || '',
+        lecture_end_time: item.lecture_end_time || '',
+        semester: item.semester || '',
+        status: item.status || false,
+        student_id: item.student_id || '',
+        subject_id: item.subject_id || null,
+        presentCount: null,
+        absentCount: null,
+        student_details: item.student_details || {} as Student,
+      }));
+      // Grouping attendance by PRN
+      const grouped: Record<string, AttendanceRow> = {};
+
+      formattedAttendance.forEach((entry) => {
+        const prn = entry.student_details?.prn_no;
+        const fullName = `${entry.student_details.first_name || ''} ${entry.student_details.middle_name || ''} ${entry.student_details.last_name || ''}`.trim();
+        const formattedDate = entry.date ? new Date(entry.date).toLocaleDateString('en-GB') : '';
+
+        if (!prn || !formattedDate) return;
+
+        if (!grouped[prn]) {
+          grouped[prn] = {
+            prn,
+            name: fullName,
+            student_id: entry.student_id,
+            attendance: {},
+          };
+        }
+
+        grouped[prn].attendance[formattedDate] = entry.status;
+      });
+
+      setAttendanceData(Object.values(grouped));
+
     }
   }
-  const applyFilters = () => {
-    if (!previousAttendance || previousAttendance.length === 0) return;
+  // const applyFilters = () => {
+  //   if (!previousAttendance || previousAttendance.length === 0) return;
 
-    let filtered = [...previousAttendance];
+  //   let filtered = [...previousAttendance];
 
-    // Filter by specific date
-    if (filterDate) {
-      const selectedDate = new Date(filterDate).toDateString();
-      filtered = filtered.filter(item =>
-        item.date && new Date(item.date).toDateString() === selectedDate
-      );
-    }
+  //   // Filter by specific date
+  //   if (filterDate) {
+  //     const selectedDate = new Date(filterDate).toDateString();
+  //     filtered = filtered.filter(item =>
+  //       item.date && new Date(item.date).toDateString() === selectedDate
+  //     );
+  //   }
 
-    // Filter by date range
-    if (startDate && endDate) {
-      const start = new Date(startDate);
-      const end = new Date(endDate);
-      filtered = filtered.filter(item => {
-        const itemDate = new Date(item.date || '');
-        return itemDate >= start && itemDate <= end;
-      });
-    }
+  //   // Filter by date range
+  //   if (startDate && endDate) {
+  //     const start = new Date(startDate);
+  //     const end = new Date(endDate);
+  //     filtered = filtered.filter(item => {
+  //       const itemDate = new Date(item.date || '');
+  //       return itemDate >= start && itemDate <= end;
+  //     });
+  //   }
 
-    // Filter by status
-    if (statusFilter) {
-      filtered = filtered.filter(item =>
-        statusFilter === "present" ? item.status === true : item.status === false
-      );
-    }
+  //   // Filter by status
+  //   if (statusFilter) {
+  //     filtered = filtered.filter(item =>
+  //       statusFilter === "present" ? item.status === true : item.status === false
+  //     );
+  //   }
 
-    // Group and count records by student_id and date, with present/absent counts
-    const grouped = filtered.reduce((acc: Record<string, PreviousAttendance>, curr) => {
-      const dateKey = new Date(curr.date || '').toDateString();
-      const key = `${curr.student_id}-${dateKey}`;
+  //   // Group and count records by student_id and date, with present/absent counts
+  //   const grouped = filtered.reduce((acc: Record<string, PreviousAttendance>, curr) => {
+  //     const dateKey = new Date(curr.date || '').toDateString();
+  //     const key = `${curr.student_id}-${dateKey}`;
 
-      if (!acc[key]) {
-        acc[key] = {
-          ...curr,
-          presentCount: curr.status ? 1 : 0,
-          absentCount: curr.status ? 0 : 1,
+  //     if (!acc[key]) {
+  //       acc[key] = {
+  //         ...curr,
+  //         presentCount: curr.status ? 1 : 0,
+  //         absentCount: curr.status ? 0 : 1,
 
-        };
-      } else {
-        acc[key].presentCount! += curr.status ? 1 : 0;
-        acc[key].absentCount! += curr.status ? 0 : 1;
-      }
+  //       };
+  //     } else {
+  //       acc[key].presentCount! += curr.status ? 1 : 0;
+  //       acc[key].absentCount! += curr.status ? 0 : 1;
+  //     }
 
-      return acc;
-    }, {});
+  //     return acc;
+  //   }, {});
 
-    setFilteredAttendance(Object.values(grouped));
-    setIsFilterApplied(true);
-  };
+  //   setFilteredAttendance(Object.values(grouped));
+  //   setIsFilterApplied(true);
+  // };
 
-  const downloadPDF = () => {
-    if (tableRef.current) {
-      const element = tableRef.current;
+  // const downloadPDF = () => {
+  //   if (tableRef.current) {
+  //     const element = tableRef.current;
 
-      import("html2pdf.js").then(module => {
-        const html2pdf = module.default; // ✅ get the default export
+  //     import("html2pdf.js").then(module => {
+  //       const html2pdf = module.default; // ✅ get the default export
 
-        const opt = {
-          margin: 0.5,
-          filename: `attendance-report-${new Date().toISOString().split("T")[0]}.pdf`,
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2 },
-          jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-        };
+  //       const opt = {
+  //         margin: 0.5,
+  //         filename: `attendance-report-${new Date().toISOString().split("T")[0]}.pdf`,
+  //         image: { type: 'jpeg', quality: 0.98 },
+  //         html2canvas: { scale: 2 },
+  //         jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+  //       };
 
-        html2pdf().set(opt).from(element).save();
-      });
-    }
-  };
+  //       html2pdf().set(opt).from(element).save();
+  //     });
+  //   }
+  // };
 
 
 
@@ -273,7 +357,7 @@ const AttendancePage: React.FC = () => {
       })),
     };
 
-    console.log('Attendance data:', attendanceData);
+    console.log('Attendance data after filling :', attendanceData);
 
     try {
       const toastId = toast.loading("Updating attendance ...");
@@ -457,6 +541,7 @@ const AttendancePage: React.FC = () => {
                       <td className="px-6 py-4">
                         <label className="inline-flex items-center">
                           <input
+                            id={`checkbox-${student.student_id}`}
                             type="checkbox"
                             className="h-5 w-5 text-blue-600 rounded border-gray-300 focus:ring-blue-500 transition"
                           />
@@ -470,9 +555,8 @@ const AttendancePage: React.FC = () => {
           </div>
         )}
 
-        {viewAttendance && (
+        {/* {viewAttendance && (
           <div className="space-y-6">
-            {/* Filter Card */}
             <div className="bg-white rounded-xl shadow-sm p-6 ring-1 ring-black/5 space-y-4">
               <h3 className="text-lg font-semibold text-gray-900">Filter Attendance</h3>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -535,8 +619,6 @@ const AttendancePage: React.FC = () => {
               </div>
             </div>
 
-            {/* Attendance Table */}
-            <div ref={tableRef} className="bg-white rounded-xl shadow-sm overflow-hidden ring-1 ring-black/5">
               <div className="overflow-x-auto">
                 <table className="min-w-full divide-y divide-gray-200">
                   <thead className="bg-gray-50">
@@ -586,9 +668,9 @@ const AttendancePage: React.FC = () => {
                   </tbody>
                 </table>
               </div>
-            </div>
+            </div> 
           </div>
-        )}
+        )} */}
 
         {/* Update Attendance Button */}
         {fillAttendance && (
@@ -602,6 +684,74 @@ const AttendancePage: React.FC = () => {
             </button>
           </div>
         )}
+
+        {viewAttendance &&
+          <div className="p-6 text-black bg-gray-100 min-h-screen">
+            <div className="flex flex-wrap items-center gap-4 mb-6">
+              <div className="flex flex-col">
+                <label className="text-sm font-medium mb-1">Start Date</label>
+                <input
+                  type="date"
+                  className="px-3 py-2 rounded-md border border-gray-300 bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  onChange={(e) => setStartDate(e.target.value)}
+                />
+              </div>
+
+              <div className="flex flex-col">
+                <label className="text-sm font-medium mb-1">End Date</label>
+                <input
+                  type="date"
+                  className="px-3 py-2 rounded-md border border-gray-300 bg-white text-black shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  onChange={(e) => setEndDate(e.target.value)}
+                />
+              </div>
+
+              <div className="flex flex-col">
+                <label className="text-sm font-medium mb-1 invisible">Filter</label>
+                <button
+                  onClick={handleDateFilter}
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 shadow"
+                >
+                  Apply Filter
+                </button>
+              </div>
+
+              <div className="flex flex-col">
+                <label className="text-sm font-medium mb-1 invisible">Toggle View</label>
+                <button
+                  onClick={() => setViewByMonth(!viewByMonth)}
+                  className="px-4 py-2 bg-purple-600 text-white rounded-md hover:bg-purple-700 shadow"
+                >
+                  {viewByMonth ? "View by Date" : "View by Month"}
+                </button>
+
+
+              </div>
+            </div>
+            <button
+              onClick={() => setIsFilterApplied(false)}
+              className="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-700 shadow"
+            >
+              Reset Filter
+            </button>
+
+            <h1 className="text-3xl font-bold mb-6 text-gray-800">Attendance Report</h1>
+            {`isFilterApplied : ${isFilterApplied}`}
+            <div className="bg-white rounded-lg shadow p-4">
+              <div className="bg-white rounded-lg shadow p-4">
+                {viewByMonth ? (
+                  <MonthlyAttendanceSummary data={isFilterApplied ? filteredData : attendanceData} />
+                ) : (
+                  <AttendanceReportTable attendanceData={isFilterApplied ? filteredData : attendanceData} />
+                )}
+              </div>
+
+
+            </div>
+
+          </div>
+
+        }
       </div>
     </div>
   );

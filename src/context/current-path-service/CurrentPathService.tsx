@@ -1,4 +1,4 @@
-"use client"; // Mark this as a Client Component
+"use client";
 
 import { Inter } from "next/font/google";
 import Navbar from "@/app/(components)/landing-page/Navbar";
@@ -8,23 +8,26 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Header from "@/app/(components)/college-landing-page/Header";
 import { useCollege } from "../college-name-provider/CollegeNameProvider";
+
 const inter = Inter({ subsets: ["latin"] });
 
-export default function ClientRootLayout({ session, children }: { session: any, children: React.ReactNode }) {
-
+export default function ClientRootLayout({
+  session,
+  children,
+}: {
+  session: any;
+  children: React.ReactNode;
+}) {
   const pathname = usePathname();
   const { collegeName } = useCollege();
-
   const [isFaculty, setIsFaculty] = useState(false);
-  // Determine whether to show the Navbar and Sidebar
+
   const showNavbarAndSidebar = pathname !== "/";
   const showCollegeNavbar = pathname === `/${collegeName}`;
 
   useEffect(() => {
     if (session) {
-      // Storing the session data in sessionStorage
       sessionStorage.setItem("userSession", JSON.stringify(session.user));
-      console.log("Session stored in sessionStorage", session.user);
     }
 
     const facultySession = JSON.parse(sessionStorage.getItem("facultySession") || "{}");
@@ -34,33 +37,19 @@ export default function ClientRootLayout({ session, children }: { session: any, 
   }, []);
 
   return (
-    <>
-    {showCollegeNavbar? <Header/> : <DashboardNavbar/>}
-        
-      {isFaculty ? (
+    <div>
+      {showCollegeNavbar ? <Header /> : <DashboardNavbar />}
+      {isFaculty || showNavbarAndSidebar ? (
         <>
-          {/* If the user is faculty, render Sidebar and children */}
           <SidebarDemo />
           {children}
         </>
       ) : (
         <>
-          {/* If not faculty, render based on other conditions */}
-          {showNavbarAndSidebar ? (
-            <>
-              {/* Render Header or DashboardNavbar based on the route */}
-              <SidebarDemo />
-              {children}
-            </>
-          ) : (
-            <>
-              {/* Render only the main landing Navbar */}
-              <Navbar />
-              {children}
-            </>
-          )}
+          <Navbar />
+          {children}
         </>
       )}
-    </>
+    </div>
   );
 }

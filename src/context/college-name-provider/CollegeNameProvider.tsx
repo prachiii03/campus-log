@@ -23,10 +23,10 @@ export const CollegeProvider = ({ children }: { children: ReactNode }) => {
     // Fetch the college name from the API when the component is mounted
     const fetchCollegeName = async () => {
       try {
-        const response = await fetch('/api/college/get-college-code');
-        const data = await response.json();
-        console.log({data})
-        setCollegeName(data); // Assuming API returns { collegeName: "some-name" }
+        // const response = await fetch('/api/college/get-college-code');
+        // const data = await response.json();
+        // console.log({data})
+        setCollegeName("sgmcoe"); // Assuming API returns { collegeName: "some-name" }
       } catch (error) {
         console.error("Error fetching college name:", error);
       }
