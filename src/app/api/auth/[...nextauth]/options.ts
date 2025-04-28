@@ -1,5 +1,5 @@
 import { NextAuthOptions } from "next-auth";
-import bcrypt from 'bcryptjs';
+import bcrypt from "bcryptjs";
 import prisma from "@/lib/db";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -12,28 +12,38 @@ export const authOptions: NextAuthOptions = {
                 prn: { label: "PRN", type: "text" },
                 password: { label: "Password", type: "password" },
             },
+
             async authorize(credentials: any): Promise<any> {
                 try {
                     const user = await prisma.student_details.findFirst({
                         where: {
-                            prn_no: credentials.prn
+                            prn_no: credentials.prn,
                         },
                         include: {
                             department: {
                                 select: {
-                                    department_name: true // Select department_name instead of just the id
-                                }
-                            }
-                        }
+                                    department_name: true, // Select department_name instead of just the id
+                                },
+                            },
+                        },
                     });
-                    console.log(user)
+                    console.log(user);
 
                     if (!user) {
-                        throw new Error("No user found with provided PRN number");
+                        throw new Error(
+                            "No user found with provided PRN number"
+                        );
                     }
 
-                    //const isPasswordCorrect = await bcrypt.compare(credentials.password, user.password);
-                    const isPasswordCorrect = credentials.password == user.password;
+                    console.log({ user });
+                    console.log({ credentials });
+                    console.log("use pasword", user.password);
+                    console.log("credentials password", credentials.password);
+                    const isPasswordCorrect = await bcrypt.compare(
+                        credentials.password,
+                        user.password
+                    );
+                    // const isPasswordCorrect = credentials.password == user.password;
                     if (!isPasswordCorrect) {
                         throw new Error("Password does not match");
                     }
@@ -49,14 +59,14 @@ export const authOptions: NextAuthOptions = {
                         current_semester: user.current_studing_semester,
                         profession: "student",
                         activeBacklogs: user.active_backlogs,
-                        currentGPA: user.current_gpa
+                        currentGPA: user.current_gpa,
                     };
                 } catch (error) {
                     console.log(error);
                     return null;
                 }
-            }
-        })
+            },
+        }),
     ],
     callbacks: {
         async jwt({ token, user }) {
@@ -69,9 +79,9 @@ export const authOptions: NextAuthOptions = {
                 token.email = user.email;
                 token.department = user.department; // Store department_name in token
                 token.current_semester = user.current_semester;
-                token.profession = user.profession
-                token.activeBacklogs = user.activeBacklogs,
-                    token.currentGPA = user.currentGPA
+                token.profession = user.profession;
+                (token.activeBacklogs = user.activeBacklogs),
+                    (token.currentGPA = user.currentGPA);
             }
             return token;
         },
@@ -85,19 +95,19 @@ export const authOptions: NextAuthOptions = {
                 session.user.department = token.department; // Store department_name in session
                 session.user.email = token.email;
                 session.user.current_semester = token.current_semester;
-                session.user.profession = token.profession
+                session.user.profession = token.profession;
                 session.user.currentGPA = token.currentGPA;
-                session.user.activeBacklogs = token.activeBacklogs
+                session.user.activeBacklogs = token.activeBacklogs;
             }
             return session;
-        }
+        },
     },
     session: {
         strategy: "jwt",
         maxAge: 24 * 60 * 60, // 24 hours
     },
     pages: {
-        signIn: '/login'
+        signIn: "/login",
     },
-    secret: process.env.NEXTAUTH_SECRET
+    secret: process.env.NEXTAUTH_SECRET,
 };
