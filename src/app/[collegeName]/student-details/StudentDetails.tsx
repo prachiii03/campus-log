@@ -989,6 +989,7 @@ const Student_Details: React.FC<StudentDetailsProps> = ({ id }) => {
               onChange={handleChange}
             />
           </div>
+
           <div>
             <label className="mb-2">Father Full Name:</label>
             <input

@@ -1,13 +1,16 @@
 
 
 "use client";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useCollege } from '@/context/college-name-provider/CollegeNameProvider';
 import { toast } from 'react-toastify';
 import { IconUpload, IconCamera, IconUser, IconUserPlus, IconSchool, IconCheck } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
+import { getAllDepartmentsAction, getAllSubjects } from '@/actions/departments';
+import { onboardNewFacultyAction } from '@/actions/faculties';
+import { onBoardNewStudentAction } from '@/actions/students';
 
-interface FacultyData {
+export interface FacultyData {
     facultyId: string;
     firstName: string;
     middleName: string;
@@ -21,8 +24,54 @@ interface FacultyData {
     departmentId: string;
     subjects: string[];
     profileImage: string | null;
+    password: string
 }
 
+export interface StudentData {
+    firstName: string,
+    middleName: string,
+    lastName: string,
+    email: string,
+    prnNo: string,
+    program: string,
+    course: string,
+    class: string,
+    motherName: string,
+    dob: string,
+    gender: string,
+    bloodGroup: string,
+    religion: string,
+    category: string,
+    contactNo: string,
+    address: string,
+    city: string,
+    state: string,
+    district: string,
+    motherTongue: string,
+    familyIncome: string,
+
+    departmentId: string,
+    currentStudingYear: string,
+    password: string,
+    currentGPA: number,
+    activeBacklog: number,
+    currentSemister: string;
+    adharNO: string;
+    subjects: string[];
+}
+interface Department {
+    department_id: string;
+    department_name: string;
+}
+
+interface Subject {
+    subject_id: string;
+    subject_name: string;
+    required_hours: number;
+    habe_practicals: boolean;
+    faculty_id: string;
+    semester: string | null;
+}
 const OnboardFacultyPage = () => {
     const { collegeName } = useCollege();
     const [activeTab, setActiveTab] = useState<'faculty' | 'student'>('faculty');
@@ -39,13 +88,43 @@ const OnboardFacultyPage = () => {
         username: '',
         departmentId: '',
         subjects: [],
-        profileImage: null
+        profileImage: null,
+        password: ''
     });
     const [currentSubject, setCurrentSubject] = useState('');
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [isFacultySubmitted, setIsFacultySubmitted] = useState(false);
     const [isStudentSubmitted, setIsStudentSubmitted] = useState(false);
+    const [departments, setDepartments] = useState<Department[] | null>(null);
+    const [selectedDepartment, setSelectedDepartment] = useState<Department>();
+    const [allSubjects, setallSubjects] = useState<Subject[]>()
+    const [selectedSubjects, setSelectedSubjects] = useState<Subject[]>()
+    useEffect(() => {
+        getAllDepartments();
+        getAllSubjectss();
+    }, [])
+    const getAllDepartments = async () => {
+        try {
+            const response = await getAllDepartmentsAction();
+            console.log("this is responnse getAllDepartmentsAction  : ", response)
+            if (response && response.success && response.data && response.data?.length > 0) {
+                setDepartments(response.data);
+            } else {
+                toast.error(response.message);
+            }
+        } catch (error) {
 
+        }
+    }
+
+    const getAllSubjectss = async () => {
+        const result = await getAllSubjects();
+        if (result && result.success && result.data && result.data?.length > 0) {
+            setallSubjects(result.data);
+        } else {
+            toast.error(result.message);
+        }
+    }
     const validateEmail = (email: string) => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
@@ -89,51 +168,55 @@ const OnboardFacultyPage = () => {
         }
     };
 
-    const handleAddSubject = () => {
-        if (currentSubject.trim() && !facultyData.subjects.includes(currentSubject.trim())) {
-            setFacultyData(prev => ({
-                ...prev,
-                subjects: [...prev.subjects, currentSubject.trim()]
-            }));
-            setCurrentSubject('');
+
+    const handleSubjectChange = (e: React.ChangeEvent<HTMLInputElement>, subject: Subject) => {
+        if (e.target.checked) {
+            setSelectedSubjects((prev) => [...(prev || []), subject]);
+            setFacultyData((prev) => (
+
+                {
+                    ...prev,
+                    subjects: [...(prev.subjects || []), subject.subject_id]
+                }
+            ))
+        } else {
+            setSelectedSubjects((prev) => (prev || []).filter((s) => s.subject_id !== subject.subject_id));
         }
     };
 
-    const handleRemoveSubject = (subjectToRemove: string) => {
-        setFacultyData(prev => ({
-            ...prev,
-            subjects: prev.subjects.filter(subject => subject !== subjectToRemove)
-        }));
-    };
+
 
     const handleFacultySubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+
+        console.log("this is faculty data after submit button : ", facultyData)
         // Validation
-        if (!validateFacultyId(facultyData.facultyId)) {
-            toast.error('Please enter a valid Faculty ID (UUID format)');
-            return;
-        }
-        if (!facultyData.firstName || !facultyData.lastName) {
-            toast.error('First Name and Last Name are required');
-            return;
-        }
-        if (!validateEmail(facultyData.email)) {
-            toast.error('Please enter a valid email address');
-            return;
-        }
-        if (!validatePhone(facultyData.contactNo)) {
-            toast.error('Please enter a valid 10-digit phone number');
-            return;
-        }
-        if (facultyData.subjects.length === 0) {
-            toast.error('Please add at least one subject');
-            return;
-        }
+        // if (!validateFacultyId(facultyData.facultyId)) {
+        //     toast.error('Please enter a valid Faculty ID (UUID format)');
+        //     return;
+        // }
+        // if (!facultyData.firstName || !facultyData.lastName) {
+        //     toast.error('First Name and Last Name are required');
+        //     return;
+        // }
+        // if (!validateEmail(facultyData.email)) {
+        //     toast.error('Please enter a valid email address');
+        //     return;
+        // }
+        // if (!validatePhone(facultyData.contactNo)) {
+        //     toast.error('Please enter a valid 10-digit phone number');
+        //     return;
+        // }
+        // if (facultyData.subjects.length === 0) {
+        //     toast.error('Please add at least one subject');
+        //     return;
+        // }
 
         try {
             // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            const res = await onboardNewFacultyAction(facultyData);
+            console.log("this is response after onboard faculty : ", res)
             setIsFacultySubmitted(true);
             toast.success('Faculty onboarded successfully!');
         } catch (error) {
@@ -174,7 +257,8 @@ const OnboardFacultyPage = () => {
                             username: '',
                             departmentId: '',
                             subjects: [],
-                            profileImage: null
+                            profileImage: null,
+                            password: ''
                         });
                         setImagePreview(null);
                     }}
@@ -188,8 +272,8 @@ const OnboardFacultyPage = () => {
 
     // Student Success Component
     const StudentSuccess = () => (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-800 dark:to-gray-900 pt-20 pb-10 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-xl shadow-2xl p-8 text-center">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 pt-20 pb-10 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-2xl p-8 text-center">
                 <motion.div
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
@@ -259,9 +343,9 @@ const OnboardFacultyPage = () => {
                             </h2>
 
                             <form onSubmit={handleFacultySubmit}>
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-black">
                                     {/* Profile Image Upload */}
-                                    <div className="md:col-span-2">
+                                    {/* <div className="md:col-span-2">
                                         <div className="flex flex-col items-center">
                                             <div className="relative w-32 h-32 rounded-full bg-gradient-to-br from-gray-200 to-gray-300  mb-4 overflow-hidden border-4 border-white  shadow-lg">
                                                 {imagePreview ? (
@@ -296,26 +380,9 @@ const OnboardFacultyPage = () => {
                                                 </button>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
 
-                                    {/* Faculty ID */}
-                                    <div>
-                                        <label className="block text-sm font-medium text-black mb-1">
-                                            Faculty ID <span className="text-red-500">*</span>
-                                            <span className="text-xs text-gray-500 ml-1">(Can be UUID or custom format, between 3-36 characters)</span>
-                                        </label>
-                                        <input
-                                            type="text"
-                                            name="facultyId"
-                                            value={facultyData.facultyId}
-                                            onChange={handleInputChange}
-                                            className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white bg-white"
-                                            placeholder="Faculty Id"
-                                            required
-                                            pattern=".{3,36}" // Minimum 3 chars, maximum 36
-                                            title="ID must be between 3 and 36 characters"
-                                        />
-                                    </div>
+
 
                                     {/* Name Fields */}
                                     <div>
@@ -462,66 +529,79 @@ const OnboardFacultyPage = () => {
                                         />
                                     </div>
 
-                                    {/* Department ID */}
                                     <div>
                                         <label className="block text-sm font-medium text-gray-700  mb-1">
-                                            Department ID <span className="text-red-500">*</span>
+                                            Password <span className="text-red-500">*</span>
                                         </label>
                                         <input
-                                            type="text"
-                                            name="departmentId"
-                                            value={facultyData.departmentId}
+                                            type="password"
+                                            name="password"
+                                            value={facultyData.password}
                                             onChange={handleInputChange}
                                             className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
-                                            placeholder="e.g. DEP-CSE"
+                                            placeholder="e.g. John"
                                             required
-                                            pattern=".{3,36}"
-                                            title="Department ID must be between 3 and 36 characters"
                                         />
                                     </div>
 
-                                    {/* Subjects */}
-                                    <div className="md:col-span-2">
-                                        <label className="block text-sm font-medium text-gray-700  mb-1">
-                                            Subjects <span className="text-red-500">*</span>
+                                    {/* Department  */}
+                                    <div>
+                                        <label htmlFor="department" className="block text-sm font-medium bg-white text-black mb-1">
+                                            Department ID <span className="text-red-500">*</span>
                                         </label>
-                                        <div className="flex flex-wrap gap-2 mb-2">
-                                            {facultyData.subjects.map((subject, index) => (
-                                                <span
-                                                    key={index}
-                                                    className="inline-flex items-center px-3 py-1 rounded-full bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900 text-blue-800 dark:text-blue-200 text-sm shadow-sm"
-                                                >
-                                                    {subject}
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => handleRemoveSubject(subject)}
-                                                        className="ml-2 text-blue-500 hover:text-blue-700 dark:hover:text-blue-400"
-                                                    >
-                                                        ×
-                                                    </button>
-                                                </span>
+                                        <select
+                                            name="department"
+                                            id="department"
+                                            className="mt-1 block px-4 py-2 w-full rounded-md text-black bg-white border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                            onChange={(e) => {
+                                                const selectedDepartmentId = e.target.value;
+                                                setFacultyData((prev) => ({
+                                                    ...prev,
+                                                    departmentId: selectedDepartmentId,
+                                                }));
+                                            }}
+                                        >
+                                            <option value="">Select a department</option>
+                                            {departments && departments.map((dept) => (
+                                                <option key={dept.department_id} value={dept.department_id}>
+                                                    {dept.department_name}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+
+
+                                    {/* Subjects */}
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">
+                                            Select Subjects <span className="text-red-500">*</span>
+                                        </label>
+                                        <div className="border p-3 rounded-md max-h-60 overflow-y-auto">
+                                            {allSubjects && allSubjects.map((subject) => (
+                                                <div key={subject.subject_id} className="flex items-center mb-2">
+                                                    <input
+                                                        type="checkbox"
+                                                        id={subject.subject_id}
+                                                        value={subject.subject_id}
+                                                        onChange={(e) => handleSubjectChange(e, subject)}
+                                                        className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                                                    />
+                                                    <label htmlFor={subject.subject_id} className="ml-2 block text-sm text-gray-700">
+                                                        {subject.subject_name}
+                                                    </label>
+                                                </div>
                                             ))}
                                         </div>
-                                        <div className="flex">
-                                            <input
-                                                type="text"
-                                                value={currentSubject}
-                                                onChange={(e) => setCurrentSubject(e.target.value)}
-                                                className="flex-grow px-4 py-2 border border-gray-300 bg-white text-black  rounded-l-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all"
-                                                placeholder="e.g. Python, Deep Learning"
-                                                onKeyPress={(e) => e.key === 'Enter' && handleAddSubject()}
-                                            />
-                                            <button
-                                                type="button"
-                                                onClick={handleAddSubject}
-                                                className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-r-lg shadow-md transition-all"
-                                            >
-                                                Add
-                                            </button>
+
+                                        {/* Debug: Show selected subjects */}
+                                        <div className="mt-4">
+                                            <h2 className="text-sm font-semibold mb-1">Selected Subjects:</h2>
+                                            <ul className="list-disc list-inside text-sm text-gray-600">
+                                                {selectedSubjects && selectedSubjects.map((subj) => (
+                                                    <li key={subj.subject_id}>{subj.subject_name}</li>
+                                                ))}
+                                            </ul>
                                         </div>
-                                        {facultyData.subjects.length === 0 && (
-                                            <p className="mt-1 text-sm text-red-500">Please add at least one subject</p>
-                                        )}
                                     </div>
                                 </div>
 
@@ -557,14 +637,15 @@ const StudentOnboardForm = ({
     collegeName: string,
     setIsStudentSubmitted: (value: boolean) => void
 }) => {
-    const [studentData, setStudentData] = useState({
-        fullName: '',
+    const [studentData, setStudentData] = useState<StudentData>({
+        firstName: '',
+        middleName: '',
+        lastName: '',
         email: '',
         prnNo: '',
         program: '',
         course: '',
         class: '',
-        fatherName: '',
         motherName: '',
         dob: '',
         gender: 'Male',
@@ -577,8 +658,63 @@ const StudentOnboardForm = ({
         state: '',
         district: '',
         motherTongue: '',
-        familyIncome: ''
+        familyIncome: '',
+        departmentId: '',
+        currentStudingYear: "Final Year",
+        currentGPA: 0,
+        password: '',
+        activeBacklog: 0,
+        currentSemister: '',
+        adharNO: '',
+        subjects: []
+
     });
+    const [departments, setDepartments] = useState<Department[]>()
+
+    const [allSubjects, setallSubjects] = useState<Subject[]>()
+    const [selectedSubjects, setSelectedSubjects] = useState<Subject[]>()
+    useEffect(() => {
+        getAllDepartments();
+        getAllSubjectss();
+    }, [])
+
+    const getAllSubjectss = async () => {
+        const result = await getAllSubjects();
+        if (result && result.success && result.data && result.data?.length > 0) {
+            setallSubjects(result.data);
+        } else {
+            toast.error(result.message);
+        }
+    }
+
+    const getAllDepartments = async () => {
+        try {
+            const response = await getAllDepartmentsAction();
+            console.log("this is responnse getAllDepartmentsAction  : ", response)
+            if (response && response.success && response.data && response.data?.length > 0) {
+                setDepartments(response.data);
+            } else {
+                toast.error(response.message);
+            }
+        } catch (error) {
+
+        }
+    }
+
+    const handleSubjectChange = (e: React.ChangeEvent<HTMLInputElement>, subject: Subject) => {
+        if (e.target.checked) {
+            setSelectedSubjects((prev) => [...(prev || []), subject]);
+            setStudentData((prev) => (
+
+                {
+                    ...prev,
+                    subjects: [...(prev.subjects || []), subject.subject_id]
+                }
+            ))
+        } else {
+            setSelectedSubjects((prev) => (prev || []).filter((s) => s.subject_id !== subject.subject_id));
+        }
+    };
 
     const validateEmail = (email: string) => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -596,12 +732,12 @@ const StudentOnboardForm = ({
         }));
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleStudentFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
+        console.log("this is student data after onboard : ", studentData)
         // Validation
-        if (!studentData.fullName) {
-            toast.error('Full Name is required');
+        if (!studentData.firstName) {
+            toast.error('First Name is required');
             return;
         }
         if (!validateEmail(studentData.email)) {
@@ -623,7 +759,7 @@ const StudentOnboardForm = ({
 
         try {
             // Simulate API call
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            await onBoardNewStudentAction(studentData)
             setIsStudentSubmitted(true);
             toast.success('Student onboarded successfully!');
         } catch (error) {
@@ -644,8 +780,8 @@ const StudentOnboardForm = ({
                     Student Onboarding Form
                 </h2>
 
-                <form onSubmit={handleSubmit}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <form onSubmit={handleStudentFormSubmit}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 text-black">
                         {/* Basic Information */}
                         <div className="md:col-span-2">
                             <h3 className="text-lg  font-medium text-gray-800 mb-4 border-b pb-2 border-gray-200 dark:border-gray-700">
@@ -655,12 +791,40 @@ const StudentOnboardForm = ({
 
                         <div>
                             <label className="block text-sm font-medium text-black  mb-1">
-                                Full Name <span className="text-red-500">*</span>
+                                First Name <span className="text-red-500">*</span>
                             </label>
                             <input
                                 type="text"
-                                name="fullName"
-                                value={studentData.fullName}
+                                name="firstName"
+                                value={studentData.firstName}
+                                onChange={handleInputChange}
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
+                                placeholder="e.g. John Doe"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-black  mb-1">
+                                Middle Name <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                name="middleName"
+                                value={studentData.middleName}
+                                onChange={handleInputChange}
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
+                                placeholder="e.g. John Doe"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-black  mb-1">
+                                Last Name <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                name="lastName"
+                                value={studentData.lastName}
                                 onChange={handleInputChange}
                                 className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 placeholder="e.g. John Doe"
@@ -685,6 +849,21 @@ const StudentOnboardForm = ({
                                 <p className="mt-1 text-sm text-red-500">Please enter a valid email</p>
                             )}
                         </div>
+                        <div>
+                            <label className="block text-sm font-medium text-black  mb-1">
+                                ADHAR NO <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                                type="adhar"
+                                name="adharNO"
+                                value={studentData.adharNO}
+                                onChange={handleInputChange}
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
+                                placeholder="e.g. john@example.com"
+                                required
+                            />
+
+                        </div>
 
                         <div>
                             <label className="block text-sm font-medium text-black  mb-1">
@@ -702,6 +881,30 @@ const StudentOnboardForm = ({
                                 pattern=".{4,20}" // Minimum 4 chars, maximum 20
                                 title="ID must be between 4 and 20 characters"
                             />
+                        </div>
+                        <div>
+                            <label htmlFor="department" className="block text-sm font-medium bg-white text-black mb-1">
+                                Department ID <span className="text-red-500">*</span>
+                            </label>
+                            <select
+                                name="department"
+                                id="department"
+                                className="mt-1 block px-4 py-2 w-full rounded-md text-black bg-white border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                onChange={(e) => {
+                                    const selectedDepartmentId = e.target.value;
+                                    setStudentData((prev) => ({
+                                        ...prev,
+                                        departmentId: selectedDepartmentId,
+                                    }));
+                                }}
+                            >
+                                <option value="">Select a department</option>
+                                {departments && departments.map((dept) => (
+                                    <option key={dept.department_id} value={dept.department_id}>
+                                        {dept.department_name}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
                         <div>
@@ -819,7 +1022,7 @@ const StudentOnboardForm = ({
                             </select>
                         </div>
 
-                        <div>
+                        {/* <div>
                             <label className="block text-sm font-medium text-black  mb-1">
                                 Course <span className="text-red-500">*</span>
                             </label>
@@ -837,7 +1040,7 @@ const StudentOnboardForm = ({
                                 <option value="Civil Engineering">Civil Engineering</option>
                                 <option value="Electronics & Telecommunication">Electronics & Telecommunication</option>
                             </select>
-                        </div>
+                        </div> */}
 
                         <div>
                             <label className="block text-sm font-medium text-black  mb-1">
@@ -862,6 +1065,51 @@ const StudentOnboardForm = ({
                                 <option value="Final Year M.Tech">Final Year M.Tech</option>
                             </select>
                         </div>
+                        <div>
+                            <label className="block text-sm font-medium text-black  mb-1">
+                                MCurrent Semester <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                                type="text"
+                                name="currentSemister"
+                                value={studentData.currentSemister}
+                                onChange={handleInputChange}
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
+                                placeholder="e.g. Mary Doe"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">
+                                Select Subjects <span className="text-red-500">*</span>
+                            </label>
+                            <div className="border p-3 rounded-md max-h-60 overflow-y-auto">
+                                {allSubjects && allSubjects.map((subject) => (
+                                    <div key={subject.subject_id} className="flex items-center mb-2">
+                                        <input
+                                            type="checkbox"
+                                            id={subject.subject_id}
+                                            value={subject.subject_id}
+                                            onChange={(e) => handleSubjectChange(e, subject)}
+                                            className="h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                                        />
+                                        <label htmlFor={subject.subject_id} className="ml-2 block text-sm text-gray-700">
+                                            {subject.subject_name}
+                                        </label>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Debug: Show selected subjects */}
+                            <div className="mt-4">
+                                <h2 className="text-sm font-semibold mb-1">Selected Subjects:</h2>
+                                <ul className="list-disc list-inside text-sm text-gray-600">
+                                    {selectedSubjects && selectedSubjects.map((subj) => (
+                                        <li key={subj.subject_id}>{subj.subject_name}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
 
                         {/* Family Information */}
                         <div className="md:col-span-2 mt-4">
@@ -870,20 +1118,6 @@ const StudentOnboardForm = ({
                             </h3>
                         </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-black  mb-1">
-                                Father full Name <span className="text-red-500">*</span>
-                            </label>
-                            <input
-                                type="text"
-                                name="fatherName"
-                                value={studentData.fatherName}
-                                onChange={handleInputChange}
-                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
-                                placeholder="e.g. Robert Doe"
-                                required
-                            />
-                        </div>
 
                         <div>
                             <label className="block text-sm font-medium text-black  mb-1">
@@ -908,6 +1142,19 @@ const StudentOnboardForm = ({
                                 type="text"
                                 name="motherTongue"
                                 value={studentData.motherTongue}
+                                onChange={handleInputChange}
+                                className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
+                                placeholder="e.g. English"
+                            />
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-black  mb-1">
+                                Password
+                            </label>
+                            <input
+                                type="text"
+                                name="password"
+                                value={studentData.password}
                                 onChange={handleInputChange}
                                 className="w-full px-4 py-2 border border-gray-300  rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500  transition-all bg-white"
                                 placeholder="e.g. English"
