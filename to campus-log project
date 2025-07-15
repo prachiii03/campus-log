@@ -1,0 +1,85 @@
+[33m664a64b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Merge pull request #34 from manikerisaurabh/conflict-resolved
+[33mf070bd5[m implemented attendance filters
+[33m26a3234[m added onboarding
+[33m9d492e0[m Merge pull request #33 from manikerisaurabh/conflict-resolved
+[33m19a5efe[m merged to main
+[33mbb1fc43[m added attendence sorting and download feature for faculty
+[33mb551f83[m added attendence sorting and download feature for faculty
+[33m9721518[m added
+[33mb534489[m fixed
+[33m3a3e695[m updated attendance and profile section
+[33m4af0ad0[m Merge pull request #31 from manikerisaurabh/student-details
+[33m23083d7[m changed student details page UI
+[33m9c837c7[m Merge pull request #30 from manikerisaurabh/rebasing-branch
+[33mb672439[m added mobile responsiveness for student attendance
+[33meff2c16[m faculty tpo fixed
+[33m7dec5c6[m Merge pull request #29 from manikerisaurabh/rebasing-branch
+[33m04a2974[m Sidebar issue fixed
+[33maec05f7[m Merge pull request #28 from manikerisaurabh/rebasing-branch
+[33mcd030bd[m final touch
+[33mb13148c[m Merge pull request #27 from manikerisaurabh/rebasing-branch
+[33m982836d[m new build is done
+[33ma931d8b[m Merge pull request #26 from manikerisaurabh/rebasing-branch
+[33m2dd8880[m fixed
+[33mafb922d[m Merge pull request #25 from manikerisaurabh/rebasing-branch
+[33m5a8c1e8[m faculty attendancce modified
+[33m8655c92[m tpo section for both student and faculty is ready
+[33mbf5e453[m Merge pull request #24 from manikerisaurabh/rebasing-branch
+[33md423a56[m final touch2
+[33m8ef4087[m Merge pull request #23 from manikerisaurabh/rebasing-branch
+[33m9e524b7[m final touch
+[33m5c492e7[m Merge pull request #22 from manikerisaurabh/rebasing-branch
+[33m6fdebfc[m attendance page for faculty completed
+[33m711c348[m Merge pull request #21 from manikerisaurabh/rebasing-branch
+[33m96c2692[m dynamic college name is done
+[33m06cf912[m now we can use sgmcoe dynamically created one provider
+[33mf445b7d[m Merge pull request #20 from manikerisaurabh/rebasing-branch
+[33m4db08f2[m student attendance page completed
+[33m2872725[m landing page for college info completed
+[33m41c1cd1[m login woriking
+[33m656056a[m Merge pull request #19 from manikerisaurabh/rebasing-branch
+[33m995019d[m barchart working
+[33m6bcf5ce[m barchart working
+[33m4232405[m Merge pull request #18 from manikerisaurabh/rebasing-branch
+[33mff2f2b9[m minor bug
+[33mc483efb[m Merge pull request #17 from manikerisaurabh/rebasing-branch
+[33mc6ad806[m minor bug
+[33m501d6db[m Merge pull request #16 from manikerisaurabh/rebasing-branch
+[33m778f456[m at stable level
+[33ma165cff[m prachi's landing page implemented
+[33mac04b5d[m attendence page backend completed
+[33m3f36277[m login & register backend done
+[33m76222b7[m Merge pull request #14 from manikerisaurabh/login-backend
+[33m1323ecf[m done
+[33m097bd7e[m done
+[33ma388ba1[m register and login completed
+[33m493022e[m Revert "Merge pull request #10 from amruta-Jodagudri/dashboard-component"
+[33m8701888[m nothing
+[33mb164b78[m Merge pull request #10 from amruta-Jodagudri/dashboard-component
+[33mf14e046[m Merge branch 'develop' into dashboard-component
+[33mb1d8f45[m Dashboard and Student Details page
+[33maef2add[m done
+[33mee3e492[m configured sessions
+[33m285bef3[m Merge pull request #9 from Dhirajya/main
+[33m0b33504[m Update README.md
+[33md486f55[m Revert "Merge pull request #7 from amruta-Jodagudri/dashboard-component"
+[33mc48f77c[m connected to supabase and generated new schema
+[33md675f75[m Merge pull request #7 from amruta-Jodagudri/dashboard-component
+[33mf00eebf[m implemented sidebar and dashboard
+[33mf97d354[m Merge pull request #6 from manikerisaurabh/login-backend
+[33mc973136[m created register backend partially
+[33mfa5c29c[m design database schema and create prisma migration file
+[33me1145a7[m Merge pull request #5 from manikerisaurabh/login-backend
+[33m22168ca[m implemented login functionality
+[33maee6ca5[m Merge pull request #4 from manikerisaurabh/develop
+[33m85e3e04[m Merge pull request #2 from prachiii03/temp2
+[33m48208d8[m[33m ([m[1;31morigin/temp2[m[33m)[m test git commands
+[33mca693fd[m Merge pull request #1 from prachiii03/temp
+[33m7fa10ce[m[33m ([m[1;31morigin/temp[m[33m)[m test git commands
+[33mb269ac5[m we can start development
+[33m4194808[m added migration command for production
+[33m8b6a336[m added migration command for production
+[33m973b36a[m prisma migration setup for production
+[33m60c09aa[m prisma migration setup for production
+[33mc53ceb6[m initial setup
+[33m3ca1509[m Initial commit from Create Next App
